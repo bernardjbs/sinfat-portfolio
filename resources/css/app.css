@@ -1,11 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&display=swap');
 @import 'tailwindcss';
 
-@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
-@source '../../storage/framework/views/*.php';
-@source '../**/*.blade.php';
-@source '../**/*.js';
-
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-mono: 'Geist Mono', ui-monospace, monospace;
+
+    --color-bg:      #0d1117;
+    --color-surface: #161b22;
+    --color-accent:  #238636;
+    --color-text:    #e6edf3;
+    --color-dim:     #6e7681;
+    --color-border:  #30363d;
+    --color-danger:  #f85149;
+}
+
+body {
+    font-family: 'Geist Mono', monospace;
+    background-color: #0d1117;
+    color: #e6edf3;
 }

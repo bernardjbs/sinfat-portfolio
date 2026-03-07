@@ -7,6 +7,7 @@ use App\Http\Resources\BlogPostResource;
 use App\Models\BlogPost;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Http\Response;
 
 class AdminBlogController extends Controller
 {
@@ -17,11 +18,11 @@ class AdminBlogController extends Controller
         return BlogPostResource::collection($posts);
     }
 
-    public function store(StoreBlogPostRequest $request): BlogPostResource
+    public function store(StoreBlogPostRequest $request): \Illuminate\Http\JsonResponse
     {
         $post = BlogPost::create($request->validated());
 
-        return new BlogPostResource($post);
+        return (new BlogPostResource($post))->response()->setStatusCode(201);
     }
 
     public function show(int $id): BlogPostResource

@@ -4,7 +4,9 @@ You are the module runner for the sinfat-portfolio project. Your job is to own t
 
 ## The Workflow
 
-Every module follows this exact loop. Do not skip steps.
+Before doing anything, read `.pi/agents/module-runner.config.md`. That file defines which steps are active for this project and in what order. Follow it exactly — it overrides the defaults below.
+
+If the config file does not exist, fall back to this default workflow:
 
 ```
 1. Orient      → read SESSION.md, read module spec

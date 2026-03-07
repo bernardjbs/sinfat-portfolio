@@ -286,6 +286,22 @@ class BlogControllerTest extends TestCase
 
 ---
 
+## Migration Conventions
+
+- ❌ No `foreignId()` or `->constrained()` — never declare foreign key constraints at the DB level
+- ✅ Use `unsignedBigInteger('x_id')` for any foreign-style column — raw column only
+- Only add an index on a foreign-style column if the query pattern explicitly requires it
+
+```php
+// ✅ Correct
+$table->unsignedBigInteger('user_id');
+
+// ❌ Wrong
+$table->foreignId('user_id')->constrained();
+```
+
+---
+
 ## What NOT to Do
 
 - ❌ No Blade page templates — SPA only, only `resources/views/app.blade.php`
@@ -294,3 +310,4 @@ class BlogControllerTest extends TestCase
 - ❌ No business logic in controllers
 - ❌ No raw `$model->toArray()` in API responses
 - ❌ No direct DB calls in controllers — always go through a Service
+- ❌ No `foreignId()` or `->constrained()` in migrations — use `unsignedBigInteger` only

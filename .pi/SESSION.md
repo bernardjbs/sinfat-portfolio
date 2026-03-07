@@ -10,10 +10,10 @@ Then read this file. That's all you need.
 ---
 
 ## Where We Are
-Pi skills + agents scaffolded. All committed and pushed. Ready to write code.
+Module 2 (Database Schema) complete. Migrations and models committed and pushed. Admin user seeded locally. Prod seeder still needs to run via SSH.
 
 ## Next Task
-**Module 2 — Database Schema** → use Opus, dispatch `database-architect` agent.
+**Module 3 — Authentication**
 
 GitHub Actions secrets set ✅ (`SERVER_HOST`, `SERVER_SSH_KEY`)
 
@@ -27,7 +27,7 @@ GitHub Actions secrets set ✅ (`SERVER_HOST`, `SERVER_SSH_KEY`)
 | # | Module | Status |
 |---|--------|--------|
 | 1 | Infrastructure & Server Setup | ✅ Complete |
-| 2 | Database Schema | ⬜ |
+| 2 | Database Schema | ✅ Complete |
 | 3 | Authentication | ⬜ |
 | 4 | API Contract | ⬜ |
 | 5 | Blog (Admin + Public) | ⬜ |
@@ -39,8 +39,8 @@ GitHub Actions secrets set ✅ (`SERVER_HOST`, `SERVER_SSH_KEY`)
 | 11 | Deploy Pipeline Polish | ⬜ |
 
 ## Reference Files (read only when needed)
-- Current module spec → `specs/module-02-database-schema.md`
-- Last session note → `docs/sessions/2026-03-07-module-1-complete.md`
+- Current module spec → `specs/module-03-authentication.md`
+- Last session note → `docs/sessions/2026-03-07-module-2-database-schema.md`
 - Full history → `.pi/PROGRESS.md`
 - Architecture decisions → `/Users/bernard/code/ai-learning/pi-vs-claude-code/docs/PORTFOLIO.md`
 - Blog drafting → `/Users/bernard/code/ai-learning/pi-vs-claude-code/docs/summaries/`

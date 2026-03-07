@@ -1,6 +1,6 @@
 ---
 name: module-runner
-description: Orchestrates the full lifecycle of building a module for sinfat-portfolio. Use when starting, continuing, or completing any module. Follows the Plan→Execute→Commit→Document→Update→Verify workflow. Supports arguments: help, start Module N, continue, status.
+description: "Orchestrates the full lifecycle of building a module for sinfat-portfolio. Use when starting, continuing, or completing any module. Follows the Plan→Execute→Commit→Document→Update→Verify workflow. Supports arguments: help, start Module N, continue, status."
 ---
 
 # Module Runner
@@ -79,6 +79,9 @@ Read before touching anything:
 1. `.pi/SESSION.md` — current task, module status, reference files
 2. The current module spec (path is in SESSION.md)
 3. Relevant skills for the work ahead
+
+**Model check — always do this during Orient:**
+If the spec or any reference file mentions a specific model (e.g. `🔴 Opus`, `🟡 Sonnet`), check which model is currently active and compare. If there is a mismatch, stop and prompt the user before proceeding. Do not silently continue on the wrong model.
 
 Do not proceed to Plan until all three are read.
 

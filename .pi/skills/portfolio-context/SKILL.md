@@ -83,11 +83,11 @@ There are NO Blade page templates — only `resources/views/app.blade.php` as th
 ```
 /               Home.vue
 /about          About.vue
-/projects       Projects.vue
+/projects       Projects.vue      ← static hardcoded project showcase, no DB table
 /blog           Blog.vue
 /blog/:slug     BlogPost.vue
 /uses           Uses.vue
-/contact        Contact.vue
+/contact        Contact.vue       ← static links only (GitHub, LinkedIn, email mailto:) — no form, no DB table
 /playground     Playground.vue
 /login          Login.vue
 /admin          AdminLayout.vue (requiresAuth: true)

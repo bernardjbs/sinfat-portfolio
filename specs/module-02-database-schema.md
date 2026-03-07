@@ -1,5 +1,5 @@
 ## Module 2 — Database Schema
-> 🔴 Opus — review schema carefully before running migrations
+> 🟡 Sonnet — review schema carefully before running migrations
 
 ### Goal
 All database tables designed, migrated, and verified.
@@ -31,6 +31,7 @@ title               varchar(255)
 slug                varchar(255) unique
 excerpt             text nullable
 content             longtext          ← markdown stored as-is
+category            varchar(100) nullable       ← e.g. 'laravel', 'ai', 'devops'
 status              enum('draft','published')  default: draft
 published_at        timestamp nullable
 ai_generated        boolean default: false    ← was this AI drafted?
@@ -42,23 +43,6 @@ Indexes:
 - slug (unique)
 - status + published_at (for public listing query)
 ```
-
-**guest_usage**
-```
-id                  bigint PK
-identifier          varchar(255)      ← IP address or session fingerprint
-type                enum('ip','session')
-count               tinyint default: 0
-last_used_at        timestamp
-expires_at          timestamp         ← reset after 24 hours
-created_at          timestamp
-updated_at          timestamp
-
-Indexes:
-- identifier + type (unique composite)
-- expires_at (for cleanup)
-```
-Note: Redis handles runtime rate limiting. This table is for persistence and analytics only.
 
 **ai_sessions**
 ```
@@ -79,7 +63,6 @@ Note: Logs every AI generation attempt. Useful for monitoring cost and usage pat
 ```
 User          → hasMany(BlogPost) [future]
 BlogPost      → no relations for now
-GuestUsage    → standalone
 AiSession     → standalone
 ```
 

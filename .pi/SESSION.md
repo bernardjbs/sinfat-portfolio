@@ -26,7 +26,7 @@ Then use this file for reference pointers and module status only.
 | 2 | Database Schema | ✅ Complete |
 | 3 | Authentication | ✅ Complete |
 | 4 | API Contract | ✅ Complete |
-| 5 | Blog (Admin + Public) | ⬜ |
+| 5 | Blog (Admin + Public) | ✅ Complete |
 | 6 | AI Integration | ⬜ |
 | 7 | Guest Playground | ⬜ |
 | 8 | Frontend SPA Foundation | ⬜ |
@@ -37,8 +37,8 @@ Then use this file for reference pointers and module status only.
 ---
 
 ## Reference Files (read only when needed)
-- Current module spec → `specs/module-05-blog.md`
-- Last session note → `docs/sessions/2026-03-07-module-4-api-contract.md`
+- Current module spec → `specs/module-06-ai-integration.md`
+- Last session note → `docs/sessions/2026-03-07-module-5-blog.md`
 - Full history → `.pi/PROGRESS.md`
 - Architecture decisions → `/Users/bernard/code/ai-learning/pi-vs-claude-code/docs/PORTFOLIO.md`
 - Blog drafting → `/Users/bernard/code/ai-learning/pi-vs-claude-code/docs/summaries/`

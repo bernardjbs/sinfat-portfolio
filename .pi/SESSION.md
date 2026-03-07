@@ -1,8 +1,16 @@
 # Session State
 
+## How to Start
+```bash
+cd /Users/bernard/code/sinfat-portfolio
+pi
+```
+Then read this file. That's all you need.
+
+---
+
 ## Where We Are
-Building sinfat-portfolio — Laravel 12 API + Vue 3 SPA at sinfat.com.
-Pi skills + agents scaffolded. Ready to write code.
+Pi skills + agents scaffolded. All committed and pushed. Ready to write code.
 
 ## Next Task
 **Module 1 — Infrastructure** (complete the server setup)
@@ -18,8 +26,6 @@ Then: **Module 2 — Database Schema** → use Opus, dispatch `database-architec
 - Prod: `sinfat.com` — Oracle Cloud Arm A1 VM
 - SSH: `ssh -i ~/.ssh/sinfat-portfolio.key ubuntu@<oracle-ip>`
 - Repo: `bernardjbs/sinfat-portfolio` (private), code at `/Users/bernard/code/sinfat-portfolio`
-- Pi skills + agents: `/Users/bernard/code/sinfat-portfolio/.pi/`
-- Spec: `/Users/bernard/code/sinfat-portfolio/SPEC.md` (read only the current module)
 
 ## Module Status
 | # | Module | Status |
@@ -37,10 +43,10 @@ Then: **Module 2 — Database Schema** → use Opus, dispatch `database-architec
 | 11 | Deploy Pipeline Polish | ⬜ |
 
 ## Reference Files (read only when needed)
-- **Current module spec** → `/Users/bernard/code/sinfat-portfolio/specs/module-01-infrastructure.md`
-- Architecture decisions → `/Users/bernard/code/ai-learning/pi-vs-claude-code/docs/PORTFOLIO.md`
+- Current module spec → `specs/module-01-infrastructure.md`
 - Full history → `.pi/PROGRESS.md`
-- Blog drafting → `/Users/bernard/code/ai-learning/pi-vs-claude-code/docs/summaries/` (read only the relevant file, 3–14KB each)
+- Architecture decisions → `/Users/bernard/code/ai-learning/pi-vs-claude-code/docs/PORTFOLIO.md`
+- Blog drafting → `/Users/bernard/code/ai-learning/pi-vs-claude-code/docs/summaries/`
   - `02-side-discussions-pi-vs-cc-llm-security.md` → Pi vs CC + LLM security posts
   - `06-infrastructure-journey.md` → Oracle Cloud / infra post
   - `07-redis-and-sse.md` → Redis + SSE posts

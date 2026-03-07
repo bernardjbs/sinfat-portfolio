@@ -8,6 +8,9 @@ export const useAuthStore = defineStore('auth', {
 
     actions: {
         async login(email, password) {
+            // Fetch a fresh CSRF cookie before posting — required after cookie clear or first visit
+            await fetch('/sanctum/csrf-cookie')
+
             const res = await fetch('/login', {
                 method: 'POST',
                 headers: {

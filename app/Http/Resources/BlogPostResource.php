@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Str;
 
 class BlogPostResource extends JsonResource
 {
@@ -16,7 +17,11 @@ class BlogPostResource extends JsonResource
             'excerpt'      => $this->excerpt,
             'category'     => $this->category,
             'content'      => $this->when(
-                $request->routeIs('api.blog.show') || $request->routeIs('api.admin.blog.show'),
+                $request->routeIs('api.blog.show'),
+                fn() => Str::markdown((string) $this->content)
+            ),
+            'raw_content'  => $this->when(
+                $request->routeIs('api.admin.blog.show'),
                 $this->content
             ),
             'status'       => $this->when(

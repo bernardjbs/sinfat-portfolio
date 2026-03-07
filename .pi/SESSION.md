@@ -15,9 +15,7 @@ Pi skills + agents scaffolded. All committed and pushed. Ready to write code.
 ## Next Task
 **Module 2 — Database Schema** → use Opus, dispatch `database-architect` agent.
 
-⚠️ Before next deploy: add GitHub Actions secrets in repo → Settings → Secrets → Actions:
-- `SERVER_HOST` → `140.238.202.198`
-- `SERVER_SSH_KEY` → contents of `~/.ssh/sinfat-portfolio.key`
+GitHub Actions secrets set ✅ (`SERVER_HOST`, `SERVER_SSH_KEY`)
 
 ## Key Facts
 - Local: `https://sinfat.test` (Valet)

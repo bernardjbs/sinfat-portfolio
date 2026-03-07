@@ -51,8 +51,8 @@ package.json / package-lock.json
 - `statefulApi()` + `SANCTUM_STATEFUL_DOMAINS` required for Sanctum SPA auth
 
 ## Outstanding
-- Prod: add `SANCTUM_STATEFUL_DOMAINS=sinfat.com` to server `.env` after deploy
-- Prod: run `php artisan migrate` (personal_access_tokens table) — handled by GitHub Actions
+- ~~Prod: add `SANCTUM_STATEFUL_DOMAINS=sinfat.com` to server `.env`~~ ✅ Done
+- Prod: run `php artisan migrate` (personal_access_tokens table) — handled by GitHub Actions ✅ Done
 
 ## Next Module
 Module 4 — API Contract

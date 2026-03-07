@@ -42,6 +42,34 @@ Report the current state without doing any work:
 ### `skip <step name>`
 Skip a named step for this run only, without modifying the config file. Acknowledge the skip and continue to the next step.
 
+### `config`
+Show the current active steps exactly as they appear in the config file, plus a reminder of config commands.
+
+### `config add <step>`
+Add a new step to the config file. Insert it in the right position based on the number or name provided. Example:
+```
+/skill:module-runner config add "4a. Review → run pr-reviewer agent before committing"
+```
+After editing, show the updated step list for confirmation.
+
+### `config remove <step name or number>`
+Comment out the matching step in the config file (prefix with `#`) so it's skipped but not lost. Example:
+```
+/skill:module-runner config remove Document
+/skill:module-runner config remove 5
+```
+After editing, show the updated step list for confirmation.
+
+### `config restore <step name or number>`
+Uncomment a previously removed step (remove the `#` prefix). Example:
+```
+/skill:module-runner config restore Document
+```
+After editing, show the updated step list for confirmation.
+
+### `config reset`
+Restore the config file to the default step list. Ask for confirmation before overwriting.
+
 ---
 
 ## The Steps (defaults — always defer to config file)

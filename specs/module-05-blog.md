@@ -7,17 +7,17 @@ Admin can create, edit, publish, and delete blog posts. Public can browse and re
 ### Tasks
 
 **Backend:**
-- [ ] `BlogController` (public)
-- [ ] `AdminBlogController` (protected)
-- [ ] `BlogPost` Resource (API response shaping)
-- [ ] Markdown → HTML rendering via `spatie/laravel-markdown`
-- [ ] Slug auto-generation from title
+- [x] `BlogController` (public)
+- [x] `AdminBlogController` (protected)
+- [x] `BlogPost` Resource (API response shaping)
+- [x] Markdown → HTML rendering via `Str::markdown()` (league/commonmark, already installed)
+- [x] Slug auto-generation from title
 
 **Frontend:**
-- [ ] `Blog.vue` — public post listing, paginated
-- [ ] `BlogPost.vue` — single post with rendered HTML + `prose` styling
-- [ ] `AdminBlog.vue` — post list with status, edit/delete/publish actions
-- [ ] `AdminBlogEditor.vue` — md-editor-v3 + save/publish controls
+- [x] `Blog.vue` — public post listing, paginated
+- [x] `BlogPost.vue` — single post with rendered HTML + `prose` styling
+- [x] `AdminBlog.vue` — post list with status, edit/delete/publish actions
+- [x] `AdminBlogEditor.vue` — md-editor-v3 + save/publish controls
 
 ### Technical Detail
 
@@ -31,8 +31,16 @@ static::creating(function ($post) {
 
 **Markdown rendering:**
 ```php
-// In BlogController
-$post->content = Str::markdown($post->content);
+// In BlogPostResource — public show only
+'content' => $this->when(
+    $request->routeIs('api.blog.show'),
+    fn() => Str::markdown((string) $this->content)
+),
+// Admin show returns raw markdown for the editor
+'raw_content' => $this->when(
+    $request->routeIs('api.admin.blog.show'),
+    $this->content
+),
 ```
 
 **AdminBlogEditor.vue layout:**
@@ -43,12 +51,12 @@ Bottom: excerpt input | metadata (created, model used)
 ```
 
 ### Acceptance Criteria
-- [ ] Admin can create a post with title + markdown content
-- [ ] Slug auto-generated from title
-- [ ] Draft posts not visible on public blog
-- [ ] Published posts appear on `/blog` listing
-- [ ] Single post at `/blog/:slug` renders markdown as HTML with prose styling
-- [ ] Admin can edit, publish, unpublish, delete posts
+- [x] Admin can create a post with title + markdown content
+- [x] Slug auto-generated from title
+- [x] Draft posts not visible on public blog
+- [x] Published posts appear on `/blog` listing
+- [x] Single post at `/blog/:slug` renders markdown as HTML with prose styling
+- [x] Admin can edit, publish, unpublish, delete posts
 
 ### Dependencies
 Modules 3, 4

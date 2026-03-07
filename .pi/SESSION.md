@@ -5,23 +5,19 @@
 cd /Users/bernard/code/sinfat-portfolio
 pi
 ```
-Then read this file. That's all you need.
+Read `.pi/MORNING_BRIEF.md` first — it tells you where you are and what to do next.
+Then use this file for reference pointers and module status only.
 
 ---
-
-## Where We Are
-Module 4 (API Contract) complete. All 12 API endpoints registered. Blog CRUD implemented. AI/playground stubs return 501. GuestRateLimit middleware working.
-
-## Next Task
-**Module 5 — Blog (Admin + Public)**
-
-GitHub Actions secrets set ✅ (`SERVER_HOST`, `SERVER_SSH_KEY`)
 
 ## Key Facts
 - Local: `https://sinfat.test` (Valet)
 - Prod: `sinfat.com` — Oracle Cloud Arm A1 VM
 - SSH: `ssh -i ~/.ssh/sinfat-portfolio.key ubuntu@<oracle-ip>`
 - Repo: `bernardjbs/sinfat-portfolio` (private), code at `/Users/bernard/code/sinfat-portfolio`
+- GitHub Actions secrets set ✅ (`SERVER_HOST`, `SERVER_SSH_KEY`)
+
+---
 
 ## Module Status
 | # | Module | Status |
@@ -37,6 +33,8 @@ GitHub Actions secrets set ✅ (`SERVER_HOST`, `SERVER_SSH_KEY`)
 | 9 | Static Pages | ⬜ |
 | 10 | Sitemap + SEO | ⬜ |
 | 11 | Deploy Pipeline Polish | ⬜ |
+
+---
 
 ## Reference Files (read only when needed)
 - Current module spec → `specs/module-05-blog.md`

@@ -52,11 +52,10 @@ php artisan test
 
 ### 5. SESSION.md — Accurate
 Check `.pi/SESSION.md`:
-- "Where We Are" reflects the actual current state?
-- "Next Task" is set to the correct next module?
 - Module status table is up to date (✅ for complete, ⬜ for pending)?
 - Reference Files point to the right spec and session note?
-- Any resolved warnings removed?
+
+Note: SESSION.md does NOT contain "Where We Are" or "Next Task" narrative — that lives in MORNING_BRIEF. SESSION.md is reference data only.
 
 ### 6. Outstanding Items — Captured
 - Any prod tasks still pending (SSH commands to run, env vars to set)?

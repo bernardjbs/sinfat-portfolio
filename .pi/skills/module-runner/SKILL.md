@@ -76,9 +76,10 @@ Restore the config file to the default step list. Ask for confirmation before ov
 
 ### 1. Orient
 Read before touching anything:
-1. `.pi/SESSION.md` — current task, module status, reference files
-2. The current module spec (path is in SESSION.md)
-3. Relevant skills for the work ahead
+1. `.pi/MORNING_BRIEF.md` — current state, what was built, what's next
+2. `.pi/SESSION.md` — module status table and reference file pointers
+3. The current module spec (path is in SESSION.md)
+4. Relevant skills for the work ahead
 
 **Model check — always do this during Orient:**
 If the spec or any reference file mentions a specific model (e.g. `🔴 Opus`, `🟡 Sonnet`), check which model is currently active and compare. If there is a mismatch, stop and prompt the user before proceeding. Do not silently continue on the wrong model.
@@ -126,10 +127,10 @@ Educational narrative. Explain why before how. Follow the style of `06-infrastru
 
 ### 6. Update
 Update `.pi/SESSION.md`:
-- Mark completed module ✅
-- Set "Next Task" to the next module
-- Update "Reference Files" pointers
-- Remove resolved warnings
+- Mark completed module ✅ in the module status table
+- Update "Reference Files" pointers (current spec, last session note)
+
+Do NOT add "Where We Are" or "Next Task" narrative to SESSION.md — that belongs in `.pi/MORNING_BRIEF.md`, written by the `next-session` skill.
 
 Commit the update on its own branch.
 
@@ -147,7 +148,7 @@ Tick off all completed tasks and acceptance criteria in the spec file (`- [ ]` �
 ### 8. Sign Off
 Before declaring the module complete, run through the full checklist:
 ```
-✅ 1. Orient     — SESSION.md, spec, skills read. Model check passed.
+✅ 1. Orient     — MORNING_BRIEF, SESSION.md, spec, skills read. Model check passed.
 ✅ 2. Plan       — Plan confirmed by user before execution.
 ✅ 3. Execute    — All tasks done and verified.
 ✅ 4. Commit     — Tests passed. Merged to main. Branch deleted.

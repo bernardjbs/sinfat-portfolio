@@ -98,6 +98,19 @@ class AdminBlogControllerTest extends TestCase
             ->assertJsonPath('data.id', $post->id);
     }
 
+    public function test_admin_single_post_returns_raw_content_not_rendered(): void
+    {
+        $post = BlogPost::factory()->create(['content' => '## Hello World']);
+
+        $response = $this->actingAsAdmin()
+            ->getJson("/api/admin/blog/{$post->id}")
+            ->assertOk();
+
+        $this->assertArrayHasKey('raw_content', $response->json('data'));
+        $this->assertSame('## Hello World', $response->json('data.raw_content'));
+        $this->assertArrayNotHasKey('content', $response->json('data'));
+    }
+
     public function test_fetch_single_post_returns_404_for_missing(): void
     {
         $this->actingAsAdmin()

@@ -109,4 +109,24 @@ class BlogControllerTest extends TestCase
 
         $this->getJson("/api/blog/{$post->slug}")->assertNotFound();
     }
+
+    public function test_single_post_content_is_rendered_as_html(): void
+    {
+        $post = BlogPost::factory()->published()->create([
+            'content' => '## Hello World',
+        ]);
+
+        $response = $this->getJson("/api/blog/{$post->slug}")->assertOk();
+
+        $this->assertStringContainsString('<h2>', $response->json('data.content'));
+    }
+
+    public function test_single_post_does_not_expose_raw_content_field(): void
+    {
+        $post = BlogPost::factory()->published()->create();
+
+        $response = $this->getJson("/api/blog/{$post->slug}")->assertOk();
+
+        $this->assertArrayNotHasKey('raw_content', $response->json('data'));
+    }
 }

@@ -18,6 +18,8 @@ jobs:
           script: |
             cd /var/www/sinfat
             git pull origin main
+            npm ci
+            npm run build
             composer install --no-dev --optimize-autoloader
             php artisan migrate --force
             php artisan config:cache

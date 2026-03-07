@@ -5,10 +5,10 @@
 All database tables designed, migrated, and verified.
 
 ### Tasks
-- [ ] Design and create all migrations
-- [ ] Create all Eloquent models with relationships
-- [ ] Seed admin user
-- [ ] Verify schema in TablePlus
+- [x] Design and create all migrations
+- [x] Create all Eloquent models with relationships
+- [x] Seed admin user
+- [x] Verify schema in TablePlus
 
 ### Schema
 
@@ -86,10 +86,10 @@ ADMIN_PASSWORD=your-secure-password
 ```
 
 ### Acceptance Criteria
-- [ ] All migrations run without errors: `php artisan migrate`
-- [ ] All tables visible in TablePlus with correct columns
-- [ ] Admin seeder creates user: `php artisan db:seed --class=AdminSeeder`
-- [ ] Admin user can log in (Module 3)
+- [x] All migrations run without errors: `php artisan migrate`
+- [x] All tables visible in TablePlus with correct columns
+- [x] Admin seeder creates user: `php artisan db:seed --class=AdminSeeder`
+- [x] Admin user can log in (Module 3)
 
 ### Dependencies
 Module 1 (Redis configured in `.env`)

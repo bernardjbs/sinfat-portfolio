@@ -142,6 +142,8 @@ Run every acceptance criterion from the module spec. Report:
 ```
 Fix failures, re-verify. Do not mark a module complete with failing criteria.
 
+Tick off all completed tasks and acceptance criteria in the spec file (`- [ ]` → `- [x]`).
+
 ### 8. Sign Off
 Before declaring the module complete, run through the full checklist:
 ```

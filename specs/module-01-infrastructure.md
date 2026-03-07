@@ -5,12 +5,12 @@
 Production server fully configured and ready to receive the application.
 
 ### Tasks
-- [ ] Install Redis on VM
-- [ ] Configure Redis in Laravel `.env`
-- [ ] Install Let's Encrypt SSL (Cloudflare Full mode)
-- [ ] Set up GitHub Actions for automated deploy on push to main
-- [ ] Install Supervisor for queue workers
-- [ ] Record Oracle VM public IP in this file
+- [x] Install Redis on VM
+- [x] Configure Redis in Laravel `.env`
+- [x] Install Let's Encrypt SSL (Cloudflare Full mode)
+- [x] Set up GitHub Actions for automated deploy on push to main
+- [x] Install Supervisor for queue workers
+- [x] Record Oracle VM public IP in this file
 
 ### Technical Detail
 
@@ -77,10 +77,10 @@ user=ubuntu
 **Oracle VM public IP:** `140.238.202.198`
 
 ### Acceptance Criteria
-- [ ] `redis-cli ping` returns `PONG`
-- [ ] `https://sinfat.com` loads with valid SSL (padlock in browser)
-- [ ] Push to main triggers GitHub Action and deploys automatically
-- [ ] Supervisor running: `sudo supervisorctl status`
+- [x] `redis-cli ping` returns `PONG`
+- [x] `https://sinfat.com` loads with valid SSL (padlock in browser)
+- [x] Push to main triggers GitHub Action and deploys automatically
+- [x] Supervisor running: `sudo supervisorctl status`
 
 ### Dependencies
 None — do this first.

@@ -5,11 +5,11 @@
 Admin login/logout working. `/admin` routes protected. Terminal-styled login page.
 
 ### Tasks
-- [ ] Create `AdminAuthController`
-- [ ] Create auth routes
-- [ ] Create `auth` middleware guard (already in Laravel)
-- [ ] Build `Login.vue` component — terminal aesthetic
-- [ ] Test login/logout flow
+- [x] Create `AdminAuthController`
+- [x] Create auth routes
+- [x] Create `auth` middleware guard (already in Laravel)
+- [x] Build `Login.vue` component — terminal aesthetic
+- [x] Test login/logout flow
 
 ### Technical Detail
 
@@ -67,12 +67,12 @@ Error state: dim red text below field
 ```
 
 ### Acceptance Criteria
-- [ ] `GET /login` serves the SPA
-- [ ] `POST /login` with valid credentials returns 200 + redirect
-- [ ] `POST /login` with invalid credentials returns 401 + error message
-- [ ] Visiting `/admin` when unauthenticated redirects to `/login`
-- [ ] Login page matches terminal aesthetic
-- [ ] Logout clears session
+- [x] `GET /login` serves the SPA
+- [x] `POST /login` with valid credentials returns 200 + redirect
+- [x] `POST /login` with invalid credentials returns 401 + error message
+- [x] Visiting `/admin` when unauthenticated redirects to `/login`
+- [x] Login page matches terminal aesthetic
+- [x] Logout clears session
 
 ### Dependencies
 Module 2 (admin user seeded)

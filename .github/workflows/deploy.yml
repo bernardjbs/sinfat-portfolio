@@ -15,10 +15,11 @@ jobs:
           host: ${{ secrets.SERVER_HOST }}
           username: ubuntu
           key: ${{ secrets.SERVER_SSH_KEY }}
+          command_timeout: 20m
           script: |
             cd /var/www/sinfat
             git pull origin main
-            npm ci
+            npm install
             npm run build
             composer install --no-dev --optimize-autoloader
             php artisan migrate --force

@@ -39,7 +39,7 @@ Then: **Module 2 — Database Schema** → use Opus, dispatch `database-architec
 ## Reference Files (read only when needed)
 - **Current module spec** → `/Users/bernard/code/sinfat-portfolio/specs/module-01-infrastructure.md`
 - Architecture decisions → `/Users/bernard/code/ai-learning/pi-vs-claude-code/docs/PORTFOLIO.md`
-- Full history → `/Users/bernard/code/ai-learning/pi-vs-claude-code/docs/PROGRESS.md`
+- Full history → `.pi/PROGRESS.md`
 - Blog drafting → `/Users/bernard/code/ai-learning/pi-vs-claude-code/docs/summaries/` (read only the relevant file, 3–14KB each)
   - `02-side-discussions-pi-vs-cc-llm-security.md` → Pi vs CC + LLM security posts
   - `06-infrastructure-journey.md` → Oracle Cloud / infra post

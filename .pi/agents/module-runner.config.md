@@ -11,10 +11,12 @@ Edit this file to add, remove, or reorder steps. The agent reads it at the start
 1. Orient      → read SESSION.md, read module spec, load relevant skills
 2. Plan        → write a plan and wait for user confirmation
 3. Execute     → do the work, dispatch sub-agents as needed
-4. Commit      → one logical unit at a time, following git-conventions
-5. Document    → session note + blog summary
-6. Update      → update SESSION.md to reflect new state
-7. Verify      → run acceptance criteria from the spec
+4. Test        → write PHPUnit feature tests per test-writer skill; php artisan test must pass
+5. Security    → run security-review skill checklist before any commit
+6. Commit      → one logical unit at a time, following git-conventions
+7. Document    → session note + blog summary
+8. Update      → update SESSION.md to reflect new state
+9. Verify      → run acceptance criteria from the spec
 ```
 
 ---

@@ -151,10 +151,12 @@ Before declaring the module complete, run through the full checklist:
 ✅ 1. Orient     — MORNING_BRIEF, SESSION.md, spec, skills read. Model check passed.
 ✅ 2. Plan       — Plan confirmed by user before execution.
 ✅ 3. Execute    — All tasks done and verified.
-✅ 4. Commit     — Tests passed. Merged to main. Branch deleted.
-✅ 5. Document   — Session note written. Blog summary written.
-✅ 6. Update     — SESSION.md updated and committed.
-✅ 7. Verify     — All acceptance criteria passing.
+✅ 4. Test       — Feature tests written. php artisan test passing.
+✅ 5. Security   — security-review checklist complete. No open items.
+✅ 6. Commit     — Tests passed. Merged to main. Branch deleted.
+✅ 7. Document   — Session note written. Blog summary written.
+✅ 8. Update     — SESSION.md updated and committed.
+✅ 9. Verify     — All acceptance criteria passing.
 ```
 Any ❌ must be resolved before the module is marked complete. Do not skip this step.
 

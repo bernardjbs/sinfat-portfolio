@@ -10,10 +10,10 @@ Then read this file. That's all you need.
 ---
 
 ## Where We Are
-Module 3 (Authentication) complete. Vue SPA foundation in place. Sanctum installed and configured. Login/logout/refresh all working.
+Module 4 (API Contract) complete. All 12 API endpoints registered. Blog CRUD implemented. AI/playground stubs return 501. GuestRateLimit middleware working.
 
 ## Next Task
-**Module 4 — API Contract**
+**Module 5 — Blog (Admin + Public)**
 
 GitHub Actions secrets set ✅ (`SERVER_HOST`, `SERVER_SSH_KEY`)
 
@@ -29,7 +29,7 @@ GitHub Actions secrets set ✅ (`SERVER_HOST`, `SERVER_SSH_KEY`)
 | 1 | Infrastructure & Server Setup | ✅ Complete |
 | 2 | Database Schema | ✅ Complete |
 | 3 | Authentication | ✅ Complete |
-| 4 | API Contract | ⬜ |
+| 4 | API Contract | ✅ Complete |
 | 5 | Blog (Admin + Public) | ⬜ |
 | 6 | AI Integration | ⬜ |
 | 7 | Guest Playground | ⬜ |
@@ -39,8 +39,8 @@ GitHub Actions secrets set ✅ (`SERVER_HOST`, `SERVER_SSH_KEY`)
 | 11 | Deploy Pipeline Polish | ⬜ |
 
 ## Reference Files (read only when needed)
-- Current module spec → `specs/module-04-api-contract.md`
-- Last session note → `docs/sessions/2026-03-07-module-3-authentication.md`
+- Current module spec → `specs/module-05-blog.md`
+- Last session note → `docs/sessions/2026-03-07-module-4-api-contract.md`
 - Full history → `.pi/PROGRESS.md`
 - Architecture decisions → `/Users/bernard/code/ai-learning/pi-vs-claude-code/docs/PORTFOLIO.md`
 - Blog drafting → `/Users/bernard/code/ai-learning/pi-vs-claude-code/docs/summaries/`

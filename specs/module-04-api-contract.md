@@ -103,10 +103,10 @@ GET    /api/admin/me                → auth, returns current user
 ```
 
 ### Acceptance Criteria
-- [ ] All routes registered: `php artisan route:list`
-- [ ] Public blog endpoints return correct JSON without auth
-- [ ] Admin endpoints return 401 without auth token
-- [ ] Playground endpoint rate limits after 3 requests per IP per day
+- [x] All routes registered: `php artisan route:list`
+- [x] Public blog endpoints return correct JSON without auth
+- [x] Admin endpoints return 401 without auth token
+- [x] Playground endpoint rate limits after 3 requests per IP per day
 
 ### Dependencies
 Modules 2, 3

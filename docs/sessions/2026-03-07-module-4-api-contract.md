@@ -34,5 +34,22 @@ routes/api.php
 - **AiController and PlaygroundController are stubs** — return 501, implemented in Modules 6 and 7
 - **Cache facade over Redis facade** — middleware works regardless of cache driver configured per environment
 
+## Tests Added (post-module)
+Written after Module 4 was committed. 33 tests, 87 assertions, all passing.
+
+| File | Tests | Covers |
+|------|-------|--------|
+| `BlogControllerTest` | 10 | Public listing, single post, field exclusions, 404s, pagination |
+| `AdminBlogControllerTest` | 12 | CRUD, auth guard, togglePublish, validation |
+| `AdminAuthControllerTest` | 5 | Login/logout, validation, CSRF |
+| `GuestRateLimitTest` | 4 | 3-request limit, 429 response, cache counter |
+
+Also created `BlogPostFactory` with `published()`, `draft()`, and `aiGenerated()` states.
+
+### Test Gotchas
+- **CSRF in web route tests** — Laravel 12 uses `ValidateCsrfToken` (not `VerifyCsrfToken`). Disabled via `$this->withoutMiddleware(ValidateCsrfToken::class)` in setUp.
+- **Session in API test** — `$request->hasSession()` returns false for non-stateful API requests in test env. Session bypass test replaced with a cache counter assertion instead.
+- **201 return type** — `BlogPostResource->response()->setStatusCode(201)` requires `JsonResponse` return type on the controller method, not `BlogPostResource`.
+
 ## Next Module
 Module 5 — Blog (Admin + Public)

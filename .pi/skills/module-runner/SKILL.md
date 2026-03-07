@@ -126,6 +126,14 @@ Quick reference: what was done, files changed, outstanding items, next module.
 **Blog summary** — `/Users/bernard/code/ai-learning/pi-vs-claude-code/docs/summaries/NN-topic.md`
 Educational narrative. Explain why before how. Follow the style of `06-infrastructure-journey.md` and `10-module-1-redis-ssl-deploy-supervisor.md`.
 
+Before moving to Step 6, explicitly confirm both outputs with a checklist:
+```
+Step 5 complete:
+✅ Session note → docs/sessions/YYYY-MM-DD-module-X-name.md
+✅ Blog summary → .../summaries/NN-topic.md
+```
+Do not proceed to Step 6 until both are checked off.
+
 ### 6. Update
 Update `.pi/SESSION.md`:
 - Mark completed module ✅
@@ -146,6 +154,11 @@ Fix failures, re-verify. Do not mark a module complete with failing criteria.
 
 ---
 
+## Step Completion Protocol
+Before moving from any step to the next, explicitly verify every output that step requires. For steps with multiple outputs, list each one with ✅ or ❌. Do not proceed until all are ✅.
+
+This is non-negotiable — context drift during long executions makes partial completion easy to miss.
+
 ## What Not to Do
 - ❌ Execute before the plan is confirmed
 - ❌ Commit with failing tests
@@ -153,3 +166,4 @@ Fix failures, re-verify. Do not mark a module complete with failing criteria.
 - ❌ Skip documentation
 - ❌ Mark a module complete without verifying acceptance criteria
 - ❌ Write a blog summary that's just commands — explain the why
+- ❌ Move to the next step without explicitly confirming all outputs of the current step

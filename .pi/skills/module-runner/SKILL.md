@@ -83,14 +83,6 @@ Read before touching anything:
 **Model check — always do this during Orient:**
 If the spec or any reference file mentions a specific model (e.g. `🔴 Opus`, `🟡 Sonnet`), check which model is currently active and compare. If there is a mismatch, stop and prompt the user before proceeding. Do not silently continue on the wrong model.
 
-```
-Step 1 complete:
-✅ SESSION.md read
-✅ Module spec read
-✅ Relevant skills loaded
-✅ Model check passed
-```
-
 ### 2. Plan
 Write a plan covering:
 - **What** — every task from the spec
@@ -99,10 +91,7 @@ Write a plan covering:
 - **Who** — which sub-agent handles which part
 - **Git plan** — branch name, expected commits
 
-```
-Step 2 complete:
-✅ Plan written and confirmed by user
-```
+Present the plan and wait for user confirmation before proceeding.
 
 ### 3. Execute
 Work through the plan in order. Dispatch the right sub-agent per task:
@@ -115,11 +104,6 @@ Work through the plan in order. Dispatch the right sub-agent per task:
 
 Confirm each task works before moving to the next.
 
-```
-Step 3 complete:
-✅ Every task from the plan executed and verified
-```
-
 ### 4. Commit
 Follow git-conventions exactly:
 ```bash
@@ -131,14 +115,6 @@ git checkout main && git merge && git push && git branch -d
 ```
 One logical unit per commit. Never commit to `main` directly.
 
-```
-Step 4 complete:
-✅ Tests passing
-✅ All commits made on feature branch
-✅ Merged to main and pushed
-✅ Feature branch deleted
-```
-
 ### 5. Document
 Write two files after the work is committed:
 
@@ -147,12 +123,6 @@ Quick reference: what was done, files changed, outstanding items, next module.
 
 **Blog summary** — `/Users/bernard/code/ai-learning/pi-vs-claude-code/docs/summaries/NN-topic.md`
 Educational narrative. Explain why before how. Follow the style of `06-infrastructure-journey.md` and `10-module-1-redis-ssl-deploy-supervisor.md`.
-
-```
-Step 5 complete:
-✅ Session note → docs/sessions/YYYY-MM-DD-module-X-name.md
-✅ Blog summary → .../summaries/NN-topic.md
-```
 
 ### 6. Update
 Update `.pi/SESSION.md`:
@@ -163,12 +133,6 @@ Update `.pi/SESSION.md`:
 
 Commit the update on its own branch.
 
-```
-Step 6 complete:
-✅ SESSION.md updated
-✅ Committed on its own branch and pushed
-```
-
 ### 7. Verify
 Run every acceptance criterion from the module spec. Report:
 ```
@@ -178,18 +142,23 @@ Run every acceptance criterion from the module spec. Report:
 ```
 Fix failures, re-verify. Do not mark a module complete with failing criteria.
 
+### 8. Sign Off
+Before declaring the module complete, run through the full checklist:
 ```
-Step 7 complete:
-✅ All acceptance criteria passing
-✅ Module marked complete
+✅ 1. Orient     — SESSION.md, spec, skills read. Model check passed.
+✅ 2. Plan       — Plan confirmed by user before execution.
+✅ 3. Execute    — All tasks done and verified.
+✅ 4. Commit     — Tests passed. Merged to main. Branch deleted.
+✅ 5. Document   — Session note written. Blog summary written.
+✅ 6. Update     — SESSION.md updated and committed.
+✅ 7. Verify     — All acceptance criteria passing.
 ```
+Any ❌ must be resolved before the module is marked complete. Do not skip this step.
 
 ---
 
 ## Step Completion Protocol
-Before moving from any step to the next, explicitly verify every output that step requires. For steps with multiple outputs, list each one with ✅ or ❌. Do not proceed until all are ✅.
-
-This is non-negotiable — context drift during long executions makes partial completion easy to miss.
+After all steps are done, Step 8 (Sign Off) runs a single checklist across all steps. This catches anything missed during execution due to context drift — without cluttering every individual step with its own checklist.
 
 ## What Not to Do
 - ❌ Execute before the plan is confirmed
@@ -198,4 +167,4 @@ This is non-negotiable — context drift during long executions makes partial co
 - ❌ Skip documentation
 - ❌ Mark a module complete without verifying acceptance criteria
 - ❌ Write a blog summary that's just commands — explain the why
-- ❌ Move to the next step without explicitly confirming all outputs of the current step
+- ❌ Declare a module complete without running the Step 8 Sign Off checklist

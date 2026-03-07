@@ -15,8 +15,10 @@
         "vite": "^7.0.7"
     },
     "dependencies": {
+        "@tailwindcss/typography": "^0.5.19",
         "@vitejs/plugin-vue": "^6.0.4",
         "lucide-vue-next": "^0.577.0",
+        "md-editor-v3": "^6.4.0",
         "pinia": "^3.0.4",
         "vue": "^3.5.29",
         "vue-router": "^4.6.4"

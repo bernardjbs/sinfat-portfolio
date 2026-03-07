@@ -83,7 +83,13 @@ Read before touching anything:
 **Model check — always do this during Orient:**
 If the spec or any reference file mentions a specific model (e.g. `🔴 Opus`, `🟡 Sonnet`), check which model is currently active and compare. If there is a mismatch, stop and prompt the user before proceeding. Do not silently continue on the wrong model.
 
-Do not proceed to Plan until all three are read.
+```
+Step 1 complete:
+✅ SESSION.md read
+✅ Module spec read
+✅ Relevant skills loaded
+✅ Model check passed
+```
 
 ### 2. Plan
 Write a plan covering:
@@ -93,7 +99,10 @@ Write a plan covering:
 - **Who** — which sub-agent handles which part
 - **Git plan** — branch name, expected commits
 
-Present the plan and wait for user confirmation before proceeding.
+```
+Step 2 complete:
+✅ Plan written and confirmed by user
+```
 
 ### 3. Execute
 Work through the plan in order. Dispatch the right sub-agent per task:
@@ -106,6 +115,11 @@ Work through the plan in order. Dispatch the right sub-agent per task:
 
 Confirm each task works before moving to the next.
 
+```
+Step 3 complete:
+✅ Every task from the plan executed and verified
+```
+
 ### 4. Commit
 Follow git-conventions exactly:
 ```bash
@@ -117,6 +131,14 @@ git checkout main && git merge && git push && git branch -d
 ```
 One logical unit per commit. Never commit to `main` directly.
 
+```
+Step 4 complete:
+✅ Tests passing
+✅ All commits made on feature branch
+✅ Merged to main and pushed
+✅ Feature branch deleted
+```
+
 ### 5. Document
 Write two files after the work is committed:
 
@@ -126,13 +148,11 @@ Quick reference: what was done, files changed, outstanding items, next module.
 **Blog summary** — `/Users/bernard/code/ai-learning/pi-vs-claude-code/docs/summaries/NN-topic.md`
 Educational narrative. Explain why before how. Follow the style of `06-infrastructure-journey.md` and `10-module-1-redis-ssl-deploy-supervisor.md`.
 
-Before moving to Step 6, explicitly confirm both outputs with a checklist:
 ```
 Step 5 complete:
 ✅ Session note → docs/sessions/YYYY-MM-DD-module-X-name.md
 ✅ Blog summary → .../summaries/NN-topic.md
 ```
-Do not proceed to Step 6 until both are checked off.
 
 ### 6. Update
 Update `.pi/SESSION.md`:
@@ -143,6 +163,12 @@ Update `.pi/SESSION.md`:
 
 Commit the update on its own branch.
 
+```
+Step 6 complete:
+✅ SESSION.md updated
+✅ Committed on its own branch and pushed
+```
+
 ### 7. Verify
 Run every acceptance criterion from the module spec. Report:
 ```
@@ -151,6 +177,12 @@ Run every acceptance criterion from the module spec. Report:
 ❌ criterion 3 — [what failed and what was done]
 ```
 Fix failures, re-verify. Do not mark a module complete with failing criteria.
+
+```
+Step 7 complete:
+✅ All acceptance criteria passing
+✅ Module marked complete
+```
 
 ---
 

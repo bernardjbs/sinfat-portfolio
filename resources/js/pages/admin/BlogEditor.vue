@@ -64,6 +64,52 @@
 
     </div>
 
+    <!-- AI Generate Panel -->
+    <div class="border-b border-border bg-surface shrink-0">
+      <button
+        class="w-full flex items-center gap-2 px-4 sm:px-6 py-2 text-xs text-dim
+               hover:text-text transition-colors"
+        @click="aiPanelOpen = !aiPanelOpen"
+      >
+        <span>{{ aiPanelOpen ? '▾' : '▸' }}</span>
+        <span>ai generate</span>
+        <span v-if="aiStreaming" class="text-accent">· streaming...</span>
+      </button>
+
+      <div v-if="aiPanelOpen" class="px-4 sm:px-6 pb-3 space-y-2">
+        <div class="flex gap-2">
+          <input
+            v-model="aiTopic"
+            type="text"
+            placeholder="topic — e.g. 'SSE streaming in Laravel with Neuron AI'"
+            class="flex-1 bg-bg border border-border text-text text-xs px-3 py-1.5
+                   placeholder:text-dim outline-none focus:border-accent transition-colors"
+            :disabled="aiStreaming"
+            @keydown.enter="startAiGenerate"
+          />
+          <button
+            class="shrink-0 text-xs px-3 py-1.5 transition-colors"
+            :class="aiStreaming
+              ? 'border border-red-800 text-red-400 hover:border-red-600'
+              : 'bg-accent text-white hover:bg-green-700'"
+            :disabled="!aiTopic.trim() && !aiStreaming"
+            @click="aiStreaming ? stopAiGenerate() : startAiGenerate()"
+          >
+            {{ aiStreaming ? 'stop' : 'generate' }}
+          </button>
+        </div>
+        <input
+          v-model="aiContext"
+          type="text"
+          placeholder="additional context (optional)"
+          class="w-full bg-bg border border-border text-text text-xs px-3 py-1.5
+                 placeholder:text-dim outline-none focus:border-accent transition-colors"
+          :disabled="aiStreaming"
+        />
+        <p v-if="aiError" class="text-danger text-xs">{{ aiError }}</p>
+      </div>
+    </div>
+
     <!-- Error banner -->
     <div v-if="error" class="px-4 py-2 bg-danger/10 text-danger text-xs border-b border-danger/30">
       {{ error }}
@@ -160,6 +206,13 @@ export default {
       saving: null,
       toggling: false,
       error: null,
+      // AI generate
+      aiPanelOpen: false,
+      aiTopic: '',
+      aiContext: '',
+      aiStreaming: false,
+      aiError: null,
+      aiAbortController: null,
     }
   },
 
@@ -236,6 +289,107 @@ export default {
       this.content       = post.raw_content ?? ''
       this.excerpt       = post.excerpt ?? ''
       this.currentStatus = post.status ?? 'draft'
+    },
+
+    // AI generate methods
+
+    async startAiGenerate() {
+      if (!this.aiTopic.trim() || this.aiStreaming) return
+
+      this.aiStreaming = true
+      this.aiError = null
+      this.aiAbortController = new AbortController()
+
+      // Append to existing content or start fresh
+      if (this.content.trim()) {
+        this.content += '\n\n'
+      }
+
+      try {
+        // Get CSRF cookie first
+        await fetch('/sanctum/csrf-cookie', { credentials: 'same-origin' })
+
+        const csrfToken = decodeURIComponent(
+          document.cookie.match(/XSRF-TOKEN=([^;]+)/)?.[1] ?? ''
+        )
+
+        const response = await fetch('/api/admin/ai/generate', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'text/event-stream',
+            'X-XSRF-TOKEN': csrfToken,
+          },
+          credentials: 'same-origin',
+          signal: this.aiAbortController.signal,
+          body: JSON.stringify({
+            topic: this.aiTopic.trim(),
+            context: this.aiContext.trim() || null,
+          }),
+        })
+
+        if (!response.ok) {
+          const err = await response.json().catch(() => ({}))
+          throw new Error(err.message || `Request failed (${response.status})`)
+        }
+
+        const reader = response.body.getReader()
+        const decoder = new TextDecoder()
+        let buffer = ''
+
+        while (true) {
+          const { done, value } = await reader.read()
+          if (done) break
+
+          buffer += decoder.decode(value, { stream: true })
+
+          const lines = buffer.split('\n')
+          // Keep the last incomplete line in the buffer
+          buffer = lines.pop() || ''
+
+          for (const line of lines) {
+            if (!line.startsWith('data: ')) continue
+
+            const data = line.slice(6)
+            if (data === '[DONE]') {
+              this.aiStreaming = false
+              return
+            }
+
+            try {
+              const parsed = JSON.parse(data)
+              if (parsed.text) {
+                this.content += parsed.text
+              }
+              if (parsed.error) {
+                this.aiError = parsed.error
+                this.aiStreaming = false
+                return
+              }
+            } catch {
+              // ignore parse errors
+            }
+          }
+        }
+
+        this.aiStreaming = false
+
+      } catch (e) {
+        if (e.name === 'AbortError') {
+          // User cancelled — not an error
+        } else {
+          this.aiError = e.message || 'AI generation failed'
+        }
+        this.aiStreaming = false
+      }
+    },
+
+    stopAiGenerate() {
+      if (this.aiAbortController) {
+        this.aiAbortController.abort()
+        this.aiAbortController = null
+      }
+      this.aiStreaming = false
     },
   },
 

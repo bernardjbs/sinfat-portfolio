@@ -26,7 +26,7 @@ class AiService
             'identifier' => $identifier,
             'type'       => $type,
             'topic'      => $topic,
-            'model'      => config('services.anthropic.model'),
+            'model'      => config('services.' . config('services.ai.provider') . '.model'),
             'status'     => 'streaming',
         ]);
 

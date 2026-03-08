@@ -35,9 +35,23 @@ return [
         ],
     ],
 
+    'ai' => [
+        'provider' => env('AI_PROVIDER', 'anthropic'),
+    ],
+
     'anthropic' => [
         'key' => env('ANTHROPIC_API_KEY'),
         'model' => env('ANTHROPIC_MODEL', 'claude-sonnet-4-5-20250514'),
+    ],
+
+    'gemini' => [
+        'key' => env('GEMINI_API_KEY'),
+        'model' => env('GEMINI_MODEL', 'gemini-2.0-flash'),
+    ],
+
+    'ollama' => [
+        'url' => env('OLLAMA_URL', 'http://localhost:11434/api'),
+        'model' => env('OLLAMA_MODEL', 'llama3.2'),
     ],
 
 ];

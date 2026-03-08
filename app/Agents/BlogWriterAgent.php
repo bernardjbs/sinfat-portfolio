@@ -3,16 +3,31 @@
 namespace App\Agents;
 
 use NeuronAI\Agent\Agent;
+use NeuronAI\Providers\AIProviderInterface;
 use NeuronAI\Providers\Anthropic\Anthropic;
+use NeuronAI\Providers\Gemini\Gemini;
+use NeuronAI\Providers\Ollama\Ollama;
 
 class BlogWriterAgent extends Agent
 {
-    protected function provider(): Anthropic
+    protected function provider(): AIProviderInterface
     {
-        return new Anthropic(
-            key: config('services.anthropic.key'),
-            model: config('services.anthropic.model'),
-        );
+        $provider = config('services.ai.provider');
+
+        return match ($provider) {
+            'ollama' => new Ollama(
+                url: config('services.ollama.url'),
+                model: config('services.ollama.model'),
+            ),
+            'gemini' => new Gemini(
+                key: config('services.gemini.key'),
+                model: config('services.gemini.model'),
+            ),
+            default => new Anthropic(
+                key: config('services.anthropic.key'),
+                model: config('services.anthropic.model'),
+            ),
+        };
     }
 
     protected function instructions(): string

@@ -5,12 +5,12 @@
 Admin can trigger an AI agent to draft a blog post. Draft streams token by token into the editor. Admin can chat with the model to refine before saving.
 
 ### Tasks
-- [ ] Install Neuron AI: `composer require inspector-apm/neuron-ai`
-- [ ] Configure Anthropic API key in `.env`
-- [ ] Build `AiController` with SSE streaming endpoint
-- [ ] Build `BlogWriterAgent` using Neuron AI
-- [ ] Build streaming chat interface in `AdminBlogEditor.vue`
-- [ ] Log AI sessions to `ai_sessions` table
+- [x] Install Neuron AI: `composer require neuron-core/neuron-ai` (updated from abandoned inspector-apm)
+- [x] Configure Anthropic API key in `.env`
+- [x] Build `AiController` with SSE streaming endpoint
+- [x] Build `BlogWriterAgent` using Neuron AI
+- [x] Build streaming chat interface in `AdminBlogEditor.vue`
+- [x] Log AI sessions to `ai_sessions` table
 
 ### Technical Detail
 
@@ -98,11 +98,11 @@ export function useStream(url) {
 ```
 
 ### Acceptance Criteria
-- [ ] Admin clicks "Generate" → content streams into editor token by token
-- [ ] `[DONE]` signal stops the stream cleanly
-- [ ] Streamed content lands in md-editor-v3 and is editable immediately
-- [ ] AI session logged to `ai_sessions` table
-- [ ] Nginx buffering disabled (`X-Accel-Buffering: no`)
+- [x] Admin clicks "Generate" → content streams into editor token by token
+- [x] `[DONE]` signal stops the stream cleanly
+- [x] Streamed content lands in textarea editor and is editable immediately
+- [x] AI session logged to `ai_sessions` table
+- [x] Nginx buffering disabled (`X-Accel-Buffering: no`)
 
 ### Dependencies
 Modules 3, 4, 5

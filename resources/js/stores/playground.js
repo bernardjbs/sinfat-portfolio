@@ -1,9 +1,5 @@
 import { defineStore } from 'pinia'
 
-function getCsrfToken() {
-    return decodeURIComponent(document.cookie.match(/XSRF-TOKEN=([^;]+)/)?.[1] ?? '')
-}
-
 export const usePlaygroundStore = defineStore('playground', {
     state: () => ({
         topic: '',
@@ -34,9 +30,10 @@ export const usePlaygroundStore = defineStore('playground', {
             try {
                 const res = await fetch('/api/playground/generate', {
                     method: 'POST',
+                    credentials: 'same-origin',
                     headers: {
                         'Content-Type': 'application/json',
-                        'X-XSRF-TOKEN': getCsrfToken(),
+                        'Accept': 'text/event-stream',
                     },
                     body: JSON.stringify({ topic: this.topic }),
                 })
@@ -117,9 +114,9 @@ export const usePlaygroundStore = defineStore('playground', {
             try {
                 const res = await fetch('/api/playground/key', {
                     method: 'POST',
+                    credentials: 'same-origin',
                     headers: {
                         'Content-Type': 'application/json',
-                        'X-XSRF-TOKEN': getCsrfToken(),
                     },
                     body: JSON.stringify({ api_key: apiKey }),
                 })

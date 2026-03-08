@@ -76,8 +76,7 @@ Restore the config file to the default step list. Ask for confirmation before ov
 
 ### 1. Orient
 Read before touching anything:
-1. `.pi/MORNING_BRIEF.md` — current state, what was built, what's next
-2. `.pi/SESSION.md` — module status table and reference file pointers
+1. `.pi/SESSION.md` — current state, module status, what to do next
 3. The current module spec (path is in SESSION.md)
 4. Relevant skills for the work ahead
 
@@ -130,7 +129,7 @@ Update `.pi/SESSION.md`:
 - Mark completed module ✅ in the module status table
 - Update "Reference Files" pointers (current spec, last session note)
 
-Do NOT add "Where We Are" or "Next Task" narrative to SESSION.md — that belongs in `.pi/MORNING_BRIEF.md`, written by the `next-session` skill.
+Update **Current State**, **Outstanding Items**, and **Start Here** sections too.
 
 Commit the update on its own branch.
 
@@ -148,7 +147,7 @@ Tick off all completed tasks and acceptance criteria in the spec file (`- [ ]` �
 ### 8. Sign Off
 Before declaring the module complete, run through the full checklist:
 ```
-✅ 1. Orient     — MORNING_BRIEF, SESSION.md, spec, skills read. Model check passed.
+✅ 1. Orient     — SESSION.md, spec, skills read. Model check passed.
 ✅ 2. Plan       — Plan confirmed by user before execution.
 ✅ 3. Execute    — All tasks done and verified.
 ✅ 4. Test       — Feature tests written. php artisan test passing.

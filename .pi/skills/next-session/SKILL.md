@@ -50,7 +50,12 @@ Update `.pi/SESSION.md`:
 - Any prod tasks pending? Known issues? Deferred decisions?
 - All captured in SESSION.md?
 
-### 6. Skills — Updated
+### 6. Blog Summary — Written
+- Write a summary of the session's journey at `/Users/bernard/code/ai-learning/pi-vs-claude-code/docs/summaries/`
+- Follow the numbering and style of existing files (e.g. `15-module-5-blog-frontend-markdown.md`)
+- Explain the *why* before the *how* — this is educational narrative, not a changelog
+
+### 7. Skills — Updated
 - Any new conventions or gotchas discovered?
 - Captured in the relevant skill file?
 
@@ -66,7 +71,8 @@ Session closed — [date]
 3. Session note ✅/❌ — [filename]
 4. SESSION.md   ✅/❌ — [next task]
 5. Outstanding  ✅/❌ — [count or "none"]
-6. Skills       ✅/❌ — [what changed or "no changes"]
+6. Blog summary ✅/❌ — [filename or "not needed this session"]
+7. Skills       ✅/❌ — [what changed or "no changes"]
 
 Next session starts at: [exact instruction]
 ```

@@ -2,19 +2,30 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
+use App\Http\Requests\StoreAiGenerateRequest;
+use App\Services\AiService;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class AiController extends Controller
 {
-    public function generate(Request $request): JsonResponse
-    {
-        $request->validate([
-            'topic'   => ['required', 'string', 'max:500'],
-            'context' => ['nullable', 'string', 'max:2000'],
-        ]);
+    public function __construct(private AiService $aiService) {}
 
-        // Module 6 — will implement SSE streaming via Neuron AI
-        return response()->json(['message' => 'AI generation not implemented yet'], 501);
+    public function generate(StoreAiGenerateRequest $request): StreamedResponse
+    {
+        $validated = $request->validated();
+
+        return response()->stream(function () use ($validated, $request) {
+            $this->aiService->streamBlogGeneration(
+                topic: $validated['topic'],
+                context: $validated['context'] ?? null,
+                identifier: $request->user()->email,
+                type: 'admin',
+            );
+        }, 200, [
+            'Content-Type'      => 'text/event-stream',
+            'Cache-Control'     => 'no-cache',
+            'X-Accel-Buffering' => 'no',
+            'Connection'        => 'keep-alive',
+        ]);
     }
 }

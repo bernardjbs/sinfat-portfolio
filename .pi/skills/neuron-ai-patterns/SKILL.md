@@ -12,8 +12,9 @@ Use this skill when building any AI-related code in this project. Covers Neuron 
 ## Package
 
 ```bash
-composer require inspector-apm/neuron-ai
+composer require neuron-core/neuron-ai
 ```
+> Note: `inspector-apm/neuron-ai` is abandoned. Use `neuron-core/neuron-ai` instead.
 
 **Config in `.env`:**
 ```

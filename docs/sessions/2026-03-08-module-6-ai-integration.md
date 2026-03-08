@@ -32,8 +32,17 @@
 - Frontend uses `fetch` + `ReadableStream` instead of `EventSource` because SSE endpoint is POST
 - AiService echoes directly inside stream callback (returns void, not Generator)
 
+## Multi-Provider Follow-Up
+After initial implementation, added multi-provider support:
+- `BlogWriterAgent` now selects provider via `AI_PROVIDER` env var
+- Supports: `anthropic` (prod default), `gemini`, `ollama` (local testing)
+- Ollama installed locally (`brew install ollama`, model: `llama3.2`)
+- Gemini free tier had zero quota — didn't work for this account
+- Tested end-to-end on sinfat.test with Ollama — streaming confirmed working
+
 ## Outstanding
-- `ANTHROPIC_API_KEY` needs to be set in local `.env` and prod `.env` before AI generation will work
+- Prod `.env` needs `AI_PROVIDER` + API key set (anthropic or gemini) before AI works on sinfat.com
+- Local uses Ollama — `brew services start ollama` to run
 - Node.js 20.17.0 — Vite warns about needing 20.19+
 
 ## Next

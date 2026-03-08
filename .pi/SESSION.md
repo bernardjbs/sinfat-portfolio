@@ -37,7 +37,8 @@ Read this file first at the start of every session. It tells you where you are a
 - **Infra:** sinfat.com live. GitHub Actions auto-deploy on push. Prod `.env` set to `production` with debug off.
 
 ## Outstanding Items
-- `ANTHROPIC_API_KEY` needs to be set in local `.env` and prod `.env` for AI generation to work
+- Prod `.env` needs `AI_PROVIDER` + API key set (anthropic or gemini) before AI works on sinfat.com
+- Local uses Ollama (llama3.2) — `brew services start ollama` to run
 - Node.js 20.17.0 locally — Vite warns it needs 20.19+
 
 ## Start Here

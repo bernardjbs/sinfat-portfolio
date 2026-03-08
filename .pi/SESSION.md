@@ -37,7 +37,6 @@ Read this file first at the start of every session. It tells you where you are a
 - **Infra:** sinfat.com live. GitHub Actions auto-deploy on push. Prod `.env` set to `production` with debug off.
 
 ## Outstanding Items
-- Deploy workflow still runs `sitemap:generate` (fails silently — Module 10 not built yet)
 - Node.js 20.17.0 locally — Vite warns it needs 20.19+
 
 ## Start Here
@@ -47,7 +46,7 @@ Load spec at `specs/module-06-ai-integration.md` and run Module 6.
 
 ## Reference Files (read only when needed)
 - Current module spec → `specs/module-06-ai-integration.md`
-- Last session note → `docs/sessions/2026-03-08-session-recovery.md`
+- Last session note → `docs/sessions/2026-03-08-hotfix-deploy-and-cleanup.md`
 - Full history → `.pi/PROGRESS.md`
 - Architecture decisions → `/Users/bernard/code/ai-learning/pi-vs-claude-code/docs/PORTFOLIO.md`
 - Blog drafting → `/Users/bernard/code/ai-learning/pi-vs-claude-code/docs/summaries/`

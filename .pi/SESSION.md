@@ -33,7 +33,7 @@ Read this file first at the start of every session. It tells you where you are a
 ## Current State
 - **Backend:** All 12 API routes registered. BlogController + AdminBlogController fully implemented. AiController + PlaygroundController are 501 stubs (Modules 6 + 7).
 - **Frontend:** Vue 3 SPA with auth working end-to-end. Login.vue terminal aesthetic. Dashboard.vue placeholder. `/` redirects to `/blog`.
-- **Tests:** 33 passing — blog, admin blog, auth, rate limiting all covered.
+- **Tests:** 36 passing — blog, admin blog, auth, rate limiting all covered.
 - **Infra:** sinfat.com live. GitHub Actions auto-deploy on push. Prod `.env` set to `production` with debug off.
 
 ## Outstanding Items

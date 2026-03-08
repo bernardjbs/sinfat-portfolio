@@ -31,10 +31,11 @@ Read this file first at the start of every session. It tells you where you are a
 ---
 
 ## Current State
-- **Backend:** All API routes implemented. PlaygroundController with SSE streaming, GuestRateLimit middleware (3/day via RateLimiter), guest API key session storage. GuestUsageService handles streaming + logging.
-- **Frontend:** Vue 3 SPA with Playground.vue (streaming output, counter badge, ApiKeyModal). Routes: `/blog`, `/playground`, `/admin/*`.
+- **Backend:** All API routes implemented. PlaygroundController with SSE streaming + status endpoint, GuestRateLimit middleware (3/day via RateLimiter), guest API key session storage. CSRF excluded for playground routes. GuestUsageService handles streaming + logging.
+- **Frontend:** Vue 3 SPA with Playground.vue (streaming output, persistent counter badge, copy/clear, ApiKeyModal). Routes: `/blog`, `/playground`, `/admin/*`.
 - **Tests:** 58 passing — blog, admin blog, auth, rate limiting, AI controller, playground all covered.
 - **Infra:** sinfat.com live. GitHub Actions auto-deploy on push. Prod `.env` set to `production` with debug off.
+- **Manually tested:** Playground working end-to-end on sinfat.test — streaming, counter persistence, copy, clear, rate limiting all verified.
 
 ## Outstanding Items
 - Prod `.env` needs `AI_PROVIDER` + API key set (anthropic or gemini) before AI works on sinfat.com

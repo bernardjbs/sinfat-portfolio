@@ -103,11 +103,25 @@ export default {
     },
 
     methods: {
-        ...mapActions(usePlaygroundStore, ['generate', 'clearContent', 'copyContent', 'fetchStatus']),
+        ...mapActions(usePlaygroundStore, ['generate', 'clearContent', 'fetchStatus']),
 
-        async handleCopy() {
-            const success = await this.copyContent()
-            if (success) {
+        handleCopy() {
+            if (!this.content) return
+            const text = this.content
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).then(() => {
+                    this.copied = true
+                    setTimeout(() => { this.copied = false }, 2000)
+                })
+            } else {
+                const textarea = document.createElement('textarea')
+                textarea.value = text
+                textarea.style.position = 'fixed'
+                textarea.style.opacity = '0'
+                document.body.appendChild(textarea)
+                textarea.select()
+                document.execCommand('copy')
+                document.body.removeChild(textarea)
                 this.copied = true
                 setTimeout(() => { this.copied = false }, 2000)
             }

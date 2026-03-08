@@ -124,7 +124,7 @@ php artisan route:list        # routes look correct (if changed)
 
 ## Rules
 
-1. **Never commit directly to `main`** — always use a feature branch
+1. **NEVER commit directly to `main`** — always use a feature branch. No exceptions. Not for docs, not for chores, not for one-line fixes. Every commit goes through a branch → merge → push flow.
 2. **One logical unit per commit** — not one commit per module (modules are too big)
 3. **Tests pass before every commit** — `php artisan test` is non-negotiable
 4. **Stage with `git add -p`** — review every hunk before committing, catch debug code
@@ -155,11 +155,11 @@ git merge feat/module-X
 
 Pushing to `main` automatically:
 1. SSH into Oracle VM
-2. `git pull origin main`
-3. `composer install --no-dev --optimize-autoloader`
-4. `php artisan migrate --force`
-5. `php artisan config:cache && route:cache && view:cache`
-6. `php artisan sitemap:generate`
+2. `git checkout .gitignore` (prevent server divergence)
+3. `git pull origin main`
+4. `composer install --no-dev --optimize-autoloader`
+5. `php artisan migrate --force`
+6. `php artisan config:cache && route:cache && view:cache`
 7. `sudo systemctl reload nginx`
 
 **Implication:** Only push to `main` when the code is production-ready.

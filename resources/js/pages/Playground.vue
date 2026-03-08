@@ -5,7 +5,7 @@
             <h1 class="text-text text-2xl font-semibold">AI Blog Playground</h1>
             <span class="bg-surface border border-border text-dim text-xs px-2 py-0.5 rounded">
                 <template v-if="hasOwnKey">using your key</template>
-                <template v-else>{{ remaining }} free {{ remaining === 1 ? 'generation' : 'generations' }} left</template>
+                <template v-else>{{ remainingDisplay }} free {{ remaining === 1 ? 'generation' : 'generations' }} left</template>
             </span>
         </div>
 
@@ -37,22 +37,22 @@
         </div>
 
         <!-- Output -->
-        <div v-if="content || streaming" class="mb-4">
+        <div v-if="hasContent" class="mb-4">
             <div class="bg-bg border border-border p-4 font-mono text-sm text-text min-h-[200px] max-h-[500px] overflow-y-auto whitespace-pre-wrap">{{ content }}<span v-if="streaming" class="animate-pulse">▌</span></div>
 
             <!-- Actions -->
             <div class="flex gap-3 mt-3">
                 <button
-                    class="border border-border text-text px-3 py-1.5 text-xs hover:border-accent hover:text-accent transition"
+                    class="border border-border text-text px-3 py-1.5 text-xs hover:border-accent hover:text-accent transition disabled:opacity-50"
                     :disabled="streaming || !content"
-                    @click="copyContent"
+                    @click="handleCopy"
                 >
                     {{ copied ? 'Copied!' : 'Copy' }}
                 </button>
                 <button
-                    class="border border-border text-text px-3 py-1.5 text-xs hover:border-accent hover:text-accent transition"
+                    class="border border-border text-text px-3 py-1.5 text-xs hover:border-accent hover:text-accent transition disabled:opacity-50"
                     :disabled="streaming"
-                    @click="clearContent"
+                    @click="handleClear"
                 >
                     Clear
                 </button>
@@ -60,7 +60,7 @@
         </div>
 
         <!-- Empty state -->
-        <div v-else class="bg-surface border border-border p-8 text-center">
+        <div v-if="!hasContent && !streaming" class="bg-surface border border-border p-8 text-center">
             <p class="text-dim text-sm">Enter a topic above and click Generate to create AI-written content.</p>
         </div>
 
@@ -91,19 +91,35 @@ export default {
     },
 
     computed: {
-        ...mapState(usePlaygroundStore, ['content', 'streaming', 'error', 'remaining', 'hasOwnKey', 'canGenerate']),
+        ...mapState(usePlaygroundStore, [
+            'content', 'streaming', 'error', 'remaining',
+            'remainingDisplay', 'hasOwnKey', 'canGenerate',
+        ]),
         ...mapWritableState(usePlaygroundStore, ['topic', 'showKeyModal']),
+
+        hasContent() {
+            return this.content.length > 0 || this.streaming
+        },
     },
 
     methods: {
-        ...mapActions(usePlaygroundStore, ['generate', 'clearContent']),
+        ...mapActions(usePlaygroundStore, ['generate', 'clearContent', 'copyContent', 'fetchStatus']),
 
-        async copyContent() {
-            const store = usePlaygroundStore()
-            store.copyContent()
-            this.copied = true
-            setTimeout(() => { this.copied = false }, 2000)
+        async handleCopy() {
+            const success = await this.copyContent()
+            if (success) {
+                this.copied = true
+                setTimeout(() => { this.copied = false }, 2000)
+            }
         },
+
+        handleClear() {
+            this.clearContent()
+        },
+    },
+
+    mounted() {
+        this.fetchStatus()
     },
 }
 </script>

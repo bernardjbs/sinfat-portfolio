@@ -37,3 +37,12 @@ Route::middleware([
     Route::post('/generate', [PlaygroundController::class, 'generate'])->name('api.playground.generate');
     Route::post('/key', [PlaygroundController::class, 'setKey'])->name('api.playground.setKey');
 });
+
+// Playground status — outside rate limit middleware (needs session for key check)
+Route::middleware([
+    \Illuminate\Cookie\Middleware\EncryptCookies::class,
+    \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
+    \Illuminate\Session\Middleware\StartSession::class,
+])->prefix('playground')->group(function () {
+    Route::get('/status', [PlaygroundController::class, 'status'])->name('api.playground.status');
+});

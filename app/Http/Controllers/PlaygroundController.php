@@ -8,11 +8,27 @@ use App\Models\AiSession;
 use App\Models\GuestUsage;
 use App\Services\GuestUsageService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\RateLimiter;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class PlaygroundController extends Controller
 {
+    private const MAX_ATTEMPTS = 3;
+
     public function __construct(private GuestUsageService $guestUsageService) {}
+
+    public function status(Request $request): JsonResponse
+    {
+        $key = 'playground:' . $request->ip();
+        $remaining = RateLimiter::remaining($key, self::MAX_ATTEMPTS);
+        $hasOwnKey = $request->session()->has('guest_api_key');
+
+        return response()->json([
+            'remaining'   => $remaining,
+            'has_own_key' => $hasOwnKey,
+        ]);
+    }
 
     public function generate(StorePlaygroundGenerateRequest $request): StreamedResponse
     {

@@ -7,19 +7,43 @@ export const usePlaygroundStore = defineStore('playground', {
         streaming: false,
         loading: false,
         error: null,
-        remaining: 3,
+        remaining: null,
         limitReached: false,
         hasOwnKey: false,
         showKeyModal: false,
+        statusLoaded: false,
     }),
 
     getters: {
         canGenerate: (state) => {
             return !state.streaming && !state.loading && state.topic.trim().length > 0
         },
+
+        remainingDisplay: (state) => {
+            if (state.remaining === null) return '...'
+            return state.remaining
+        },
     },
 
     actions: {
+        async fetchStatus() {
+            try {
+                const res = await fetch('/api/playground/status', {
+                    credentials: 'same-origin',
+                })
+                if (res.ok) {
+                    const data = await res.json()
+                    this.remaining = data.remaining
+                    this.hasOwnKey = data.has_own_key
+                    this.limitReached = data.remaining <= 0 && !data.has_own_key
+                }
+            } catch {
+                // silently fail — default to showing counter
+            } finally {
+                this.statusLoaded = true
+            }
+        },
+
         async generate() {
             if (!this.canGenerate) return
 
@@ -145,9 +169,22 @@ export const usePlaygroundStore = defineStore('playground', {
             this.error = null
         },
 
-        copyContent() {
-            if (this.content) {
-                navigator.clipboard.writeText(this.content)
+        async copyContent() {
+            if (!this.content) return false
+            try {
+                await navigator.clipboard.writeText(this.content)
+                return true
+            } catch {
+                // Fallback for older browsers / insecure context
+                const textarea = document.createElement('textarea')
+                textarea.value = this.content
+                textarea.style.position = 'fixed'
+                textarea.style.opacity = '0'
+                document.body.appendChild(textarea)
+                textarea.select()
+                document.execCommand('copy')
+                document.body.removeChild(textarea)
+                return true
             }
         },
     },

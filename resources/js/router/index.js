@@ -10,6 +10,10 @@ import AdminBlogEditor from '../pages/admin/BlogEditor.vue'
 
 const routes = [
     {
+        path: '/',
+        redirect: '/blog',
+    },
+    {
         path: '/login',
         name: 'login',
         component: Login,

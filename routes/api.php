@@ -27,8 +27,13 @@ Route::middleware('auth:sanctum')->prefix('admin')->group(function () {
     Route::post('/ai/generate', [AiController::class, 'generate'])->name('api.admin.ai.generate');
 });
 
-// Guest playground (rate limited)
-Route::middleware('guest-rate-limit')->prefix('playground')->group(function () {
+// Guest playground (session + rate limited)
+Route::middleware([
+    \Illuminate\Cookie\Middleware\EncryptCookies::class,
+    \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
+    \Illuminate\Session\Middleware\StartSession::class,
+    'guest-rate-limit',
+])->prefix('playground')->group(function () {
     Route::post('/generate', [PlaygroundController::class, 'generate'])->name('api.playground.generate');
     Route::post('/key', [PlaygroundController::class, 'setKey'])->name('api.playground.setKey');
 });

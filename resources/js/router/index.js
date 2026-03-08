@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import { useAuthStore } from '../stores/auth.js'
 
 import Login from '../pages/Login.vue'
+import Playground from '../pages/Playground.vue'
 import Dashboard from '../pages/admin/Dashboard.vue'
 import Blog from '../pages/Blog.vue'
 import BlogPost from '../pages/BlogPost.vue'
@@ -29,6 +30,12 @@ const routes = [
         name: 'blog-post',
         component: BlogPost,
         props: true,
+    },
+    // Playground
+    {
+        path: '/playground',
+        name: 'playground',
+        component: Playground,
     },
     // Admin
     {

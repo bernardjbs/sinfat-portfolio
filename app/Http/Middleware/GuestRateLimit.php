@@ -4,33 +4,41 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\RateLimiter;
 use Symfony\Component\HttpFoundation\Response;
 
 class GuestRateLimit
 {
-    private const MAX_REQUESTS = 3;
-    private const TTL_SECONDS = 86400; // 24 hours
+    private const MAX_ATTEMPTS = 3;
+    private const DECAY_SECONDS = 86400; // 24 hours
 
     public function handle(Request $request, Closure $next): Response
     {
-        // Skip rate limiting if guest provided their own API key
-        if ($request->hasSession() && $request->session()->has('guest_api_key')) {
-            return $next($request);
-        }
+        $key = 'playground:' . $request->ip();
 
-        $key = 'guest_usage:' . $request->ip();
-        $count = (int) Cache::get($key, 0);
+        if (RateLimiter::tooManyAttempts($key, self::MAX_ATTEMPTS)) {
+            // Allow through if guest has provided their own key
+            if ($request->session()->has('guest_api_key')) {
+                return $next($request);
+            }
 
-        if ($count >= self::MAX_REQUESTS) {
             return response()->json([
                 'error'   => 'limit_reached',
-                'message' => 'Free limit reached. Provide your Anthropic API key to continue.',
+                'message' => 'You have used all 3 free generations. Please provide your Anthropic API key to continue.',
+                'remaining' => 0,
             ], 429);
         }
 
-        Cache::put($key, $count + 1, self::TTL_SECONDS);
+        // Only hit the limiter on the generate endpoint, not on setKey
+        if ($request->routeIs('api.playground.generate')) {
+            RateLimiter::hit($key, self::DECAY_SECONDS);
+        }
 
-        return $next($request);
+        $response = $next($request);
+
+        $remaining = RateLimiter::remaining($key, self::MAX_ATTEMPTS);
+        $response->headers->set('X-RateLimit-Remaining', $remaining);
+
+        return $response;
     }
 }

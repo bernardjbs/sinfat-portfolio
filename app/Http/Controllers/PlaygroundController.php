@@ -2,31 +2,63 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreGuestKeyRequest;
+use App\Http\Requests\StorePlaygroundGenerateRequest;
+use App\Models\AiSession;
+use App\Models\GuestUsage;
+use App\Services\GuestUsageService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class PlaygroundController extends Controller
 {
-    public function generate(Request $request): JsonResponse
+    public function __construct(private GuestUsageService $guestUsageService) {}
+
+    public function generate(StorePlaygroundGenerateRequest $request): StreamedResponse
     {
-        $request->validate([
-            'topic'   => ['required', 'string', 'max:500'],
-            'api_key' => ['nullable', 'string'],
+        $validated = $request->validated();
+
+        $apiKey = $request->session()->get('guest_api_key', config('services.anthropic.key'));
+        $usedOwnKey = $request->session()->has('guest_api_key');
+        $ip = $request->ip();
+        $model = config('services.' . config('services.ai.provider') . '.model');
+
+        // Log before streaming — ensures records exist even if stream fails
+        $guestUsage = GuestUsage::create([
+            'ip_address'   => $ip,
+            'topic'        => $validated['topic'],
+            'model'        => $model,
+            'used_own_key' => $usedOwnKey,
+            'status'       => 'streaming',
         ]);
 
-        // Module 7 — will implement SSE streaming with guest rate limiting
-        return response()->json(['message' => 'Playground not implemented yet'], 501);
+        $aiSession = AiSession::create([
+            'identifier' => $ip,
+            'type'       => 'guest',
+            'topic'      => $validated['topic'],
+            'model'      => $model,
+            'status'     => 'streaming',
+        ]);
+
+        return response()->stream(function () use ($validated, $apiKey, $guestUsage, $aiSession) {
+            $this->guestUsageService->streamGeneration(
+                topic: $validated['topic'],
+                apiKey: $apiKey,
+                guestUsage: $guestUsage,
+                aiSession: $aiSession,
+            );
+        }, 200, [
+            'Content-Type'      => 'text/event-stream',
+            'Cache-Control'     => 'no-cache',
+            'X-Accel-Buffering' => 'no',
+            'Connection'        => 'keep-alive',
+        ]);
     }
 
-    public function setKey(Request $request): JsonResponse
+    public function setKey(StoreGuestKeyRequest $request): JsonResponse
     {
-        $request->validate([
-            'api_key' => ['required', 'string'],
-        ]);
-
-        // Store in session only — never persisted to DB
         $request->session()->put('guest_api_key', $request->input('api_key'));
 
-        return response()->json(['message' => 'API key stored in session']);
+        return response()->json(['success' => true]);
     }
 }

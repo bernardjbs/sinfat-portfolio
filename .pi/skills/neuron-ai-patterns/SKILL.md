@@ -264,6 +264,22 @@ These map directly to the LLM security patterns documented in SUMMARY.md:
 
 ---
 
+## Gotchas Discovered in Production
+
+### CSRF + Sanctum + SSE = Token Rotation
+Sanctum's `EnsureFrontendRequestsAreStateful` injects `VerifyCsrfToken` for stateful domain requests. After an SSE stream completes, the session rotates and the CSRF token changes. The **second** request then sends a stale token → 419 rendered as HTML. Fix: exclude unauthenticated streaming routes from CSRF in `bootstrap/app.php`:
+```php
+$middleware->validateCsrfTokens(except: ['api/playground/*']);
+```
+
+### Clipboard API Requires User Gesture
+`navigator.clipboard.writeText()` must run in the **synchronous call stack** of a user gesture (click). Routing through an `async` Pinia action breaks the gesture chain. Always do clipboard writes directly in the component click handler, not in store actions.
+
+### Status Endpoint Outside Rate Limit
+If you add a status/remaining-count endpoint, put it **outside** the rate-limit middleware group — otherwise it gets blocked after the limit is reached and the frontend can't fetch the real count on page load.
+
+---
+
 ## What NOT to Do
 
 - ❌ Do NOT store guest API keys in the database
@@ -272,3 +288,5 @@ These map directly to the LLM security patterns documented in SUMMARY.md:
 - ❌ Do NOT skip `X-Accel-Buffering: no` on Nginx — streaming won't work
 - ❌ Do NOT forget to call `ob_flush()` and `flush()` after every `echo` in a stream
 - ❌ Do NOT use WebSockets — SSE is sufficient for one-way AI streaming
+- ❌ Do NOT send CSRF tokens on public unauthenticated SSE endpoints — Sanctum's token rotation will break the second request
+- ❌ Do NOT call `navigator.clipboard` from async Pinia actions — the user gesture context is lost

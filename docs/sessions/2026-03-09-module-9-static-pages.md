@@ -29,7 +29,15 @@ Built all public-facing pages with real content following the terminal aesthetic
 ## Outstanding Items
 - `public/cv.pdf` needs to be added for download links to work
 - Email `bernard@sinfat.com` mailbox not yet configured
-- Light mode styling still needs refinement
+- Football Analytics description is placeholder — real story TBD
+
+## Post-Module Fixes (same session)
+
+Three bugs found during manual testing and fixed in `fix/module-8-9-issues`:
+
+1. **Light mode toggle stuck on dark** — CSS had hardcoded dark colours in `body` and `@theme` only defined dark tokens. Fixed: light colours as `@theme` defaults, dark overrides in `.dark` class selector. Toggle now works.
+2. **`/admin` blank page when logged out** — `fetchUser()` in auth store had no `Accept: application/json` header and no try/catch. Laravel likely returned an HTML redirect instead of JSON 401, crashing the guard silently. Fixed: added header + try/catch.
+3. **Home featured projects missing "private" label** — Football Analytics had no URL but no fallback label. Fixed: added `v-else` span showing "private".
 
 ## Tests
 - 58 passing (no new PHP tests — frontend content only)

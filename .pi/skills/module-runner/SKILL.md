@@ -164,6 +164,19 @@ Any ❌ must be resolved before the module is marked complete. Do not skip this 
 ## Step Completion Protocol
 After all steps are done, Step 8 (Sign Off) runs a single checklist across all steps. This catches anything missed during execution due to context drift — without cluttering every individual step with its own checklist.
 
+## Fixes After Sign-Off
+
+If bugs are found after a module is marked complete, the fix still follows the full commit → document → update cycle. Do not start the next module until this is done.
+
+1. **Fix** on a `fix/*` branch — merge to main as normal
+2. **Update the session note** for the completed module — add a "Post-Module Fixes" section describing what broke, why, and what changed
+3. **Update SESSION.md** — reflect the new state in Outstanding Items and Current State
+4. **Commit the docs update** on a `docs/*` branch — merge to main
+
+This applies to any fix that lands between module sign-off and the next module's Orient step. The rule is simple: every merge to main must be documented before moving on.
+
+---
+
 ## What Not to Do
 - ❌ Execute before the plan is confirmed
 - ❌ Commit with failing tests

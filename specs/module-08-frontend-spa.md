@@ -5,16 +5,16 @@
 Vue SPA scaffolded with routing, Pinia stores, layout components, and design system in place.
 
 ### Tasks
-- [ ] Install and configure Vue Router
-- [ ] Install and configure Pinia
-- [ ] Install Lucide Vue: `npm install lucide-vue-next`
-- [ ] Install md-editor-v3: `npm install md-editor-v3`
-- [ ] Configure Geist Mono font
-- [ ] Configure Tailwind with terminal palette + typography plugin
-- [ ] Build `AppLayout.vue` — nav, footer, dark/light toggle
-- [ ] Build `AdminLayout.vue` — sidebar, admin nav
-- [ ] Set up all routes in `router/index.js`
-- [ ] Set up Pinia stores
+- [x] Install and configure Vue Router
+- [x] Install and configure Pinia
+- [x] Install Lucide Vue: `npm install lucide-vue-next`
+- [x] ~~Install md-editor-v3~~ — skipped, Vite build issue on server. Using textarea + marked instead.
+- [x] Configure Geist Mono font
+- [x] Configure Tailwind with terminal palette + typography plugin
+- [x] Build `AppLayout.vue` — nav, footer, dark/light toggle
+- [x] Build `AdminLayout.vue` — sidebar, admin nav
+- [x] Set up all routes in `router/index.js`
+- [x] Set up Pinia stores
 
 ### Technical Detail
 
@@ -95,13 +95,13 @@ router.beforeEach((to, from, next) => {
 ```
 
 ### Acceptance Criteria
-- [ ] `https://sinfat.test` loads Vue SPA
-- [ ] All routes navigate without page reload
-- [ ] Dark/light toggle works and persists in localStorage
-- [ ] Unauthenticated visit to `/admin` redirects to `/login`
-- [ ] Geist Mono font rendering in browser
-- [ ] Tailwind palette applied — bg colour matches `#0d1117`
-- [ ] Pinia stores initialised
+- [x] `https://sinfat.test` loads Vue SPA
+- [x] All routes navigate without page reload
+- [x] Dark/light toggle works and persists in localStorage
+- [x] Unauthenticated visit to `/admin` redirects to `/login`
+- [x] Geist Mono font rendering in browser
+- [x] Tailwind palette applied — bg colour matches `#0d1117`
+- [x] Pinia stores initialised
 
 ### Dependencies
 Module 3 (auth guard needs auth store)

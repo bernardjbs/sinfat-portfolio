@@ -2,9 +2,23 @@
 @import 'tailwindcss';
 @plugin '@tailwindcss/typography';
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
     --font-mono: 'Geist Mono', ui-monospace, monospace;
 
+    /* Light mode defaults */
+    --color-bg:      #ffffff;
+    --color-surface: #f6f8fa;
+    --color-accent:  #238636;
+    --color-text:    #1f2328;
+    --color-dim:     #656d76;
+    --color-border:  #d0d7de;
+    --color-danger:  #cf222e;
+}
+
+/* Dark mode overrides */
+.dark {
     --color-bg:      #0d1117;
     --color-surface: #161b22;
     --color-accent:  #238636;
@@ -16,6 +30,6 @@
 
 body {
     font-family: 'Geist Mono', monospace;
-    background-color: #0d1117;
-    color: #e6edf3;
+    background-color: var(--color-bg);
+    color: var(--color-text);
 }

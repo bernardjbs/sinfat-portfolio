@@ -44,12 +44,19 @@ export const useAuthStore = defineStore('auth', {
         },
 
         async fetchUser() {
-            const res = await fetch('/api/admin/me')
-            if (res.ok) {
-                const json = await res.json()
-                this.user = json.user
-                this.isAuthenticated = true
-            } else {
+            try {
+                const res = await fetch('/api/admin/me', {
+                    headers: { 'Accept': 'application/json' },
+                })
+                if (res.ok) {
+                    const json = await res.json()
+                    this.user = json.user
+                    this.isAuthenticated = true
+                } else {
+                    this.isAuthenticated = false
+                    this.user = null
+                }
+            } catch {
                 this.isAuthenticated = false
                 this.user = null
             }

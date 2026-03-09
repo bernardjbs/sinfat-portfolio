@@ -53,6 +53,7 @@
                         >
                             github →
                         </a>
+                        <span v-else class="text-dim text-xs shrink-0">private</span>
                     </div>
                     <div class="flex gap-2 mt-3">
                         <span

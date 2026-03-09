@@ -25,16 +25,16 @@ Read this file first at the start of every session. It tells you where you are a
 | 7 | Guest Playground | ✅ Complete |
 | 8 | Frontend SPA Foundation | ✅ Complete |
 | 9 | Static Pages | ✅ Complete |
-| 10 | Sitemap + SEO | ⬜ |
+| 10 | Sitemap + SEO | ✅ Complete |
 | 11 | Deploy Pipeline Polish | ⬜ |
 
 ---
 
 ## Current State
-- **Backend:** All API routes implemented. No backend changes since Module 7.
-- **Frontend:** All public pages built with content: Home (hero + projects + blog), About (skills grid + education), Projects (4 cards with stories), Contact (links + availability), Uses (tool categories). Blog + Playground unchanged. AppLayout + AdminLayout in place. Theme toggle working.
+- **Backend:** All API routes implemented. `GenerateSitemap` artisan command added. Deploy pipeline runs `php artisan sitemap:generate` on every push.
+- **Frontend:** All public pages built with content. Per-route meta tags (title + description + OG). Theme toggle working. Blog post titles set dynamically from post data.
 - **Tests:** 58 passing.
-- **Infra:** sinfat.com live. GitHub Actions auto-deploy on push. Modules 8+9 pushed and deployed.
+- **Infra:** sinfat.com live. GitHub Actions auto-deploy on push. Sitemap generated on deploy. robots.txt blocks /admin and /login.
 
 ## Outstanding Items
 - Prod `.env` needs `AI_PROVIDER` + API key set (anthropic or gemini) before AI works on sinfat.com
@@ -44,15 +44,17 @@ Read this file first at the start of every session. It tells you where you are a
 - Email `bernard@sinfat.com` mailbox not yet configured
 - Football Analytics description is placeholder — real story TBD
 - Light mode works but could use further colour tuning
+- Submit sitemap to Google Search Console after launch
+- `og:image` not set — no images on the site yet
 
 ## Start Here
-Load spec at `specs/module-10-sitemap-seo.md` and run Module 10.
+Load spec at `specs/module-11-deploy-pipeline.md` and run Module 11.
 
 ---
 
 ## Reference Files (read only when needed)
-- Current module spec → `specs/module-10-sitemap-seo.md`
-- Last session note → `docs/sessions/2026-03-09-module-9-static-pages.md`
+- Current module spec → `specs/module-11-deploy-pipeline.md`
+- Last session note → `docs/sessions/2026-03-09-module-10-sitemap-seo.md`
 - Full history → `.pi/PROGRESS.md`
 - Architecture decisions → `/Users/bernard/code/ai-learning/pi-vs-claude-code/docs/PORTFOLIO.md`
 - Blog drafting → `/Users/bernard/code/ai-learning/pi-vs-claude-code/docs/summaries/`

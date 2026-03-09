@@ -5,11 +5,11 @@
 Sitemap generated, meta tags per page, robots.txt in place.
 
 ### Tasks
-- [ ] Install `spatie/laravel-sitemap`: `composer require spatie/laravel-sitemap`
-- [ ] Create `GenerateSitemap` artisan command
-- [ ] Add meta tags per route (title, description, og:image)
-- [ ] Create `public/robots.txt`
-- [ ] Add sitemap generation to deploy pipeline (Module 1)
+- [x] Install `spatie/laravel-sitemap`: `composer require spatie/laravel-sitemap`
+- [x] Create `GenerateSitemap` artisan command
+- [x] Add meta tags per route (title, description, og:title, og:description)
+- [x] Create `public/robots.txt`
+- [x] Add sitemap generation to deploy pipeline (Module 1)
 - [ ] Submit to Google Search Console after launch
 
 ### Technical Detail
@@ -46,10 +46,10 @@ Sitemap: https://sinfat.com/sitemap.xml
 ```
 
 ### Acceptance Criteria
-- [ ] `https://sinfat.com/sitemap.xml` accessible
-- [ ] All published blog posts included in sitemap
-- [ ] `robots.txt` blocks `/admin` and `/login`
-- [ ] Each page has correct `<title>` and `<meta description>`
+- [x] `https://sinfat.com/sitemap.xml` accessible (generated on deploy)
+- [x] All published blog posts included in sitemap
+- [x] `robots.txt` blocks `/admin` and `/login`
+- [x] Each page has correct `<title>` and `<meta description>`
 
 ### Dependencies
 Module 5 (blog posts in sitemap)

@@ -23,7 +23,7 @@ Read this file first at the start of every session. It tells you where you are a
 | 5 | Blog (Admin + Public) | ✅ Complete |
 | 6 | AI Integration | ✅ Complete |
 | 7 | Guest Playground | ✅ Complete |
-| 8 | Frontend SPA Foundation | ⬜ |
+| 8 | Frontend SPA Foundation | ✅ Complete |
 | 9 | Static Pages | ⬜ |
 | 10 | Sitemap + SEO | ⬜ |
 | 11 | Deploy Pipeline Polish | ⬜ |
@@ -31,25 +31,26 @@ Read this file first at the start of every session. It tells you where you are a
 ---
 
 ## Current State
-- **Backend:** All API routes implemented. PlaygroundController with SSE streaming + status endpoint, GuestRateLimit middleware (3/day via RateLimiter), guest API key session storage. CSRF excluded for playground routes. GuestUsageService handles streaming + logging.
-- **Frontend:** Vue 3 SPA with Playground.vue (streaming output, persistent counter badge, copy/clear, ApiKeyModal). Routes: `/blog`, `/playground`, `/admin/*`.
-- **Tests:** 58 passing — blog, admin blog, auth, rate limiting, AI controller, playground all covered.
-- **Infra:** sinfat.com live. GitHub Actions auto-deploy on push. Prod `.env` set to `production` with debug off.
-- **Manually tested:** Playground working end-to-end on sinfat.test — streaming, counter persistence, copy, clear, rate limiting all verified.
+- **Backend:** All API routes implemented. No changes in Module 8 (frontend-only module).
+- **Frontend:** Full SPA foundation in place. AppLayout (NavBar + Footer) wraps all public pages. AdminLayout (sidebar) wraps admin pages. Theme toggle (dark/light) with localStorage persistence. Lazy-loaded routes with code-splitting. Stub pages for Home, About, Projects, Uses, Contact, NotFound.
+- **Tests:** 58 passing — no new PHP tests needed (frontend-only module).
+- **Infra:** sinfat.com live. GitHub Actions auto-deploy on push. Module 8 pushed and deployed.
 
 ## Outstanding Items
 - Prod `.env` needs `AI_PROVIDER` + API key set (anthropic or gemini) before AI works on sinfat.com
 - Local uses Ollama (llama3.2) — `brew services start ollama` to run
 - Node.js 20.17.0 locally — Vite warns it needs 20.19+
+- Light mode colour palette needs refinement (dark tokens on body don't invert)
+- md-editor-v3 removed from plan — caused Vite build issues on server
 
 ## Start Here
-Load spec at `specs/module-08-frontend-spa-foundation.md` and run Module 8.
+Load spec at `specs/module-09-static-pages.md` and run Module 9.
 
 ---
 
 ## Reference Files (read only when needed)
-- Current module spec → `specs/module-08-frontend-spa-foundation.md`
-- Last session note → `docs/sessions/2026-03-08-module-7-guest-playground.md`
+- Current module spec → `specs/module-09-static-pages.md`
+- Last session note → `docs/sessions/2026-03-09-module-8-frontend-spa-foundation.md`
 - Full history → `.pi/PROGRESS.md`
 - Architecture decisions → `/Users/bernard/code/ai-learning/pi-vs-claude-code/docs/PORTFOLIO.md`
 - Blog drafting → `/Users/bernard/code/ai-learning/pi-vs-claude-code/docs/summaries/`

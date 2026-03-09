@@ -61,11 +61,11 @@ Back to blog link
 ```
 
 ### Acceptance Criteria
-- [ ] All pages render correctly at their routes
-- [ ] Terminal aesthetic consistent across all pages
-- [ ] CV downloads from About + Home
-- [ ] All external links open in new tab
-- [ ] Mobile responsive
+- [x] All pages render correctly at their routes
+- [x] Terminal aesthetic consistent across all pages
+- [x] CV downloads from About + Home (links in place — needs `public/cv.pdf` file)
+- [x] All external links open in new tab
+- [x] Mobile responsive
 
 ### Dependencies
 Module 8

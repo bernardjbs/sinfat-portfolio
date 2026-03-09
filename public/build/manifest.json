@@ -1,6 +1,13 @@
 {
+  "_blog-DiLIvC4J.js": {
+    "file": "assets/blog-DiLIvC4J.js",
+    "name": "blog",
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
   "resources/css/app.css": {
-    "file": "assets/app-ajckOS9r.css",
+    "file": "assets/app-CwHpT9K4.css",
     "src": "resources/css/app.css",
     "isEntry": true,
     "name": "app",
@@ -9,12 +16,214 @@
     ]
   },
   "resources/js/app.js": {
-    "file": "assets/app-BCCh0S-M.js",
+    "file": "assets/app-DghgjSvf.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
+    "dynamicImports": [
+      "resources/js/layouts/AppLayout.vue",
+      "resources/js/pages/Home.vue",
+      "resources/js/pages/Blog.vue",
+      "resources/js/pages/BlogPost.vue",
+      "resources/js/pages/Projects.vue",
+      "resources/js/pages/About.vue",
+      "resources/js/pages/Uses.vue",
+      "resources/js/pages/Contact.vue",
+      "resources/js/pages/Playground.vue",
+      "resources/js/pages/Login.vue",
+      "resources/js/layouts/AdminLayout.vue",
+      "resources/js/pages/admin/Dashboard.vue",
+      "resources/js/pages/admin/Blog.vue",
+      "resources/js/pages/admin/BlogEditor.vue",
+      "resources/js/pages/admin/BlogEditor.vue",
+      "resources/js/pages/NotFound.vue"
+    ],
     "css": [
-      "assets/app-ajckOS9r.css"
+      "assets/app-CwHpT9K4.css"
+    ]
+  },
+  "resources/js/layouts/AdminLayout.vue": {
+    "file": "assets/AdminLayout-CgFjRrmK.js",
+    "name": "AdminLayout",
+    "src": "resources/js/layouts/AdminLayout.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js"
+    ],
+    "css": [
+      "assets/app-CwHpT9K4.css"
+    ]
+  },
+  "resources/js/layouts/AppLayout.vue": {
+    "file": "assets/AppLayout-BdCvZ1dp.js",
+    "name": "AppLayout",
+    "src": "resources/js/layouts/AppLayout.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js"
+    ],
+    "css": [
+      "assets/app-CwHpT9K4.css"
+    ]
+  },
+  "resources/js/pages/About.vue": {
+    "file": "assets/About-Bce87YY-.js",
+    "name": "About",
+    "src": "resources/js/pages/About.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js"
+    ],
+    "css": [
+      "assets/app-CwHpT9K4.css"
+    ]
+  },
+  "resources/js/pages/Blog.vue": {
+    "file": "assets/Blog-C5FcZNeG.js",
+    "name": "Blog",
+    "src": "resources/js/pages/Blog.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_blog-DiLIvC4J.js"
+    ],
+    "css": [
+      "assets/app-CwHpT9K4.css"
+    ]
+  },
+  "resources/js/pages/BlogPost.vue": {
+    "file": "assets/BlogPost-cYStqGEf.js",
+    "name": "BlogPost",
+    "src": "resources/js/pages/BlogPost.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_blog-DiLIvC4J.js"
+    ],
+    "css": [
+      "assets/app-CwHpT9K4.css"
+    ]
+  },
+  "resources/js/pages/Contact.vue": {
+    "file": "assets/Contact-ByoEofRy.js",
+    "name": "Contact",
+    "src": "resources/js/pages/Contact.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js"
+    ],
+    "css": [
+      "assets/app-CwHpT9K4.css"
+    ]
+  },
+  "resources/js/pages/Home.vue": {
+    "file": "assets/Home-TWjLLfnL.js",
+    "name": "Home",
+    "src": "resources/js/pages/Home.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js"
+    ],
+    "css": [
+      "assets/app-CwHpT9K4.css"
+    ]
+  },
+  "resources/js/pages/Login.vue": {
+    "file": "assets/Login-BdI3Th94.js",
+    "name": "Login",
+    "src": "resources/js/pages/Login.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js"
+    ],
+    "css": [
+      "assets/app-CwHpT9K4.css"
+    ]
+  },
+  "resources/js/pages/NotFound.vue": {
+    "file": "assets/NotFound-DmTwoUdW.js",
+    "name": "NotFound",
+    "src": "resources/js/pages/NotFound.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js"
+    ],
+    "css": [
+      "assets/app-CwHpT9K4.css"
+    ]
+  },
+  "resources/js/pages/Playground.vue": {
+    "file": "assets/Playground-Cwutfhq9.js",
+    "name": "Playground",
+    "src": "resources/js/pages/Playground.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js"
+    ],
+    "css": [
+      "assets/app-CwHpT9K4.css"
+    ]
+  },
+  "resources/js/pages/Projects.vue": {
+    "file": "assets/Projects-Cv80qQp9.js",
+    "name": "Projects",
+    "src": "resources/js/pages/Projects.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js"
+    ],
+    "css": [
+      "assets/app-CwHpT9K4.css"
+    ]
+  },
+  "resources/js/pages/Uses.vue": {
+    "file": "assets/Uses-CJNGZp4a.js",
+    "name": "Uses",
+    "src": "resources/js/pages/Uses.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js"
+    ],
+    "css": [
+      "assets/app-CwHpT9K4.css"
+    ]
+  },
+  "resources/js/pages/admin/Blog.vue": {
+    "file": "assets/Blog-Djr1ACxi.js",
+    "name": "Blog",
+    "src": "resources/js/pages/admin/Blog.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_blog-DiLIvC4J.js"
+    ],
+    "css": [
+      "assets/app-CwHpT9K4.css"
+    ]
+  },
+  "resources/js/pages/admin/BlogEditor.vue": {
+    "file": "assets/BlogEditor-qRQTG3YW.js",
+    "name": "BlogEditor",
+    "src": "resources/js/pages/admin/BlogEditor.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_blog-DiLIvC4J.js"
+    ],
+    "css": [
+      "assets/app-CwHpT9K4.css"
+    ]
+  },
+  "resources/js/pages/admin/Dashboard.vue": {
+    "file": "assets/Dashboard-Cm6vZnz7.js",
+    "name": "Dashboard",
+    "src": "resources/js/pages/admin/Dashboard.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js"
+    ],
+    "css": [
+      "assets/app-CwHpT9K4.css"
     ]
   }
 }

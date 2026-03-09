@@ -1,69 +1,99 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { useAuthStore } from '../stores/auth.js'
 
-import Login from '../pages/Login.vue'
-import Playground from '../pages/Playground.vue'
-import Dashboard from '../pages/admin/Dashboard.vue'
-import Blog from '../pages/Blog.vue'
-import BlogPost from '../pages/BlogPost.vue'
-import AdminBlog from '../pages/admin/Blog.vue'
-import AdminBlogEditor from '../pages/admin/BlogEditor.vue'
-
 const routes = [
+    // Public pages — wrapped in AppLayout
     {
         path: '/',
-        redirect: '/blog',
+        component: () => import('../layouts/AppLayout.vue'),
+        children: [
+            {
+                path: '',
+                name: 'home',
+                component: () => import('../pages/Home.vue'),
+            },
+            {
+                path: 'blog',
+                name: 'blog',
+                component: () => import('../pages/Blog.vue'),
+            },
+            {
+                path: 'blog/:slug',
+                name: 'blog-post',
+                component: () => import('../pages/BlogPost.vue'),
+                props: true,
+            },
+            {
+                path: 'projects',
+                name: 'projects',
+                component: () => import('../pages/Projects.vue'),
+            },
+            {
+                path: 'about',
+                name: 'about',
+                component: () => import('../pages/About.vue'),
+            },
+            {
+                path: 'uses',
+                name: 'uses',
+                component: () => import('../pages/Uses.vue'),
+            },
+            {
+                path: 'contact',
+                name: 'contact',
+                component: () => import('../pages/Contact.vue'),
+            },
+            {
+                path: 'playground',
+                name: 'playground',
+                component: () => import('../pages/Playground.vue'),
+            },
+        ],
     },
+
+    // Login — no layout (standalone page)
     {
         path: '/login',
         name: 'login',
-        component: Login,
+        component: () => import('../pages/Login.vue'),
     },
-    // Public blog
-    {
-        path: '/blog',
-        name: 'blog',
-        component: Blog,
-    },
-    {
-        path: '/blog/:slug',
-        name: 'blog-post',
-        component: BlogPost,
-        props: true,
-    },
-    // Playground
-    {
-        path: '/playground',
-        name: 'playground',
-        component: Playground,
-    },
-    // Admin
+
+    // Admin — wrapped in AdminLayout, requires auth
     {
         path: '/admin',
-        name: 'admin',
-        component: Dashboard,
+        component: () => import('../layouts/AdminLayout.vue'),
         meta: { requiresAuth: true },
+        children: [
+            {
+                path: '',
+                name: 'admin',
+                component: () => import('../pages/admin/Dashboard.vue'),
+            },
+            {
+                path: 'blog',
+                name: 'admin-blog',
+                component: () => import('../pages/admin/Blog.vue'),
+            },
+            {
+                path: 'blog/new',
+                name: 'admin-blog-new',
+                component: () => import('../pages/admin/BlogEditor.vue'),
+            },
+            {
+                path: 'blog/:id/edit',
+                name: 'admin-blog-edit',
+                component: () => import('../pages/admin/BlogEditor.vue'),
+                props: true,
+            },
+        ],
     },
+
+    // Catch-all 404
     {
-        path: '/admin/blog',
-        name: 'admin-blog',
-        component: AdminBlog,
-        meta: { requiresAuth: true },
+        path: '/:pathMatch(.*)*',
+        name: 'not-found',
+        component: () => import('../pages/NotFound.vue'),
     },
-    {
-        path: '/admin/blog/new',
-        name: 'admin-blog-new',
-        component: AdminBlogEditor,
-        meta: { requiresAuth: true },
-    },
-    {
-        path: '/admin/blog/:id/edit',
-        name: 'admin-blog-edit',
-        component: AdminBlogEditor,
-        props: true,
-        meta: { requiresAuth: true },
-    },
-    // additional routes added in Module 8
 ]
 
 const router = createRouter({
@@ -74,7 +104,7 @@ const router = createRouter({
 router.beforeEach(async (to, from, next) => {
     const auth = useAuthStore()
 
-    if (to.meta.requiresAuth) {
+    if (to.meta.requiresAuth || to.matched.some(r => r.meta.requiresAuth)) {
         if (!auth.isAuthenticated) {
             await auth.fetchUser()
         }

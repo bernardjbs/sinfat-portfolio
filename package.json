@@ -17,6 +17,7 @@
     "dependencies": {
         "@tailwindcss/typography": "^0.5.19",
         "@vitejs/plugin-vue": "^6.0.4",
+        "highlight.js": "^11.11.1",
         "lucide-vue-next": "^0.577.0",
         "marked": "^17.0.4",
         "pinia": "^3.0.4",

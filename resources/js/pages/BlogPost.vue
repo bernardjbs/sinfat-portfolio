@@ -54,6 +54,26 @@
 <script>
 import { mapState, mapActions } from 'pinia'
 import { useBlogStore } from '../stores/blog.js'
+import hljs from 'highlight.js/lib/core'
+import javascript from 'highlight.js/lib/languages/javascript'
+import php from 'highlight.js/lib/languages/php'
+import bash from 'highlight.js/lib/languages/bash'
+import json from 'highlight.js/lib/languages/json'
+import css from 'highlight.js/lib/languages/css'
+import xml from 'highlight.js/lib/languages/xml'
+import sql from 'highlight.js/lib/languages/sql'
+import 'highlight.js/styles/github-dark.css'
+
+hljs.registerLanguage('javascript', javascript)
+hljs.registerLanguage('js', javascript)
+hljs.registerLanguage('php', php)
+hljs.registerLanguage('bash', bash)
+hljs.registerLanguage('sh', bash)
+hljs.registerLanguage('json', json)
+hljs.registerLanguage('css', css)
+hljs.registerLanguage('html', xml)
+hljs.registerLanguage('xml', xml)
+hljs.registerLanguage('sql', sql)
 
 export default {
   name: 'BlogPostPage',
@@ -78,6 +98,19 @@ export default {
     },
   },
 
+  methods: {
+    ...mapActions(useBlogStore, ['fetchPost']),
+
+    highlightCode() {
+      this.$nextTick(() => {
+        const blocks = this.$el.querySelectorAll('pre code')
+        blocks.forEach((block) => {
+          hljs.highlightElement(block)
+        })
+      })
+    },
+  },
+
   watch: {
     currentPost(post) {
       if (post) {
@@ -94,12 +127,9 @@ export default {
         if (ogDesc && post.excerpt) {
           ogDesc.setAttribute('content', post.excerpt)
         }
+        this.highlightCode()
       }
     },
-  },
-
-  methods: {
-    ...mapActions(useBlogStore, ['fetchPost']),
   },
 
   async mounted() {

@@ -52,4 +52,4 @@ Controllers are thin. Business logic lives in Services. API output shaped by Res
 
 ## License
 
-Private repository. All rights reserved.
+MIT

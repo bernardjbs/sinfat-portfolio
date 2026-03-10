@@ -60,7 +60,7 @@ export default {
                 },
                 {
                     name: 'pi-agent-toolkit',
-                    description: 'Custom extensions, skills, and themes for the pi coding agent framework. Includes module-runner workflows, security review checklists, and documentation conventions.',
+                    description: 'TypeScript extensions for the pi coding agent. Session focus gate, bash guardrails, workflow observer with slash commands, blog drafting tools, progress tracking with session shutdown prompts, and a custom footer with git branch and context metering.',
                     story: null,
                     url: 'https://github.com/bernardjbs/pi-agent-toolkit',
                     tags: ['TypeScript', 'AI agents', 'CLI tooling', 'pi framework'],

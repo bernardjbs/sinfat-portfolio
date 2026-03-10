@@ -116,13 +116,19 @@ git checkout main && git merge && git push && git branch -d
 One logical unit per commit. Never commit to `main` directly.
 
 ### 5. Document
-Write two files after the work is committed:
+**MUST complete ALL of these before moving on. Check each one explicitly.**
 
-**Session note** — `docs/sessions/YYYY-MM-DD-module-X-name.md`
+□ **Session note** — `docs/sessions/YYYY-MM-DD-module-X-name.md`
 Quick reference: what was done, files changed, outstanding items, next module.
 
-**Blog summary** — `/Users/bernard/code/ai-learning/pi-vs-claude-code/docs/summaries/NN-topic.md`
+□ **Blog summary** — `/Users/bernard/code/ai-learning/pi-vs-claude-code/docs/summaries/NN-topic.md`
 Educational narrative. Explain why before how. Follow the style of `06-infrastructure-journey.md` and `10-module-1-redis-ssl-deploy-supervisor.md`.
+
+□ **Skills** — did this module introduce new conventions, gotchas, or patterns? Update the relevant skill files. If nothing new, explicitly state "no skill changes needed".
+
+□ **Outstanding items** — update in both SESSION.md and the session note. Remove resolved items, add new ones. Do not carry stale items from previous modules.
+
+□ **Spec file** — tick off all completed tasks (`- [ ]` → `- [x]`) and acceptance criteria.
 
 ### 6. Update
 Update `.pi/SESSION.md`:
@@ -145,19 +151,30 @@ Fix failures, re-verify. Do not mark a module complete with failing criteria.
 Tick off all completed tasks and acceptance criteria in the spec file (`- [ ]` → `- [x]`).
 
 ### 8. Sign Off
-Before declaring the module complete, run through the full checklist:
+**GATE CHECK — this is not a rubber stamp. Verify each item exists before ticking it.**
+
+Run these commands first:
+```bash
+git status                    # must be clean
+git branch                    # must be on main, no stale branches
+php artisan test              # must pass — report exact count
+ls docs/sessions/             # session note must exist
+ls /Users/bernard/code/ai-learning/pi-vs-claude-code/docs/summaries/  # blog summary must exist
 ```
-✅ 1. Orient     — SESSION.md, spec, skills read. Model check passed.
-✅ 2. Plan       — Plan confirmed by user before execution.
-✅ 3. Execute    — All tasks done and verified.
-✅ 4. Test       — Feature tests written. php artisan test passing.
-✅ 5. Security   — security-review checklist complete. No open items.
-✅ 6. Commit     — Tests passed. Merged to main. Branch deleted.
-✅ 7. Document   — Session note written. Blog summary written.
-✅ 8. Update     — SESSION.md updated and committed.
-✅ 9. Verify     — All acceptance criteria passing.
+
+Then confirm every item:
 ```
-Any ❌ must be resolved before the module is marked complete. Do not skip this step.
+□ Git clean — all committed, pushed, no stale branches
+□ Tests — php artisan test passing (X passed, Y skipped)
+□ Session note — docs/sessions/YYYY-MM-DD-module-X-name.md exists
+□ Blog summary — summaries/NN-topic.md exists and pushed to pi-playground
+□ SESSION.md — module table shows ✅, current state updated, test count updated, what's next updated
+□ Spec file — all tasks [x] and acceptance criteria [x]
+□ Outstanding items — reviewed and current (not stale from previous module)
+□ Skills — updated if new patterns, or explicitly noted "no changes"
+```
+
+Any □ not confirmed = the module is NOT complete. Fix it first.
 
 ---
 

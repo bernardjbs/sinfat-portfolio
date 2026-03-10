@@ -27,6 +27,7 @@ Read this file first at the start of every session. It tells you where you are a
 | 9 | Static Pages | ✅ Complete |
 | 10 | Sitemap + SEO | ✅ Complete |
 | 11 | Deploy Pipeline Polish | ✅ Complete |
+| 12 | Blog Polish | ⬜ |
 
 **All 11 modules complete. 🎉**
 
@@ -49,8 +50,7 @@ Read this file first at the start of every session. It tells you where you are a
 - Supervisor for queue workers not yet set up on prod
 
 ## What's Next
-All build modules are done. Potential next steps:
-- Write first blog posts
+Start Module 12 — Blog Polish. Spec at `specs/module-12-blog-polish.md`.
 - Submit sitemap to Google Search Console
 - Polish light mode colours
 - Add og:image meta tags

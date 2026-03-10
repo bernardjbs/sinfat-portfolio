@@ -53,7 +53,13 @@ class AiService
 
             $session->update(['status' => 'completed']);
 
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
+            \Log::error('Blog generation failed', [
+                'message' => $e->getMessage(),
+                'file'    => $e->getFile(),
+                'line'    => $e->getLine(),
+            ]);
+
             echo "data: " . json_encode(['error' => 'Generation failed']) . "\n\n";
             if (ob_get_level()) {
                 ob_flush();

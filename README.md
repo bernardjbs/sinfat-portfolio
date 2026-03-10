@@ -52,4 +52,4 @@ Controllers are thin. Business logic lives in Services. API output shaped by Res
 
 ## License
 
-MIT
+Source code is public for reference and learning. Not licensed for redistribution or commercial use.

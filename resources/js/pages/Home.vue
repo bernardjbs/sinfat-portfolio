@@ -142,12 +142,6 @@ export default {
                     tags: ['Laravel', 'Vue 3', 'Tailwind', 'Oracle Cloud'],
                 },
                 {
-                    name: 'pi-agent-toolkit',
-                    description: 'Custom coding agent extensions and skills built on the pi framework.',
-                    url: 'https://github.com/bernardjbs/pi-agent-toolkit',
-                    tags: ['TypeScript', 'AI agents', 'CLI'],
-                },
-                {
                     name: 'Football Analytics',
                     description: 'Sports analytics platform — 5 iterations from monolith to microservices. A story about learning by rebuilding.',
                     url: null,

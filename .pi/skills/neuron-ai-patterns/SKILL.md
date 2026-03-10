@@ -18,15 +18,43 @@ composer require neuron-core/neuron-ai
 
 **Config in `.env`:**
 ```
+AI_PROVIDER=github          # options: github, anthropic, gemini, ollama
+
+GITHUB_MODELS_KEY=github_pat_...
+GITHUB_MODELS_MODEL=gpt-4o-mini
+
 ANTHROPIC_API_KEY=sk-ant-...
 ANTHROPIC_MODEL=claude-sonnet-4-5
+
+GEMINI_API_KEY=AIza...
+GEMINI_MODEL=gemini-2.0-flash
 ```
 
 **Config in `config/services.php`:**
 ```php
+'ai' => [
+    'provider' => env('AI_PROVIDER', 'anthropic'),
+],
+
+'github' => [
+    'key'   => env('GITHUB_MODELS_KEY'),
+    'model' => env('GITHUB_MODELS_MODEL', 'gpt-4o-mini'),
+    'url'   => env('GITHUB_MODELS_URL', 'https://models.inference.ai.azure.com'),
+],
+
 'anthropic' => [
     'key'   => env('ANTHROPIC_API_KEY'),
     'model' => env('ANTHROPIC_MODEL', 'claude-sonnet-4-5'),
+],
+
+'gemini' => [
+    'key'   => env('GEMINI_API_KEY'),
+    'model' => env('GEMINI_MODEL', 'gemini-2.0-flash'),
+],
+
+'ollama' => [
+    'url'   => env('OLLAMA_URL', 'http://localhost:11434/api'),
+    'model' => env('OLLAMA_MODEL', 'llama3.2'),
 ],
 ```
 
@@ -41,17 +69,38 @@ All Neuron AI agents live in `app/Agents/`. One class per agent persona.
 
 namespace App\Agents;
 
-use NeuronAI\Agent;
-use NeuronAI\Providers\Anthropic;
+use NeuronAI\Agent\Agent;
+use NeuronAI\Providers\AIProviderInterface;
+use NeuronAI\Providers\Anthropic\Anthropic;
+use NeuronAI\Providers\Gemini\Gemini;
+use NeuronAI\Providers\Ollama\Ollama;
+use NeuronAI\Providers\OpenAILike;
 
 class BlogWriterAgent extends Agent
 {
-    protected function provider(): Anthropic
+    protected function provider(): AIProviderInterface
     {
-        return new Anthropic(
-            apiKey: config('services.anthropic.key'),
-            model: config('services.anthropic.model'),
-        );
+        $provider = config('services.ai.provider');
+
+        return match ($provider) {
+            'ollama' => new Ollama(
+                url: config('services.ollama.url'),
+                model: config('services.ollama.model'),
+            ),
+            'gemini' => new Gemini(
+                key: config('services.gemini.key'),
+                model: config('services.gemini.model'),
+            ),
+            'github' => new OpenAILike(
+                baseUri: config('services.github.url'),
+                key: config('services.github.key'),
+                model: config('services.github.model'),
+            ),
+            default => new Anthropic(
+                key: config('services.anthropic.key'),
+                model: config('services.anthropic.model'),
+            ),
+        };
     }
 
     protected function instructions(): string
@@ -73,14 +122,34 @@ class BlogWriterAgent extends Agent
 ```php
 class GuestBlogWriterAgent extends Agent
 {
-    public function __construct(private string $apiKey) {}
-
-    protected function provider(): Anthropic
+    public function __construct(private string $apiKey)
     {
-        return new Anthropic(
-            apiKey: $this->apiKey,  // guest's key — never stored
-            model: config('services.anthropic.model'),
-        );
+        parent::__construct();
+    }
+
+    protected function provider(): AIProviderInterface
+    {
+        $provider = config('services.ai.provider');
+
+        return match ($provider) {
+            'ollama' => new Ollama(
+                url: config('services.ollama.url'),
+                model: config('services.ollama.model'),
+            ),
+            'gemini' => new Gemini(
+                key: $this->apiKey,
+                model: config('services.gemini.model'),
+            ),
+            'github' => new OpenAILike(
+                baseUri: config('services.github.url'),
+                key: $this->apiKey,
+                model: config('services.github.model'),
+            ),
+            default => new Anthropic(
+                key: $this->apiKey,
+                model: config('services.anthropic.model'),
+            ),
+        };
     }
 
     protected function instructions(): string
@@ -177,8 +246,10 @@ public function generate(Request $request): StreamedResponse
         'topic' => ['required', 'string', 'max:500'],
     ]);
 
-    // Use guest key if available, fall back to system key
-    $apiKey = $request->session()->get('guest_api_key', config('services.anthropic.key'));
+    // Use guest key if available, fall back to active provider's key
+    $provider = config('services.ai.provider');
+    $defaultKey = config("services.{$provider}.key");
+    $apiKey = $request->session()->get('guest_api_key', $defaultKey);
     $agent = new GuestBlogWriterAgent($apiKey);
 
     // ... same SSE streaming pattern
@@ -242,7 +313,7 @@ $session = AiSession::create([
     'identifier' => $request->ip(),
     'type'       => 'guest',  // or 'admin'
     'topic'      => $validated['topic'],
-    'model'      => config('services.anthropic.model'),
+    'model'      => config('services.' . config('services.ai.provider') . '.model'),
     'status'     => 'streaming',
 ]);
 

@@ -229,14 +229,19 @@ All config values go through `config/` files — never call `env()` directly in 
 
 ```php
 // config/services.php
-'anthropic' => [
-    'key'   => env('ANTHROPIC_API_KEY'),
-    'model' => env('ANTHROPIC_MODEL', 'claude-sonnet-4-5'),
+'ai' => [
+    'provider' => env('AI_PROVIDER', 'anthropic'),
+],
+'github' => [
+    'key'   => env('GITHUB_MODELS_KEY'),
+    'model' => env('GITHUB_MODELS_MODEL', 'gpt-4o-mini'),
+    'url'   => env('GITHUB_MODELS_URL', 'https://models.inference.ai.azure.com'),
 ],
 
 // Usage in code
-config('services.anthropic.key')     ✅
-env('ANTHROPIC_API_KEY')             ❌ (outside config files)
+config('services.ai.provider')       ✅
+config('services.github.key')        ✅
+env('GITHUB_MODELS_KEY')             ❌ (outside config files)
 ```
 
 ---

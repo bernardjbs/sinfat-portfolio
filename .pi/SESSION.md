@@ -26,34 +26,40 @@ Read this file first at the start of every session. It tells you where you are a
 | 8 | Frontend SPA Foundation | ✅ Complete |
 | 9 | Static Pages | ✅ Complete |
 | 10 | Sitemap + SEO | ✅ Complete |
-| 11 | Deploy Pipeline Polish | ⬜ |
+| 11 | Deploy Pipeline Polish | ✅ Complete |
+
+**All 11 modules complete. 🎉**
 
 ---
 
 ## Current State
-- **Backend:** All API routes implemented. `GenerateSitemap` artisan command added. Deploy pipeline runs `php artisan sitemap:generate` on every push.
-- **Frontend:** All public pages built with content. Per-route meta tags (title + description + OG). Theme toggle working. Blog post titles set dynamically from post data.
+- **Backend:** All API routes implemented. All services, controllers, resources built.
+- **Frontend:** Full SPA — Home, About, Blog, AI Chat, Playground, Admin. Per-route meta tags. Theme toggle.
 - **Tests:** 58 passing.
-- **Infra:** sinfat.com live. GitHub Actions auto-deploy on push. Sitemap generated on deploy. robots.txt blocks /admin and /login.
+- **Infra:** sinfat.com live. GitHub Actions auto-deploy on push to main. Sitemap generated on deploy. Redis for session/cache/queue. PHP 8.3 + Nginx + MySQL 8.
+- **Deploy:** Push to main → live in ~80 seconds. Manual fallback documented in `docs/deploy-guide.md`.
 
 ## Outstanding Items
-- Prod `.env` needs `AI_PROVIDER` + API key set (anthropic or gemini) before AI works on sinfat.com
-- Local uses Ollama (llama3.2) — `brew services start ollama` to run
-- Node.js 20.17.0 locally — Vite warns it needs 20.19+
-- Email `bernard@sinfat.com` mailbox not yet configured
+- Prod `.env` needs `AI_PROVIDER` + `ANTHROPIC_API_KEY` set before AI works on sinfat.com
+- Email `bernard@sinfat.com` mailbox not configured
 - Football Analytics description is placeholder — real story TBD
-- Light mode works but could use further colour tuning
-- Submit sitemap to Google Search Console after launch
 - `og:image` not set — no images on the site yet
+- Light mode could use further colour tuning
+- Submit sitemap to Google Search Console after launch
 
-## Start Here
-Load spec at `specs/module-11-deploy-pipeline.md` and run Module 11.
+## What's Next
+All build modules are done. Potential next steps:
+- Write first blog posts
+- Set AI provider keys on prod
+- Submit sitemap to Google Search Console
+- Polish light mode colours
+- Add og:image meta tags
 
 ---
 
 ## Reference Files (read only when needed)
-- Current module spec → `specs/module-11-deploy-pipeline.md`
-- Last session note → `docs/sessions/2026-03-09-module-10-sitemap-seo.md`
+- Deploy guide → `docs/deploy-guide.md`
+- Production env reference → `docs/production-env.md`
+- Last session note → `docs/sessions/2026-03-10-module-11-deploy-pipeline.md`
 - Full history → `.pi/PROGRESS.md`
 - Architecture decisions → `/Users/bernard/code/ai-learning/pi-vs-claude-code/docs/PORTFOLIO.md`
-- Blog drafting → `/Users/bernard/code/ai-learning/pi-vs-claude-code/docs/summaries/`

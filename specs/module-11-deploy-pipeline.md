@@ -5,11 +5,11 @@
 Deployment is automated, reliable, and zero-downtime where possible.
 
 ### Tasks
-- [ ] Verify GitHub Actions deploy works end to end
-- [ ] Add `.env.production` documentation (what keys are required)
-- [ ] Add `php artisan sitemap:generate` to deploy script
-- [ ] Test full deploy: push → action triggers → site updates
-- [ ] Document manual deploy fallback
+- [x] Verify GitHub Actions deploy works end to end
+- [x] Add `.env.production` documentation (what keys are required)
+- [x] Add `php artisan sitemap:generate` to deploy script
+- [x] Test full deploy: push → action triggers → site updates
+- [x] Document manual deploy fallback
 
 ### Required Production `.env` Keys
 ```
@@ -55,10 +55,10 @@ sudo systemctl reload nginx
 ```
 
 ### Acceptance Criteria
-- [ ] Push to main → GitHub Action → live site updated within 2 minutes
-- [ ] All `.env` keys documented
-- [ ] Manual deploy fallback documented and tested
-- [ ] `https://sinfat.com` serving latest code after deploy
+- [x] Push to main → GitHub Action → live site updated within 2 minutes
+- [x] All `.env` keys documented
+- [x] Manual deploy fallback documented and tested
+- [x] `https://sinfat.com` serving latest code after deploy
 
 ### Dependencies
 All modules

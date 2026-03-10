@@ -49,6 +49,12 @@ return [
         'model' => env('GEMINI_MODEL', 'gemini-2.0-flash'),
     ],
 
+    'github' => [
+        'key' => env('GITHUB_MODELS_KEY'),
+        'model' => env('GITHUB_MODELS_MODEL', 'gpt-4o-mini'),
+        'url' => env('GITHUB_MODELS_URL', 'https://models.inference.ai.azure.com'),
+    ],
+
     'ollama' => [
         'url' => env('OLLAMA_URL', 'http://localhost:11434/api'),
         'model' => env('OLLAMA_MODEL', 'llama3.2'),

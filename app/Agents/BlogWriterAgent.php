@@ -7,6 +7,7 @@ use NeuronAI\Providers\AIProviderInterface;
 use NeuronAI\Providers\Anthropic\Anthropic;
 use NeuronAI\Providers\Gemini\Gemini;
 use NeuronAI\Providers\Ollama\Ollama;
+use NeuronAI\Providers\OpenAILike;
 
 class BlogWriterAgent extends Agent
 {
@@ -22,6 +23,11 @@ class BlogWriterAgent extends Agent
             'gemini' => new Gemini(
                 key: config('services.gemini.key'),
                 model: config('services.gemini.model'),
+            ),
+            'github' => new OpenAILike(
+                baseUri: config('services.github.url'),
+                key: config('services.github.key'),
+                model: config('services.github.model'),
             ),
             default => new Anthropic(
                 key: config('services.anthropic.key'),

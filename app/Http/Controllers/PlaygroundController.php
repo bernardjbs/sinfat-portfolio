@@ -34,7 +34,9 @@ class PlaygroundController extends Controller
     {
         $validated = $request->validated();
 
-        $apiKey = $request->session()->get('guest_api_key', config('services.anthropic.key'));
+        $provider = config('services.ai.provider');
+        $defaultKey = config("services.{$provider}.key");
+        $apiKey = $request->session()->get('guest_api_key', $defaultKey);
         $usedOwnKey = $request->session()->has('guest_api_key');
         $ip = $request->ip();
         $model = config('services.' . config('services.ai.provider') . '.model');

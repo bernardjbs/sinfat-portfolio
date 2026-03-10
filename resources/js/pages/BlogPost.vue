@@ -46,6 +46,24 @@
                prose-strong:text-text prose-hr:border-border"
         v-html="currentPost.content"
       />
+
+      <!-- Post footer -->
+      <footer class="flex items-center justify-between mt-12 pt-6 border-t border-border">
+        <button
+          class="text-dim text-xs hover:text-accent transition-colors"
+          @click="copyLink"
+        >
+          {{ linkCopied ? 'copied!' : 'copy link' }}
+        </button>
+
+        <a
+          href="#"
+          class="text-dim text-xs hover:text-accent transition-colors"
+          @click.prevent="scrollToTop"
+        >
+          ↑ top
+        </a>
+      </footer>
     </article>
 
   </div>
@@ -85,6 +103,12 @@ export default {
     },
   },
 
+  data() {
+    return {
+      linkCopied: false,
+    }
+  },
+
   computed: {
     ...mapState(useBlogStore, ['currentPost', 'loading', 'error']),
 
@@ -108,6 +132,16 @@ export default {
           hljs.highlightElement(block)
         })
       })
+    },
+
+    copyLink() {
+      navigator.clipboard.writeText(window.location.href)
+      this.linkCopied = true
+      setTimeout(() => { this.linkCopied = false }, 2000)
+    },
+
+    scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
     },
   },
 

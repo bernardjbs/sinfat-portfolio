@@ -26,6 +26,11 @@
 
         <div class="flex items-center gap-3 mt-3">
           <span class="text-dim text-xs">{{ formattedDate }}</span>
+          <span v-if="currentPost.reading_time" class="text-dim text-xs">· {{ currentPost.reading_time }} min read</span>
+          <span
+            v-if="currentPost.category"
+            class="text-xs text-dim border border-border rounded px-1.5 py-0.5"
+          >{{ currentPost.category }}</span>
           <span v-if="currentPost.ai_generated" class="text-dim text-xs">· AI drafted</span>
         </div>
       </header>

@@ -14,6 +14,11 @@
 
       <div class="flex items-center gap-3 mt-2">
         <span class="text-dim text-xs">{{ formattedDate }}</span>
+        <span v-if="post.reading_time" class="text-dim text-xs">· {{ post.reading_time }} min read</span>
+        <span
+          v-if="post.category"
+          class="text-xs text-dim border border-border rounded px-1.5 py-0.5"
+        >{{ post.category }}</span>
         <span v-if="post.ai_generated" class="text-dim text-xs">· AI drafted</span>
       </div>
     </router-link>

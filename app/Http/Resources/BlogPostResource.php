@@ -28,6 +28,7 @@ class BlogPostResource extends JsonResource
                 $request->routeIs('api.admin.blog.*'),
                 $this->status
             ),
+            'reading_time' => (int) max(1, ceil(str_word_count(strip_tags((string) $this->content)) / 200)),
             'published_at' => $this->published_at?->toISOString(),
             'ai_generated' => $this->ai_generated,
             'ai_model'     => $this->when(

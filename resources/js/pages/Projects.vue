@@ -59,13 +59,6 @@ export default {
                     tags: ['Laravel 12', 'Vue 3', 'Pinia', 'Tailwind', 'Neuron AI', 'Oracle Cloud', 'GitHub Actions'],
                 },
                 {
-                    name: 'pi-agent-toolkit',
-                    description: 'TypeScript extensions for the pi coding agent. Session focus gate, bash guardrails, workflow observer with slash commands, blog drafting tools, progress tracking with session shutdown prompts, and a custom footer with git branch and context metering.',
-                    story: null,
-                    url: 'https://github.com/bernardjbs/pi-agent-toolkit',
-                    tags: ['TypeScript', 'AI agents', 'CLI tooling', 'pi framework'],
-                },
-                {
                     name: 'Football Analytics Platform',
                     description: 'Sports analytics platform for Australian football — data ingestion, statistical models, and match prediction dashboards.',
                     story: 'Five iterations over two years. Started as a Laravel monolith, moved to separate API + SPA, tried microservices, came back to a simpler architecture. The real lesson was knowing when to stop rebuilding and start shipping.',

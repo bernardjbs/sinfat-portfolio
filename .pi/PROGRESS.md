@@ -82,7 +82,7 @@
 
 ### Tech Decisions
 - **Architecture:** Full SPA (Vue Router + Laravel pure API)
-- **AI runtime:** Neuron AI (`inspector-apm/neuron-ai`)
+- **AI runtime:** Neuron AI (`neuron-core/neuron-ai`)
 - **Streaming:** SSE (Server-Sent Events)
 - **Markdown editor:** md-editor-v3
 - **Auth:** Custom (no Breeze/Jetstream)
@@ -162,13 +162,21 @@
 
 ---
 
-## Blockers / Questions
-
-*(Add anything here that needs resolving before continuing)*
+## Outstanding Items
+- Email `bernard@sinfat.com` mailbox not configured
+- Football Analytics project description is placeholder — real story TBD
+- `og:image` not set — no images on the site yet
+- Light mode could use further colour tuning
+- Submit sitemap to Google Search Console
+- Supervisor for queue workers not yet set up on prod
+- GitHub Models PAT (`sinfat-ai`) expires — check expiry and rotate before it lapses
 
 ---
 
 ## Wins / Key Learnings
-
-*(Fill in as you complete modules)*
+- All 11 modules complete — sinfat.com live and fully deployed
+- GitHub Models provides free AI without billing — OpenAILike provider in Neuron AI
+- Platform PHP pin in composer.json prevents server/local version drift
+- Redis server ≠ PHP Redis extension — both required
+- Never swallow exceptions silently — always log the real error
 

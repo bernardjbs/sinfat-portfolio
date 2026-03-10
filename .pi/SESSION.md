@@ -46,11 +46,11 @@ Read this file first at the start of every session. It tells you where you are a
 - `og:image` not set — no images on the site yet
 - Light mode could use further colour tuning
 - Submit sitemap to Google Search Console after launch
+- Supervisor for queue workers not yet set up on prod
 
 ## What's Next
 All build modules are done. Potential next steps:
 - Write first blog posts
-- Set AI provider keys on prod
 - Submit sitemap to Google Search Console
 - Polish light mode colours
 - Add og:image meta tags

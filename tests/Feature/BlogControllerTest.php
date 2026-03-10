@@ -129,4 +129,28 @@ class BlogControllerTest extends TestCase
 
         $this->assertArrayNotHasKey('raw_content', $response->json('data'));
     }
+
+    // Reading time
+
+    public function test_listing_includes_reading_time(): void
+    {
+        BlogPost::factory()->published()->create([
+            'content' => implode(' ', array_fill(0, 400, 'word')),
+        ]);
+
+        $response = $this->getJson('/api/blog')->assertOk();
+
+        $this->assertEquals(2, $response->json('data.0.reading_time'));
+    }
+
+    public function test_reading_time_is_at_least_one_minute(): void
+    {
+        BlogPost::factory()->published()->create([
+            'content' => 'Short post.',
+        ]);
+
+        $response = $this->getJson('/api/blog')->assertOk();
+
+        $this->assertEquals(1, $response->json('data.0.reading_time'));
+    }
 }

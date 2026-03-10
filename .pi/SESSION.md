@@ -7,7 +7,7 @@ Read this file first at the start of every session. It tells you where you are a
 ## Key Facts
 - Local: `https://sinfat.test` (Valet)
 - Prod: `sinfat.com` — Oracle Cloud Arm A1 VM
-- SSH: `ssh -i ~/.ssh/sinfat-portfolio.key ubuntu@140.238.202.198`
+- SSH: `ssh -i ~/.ssh/sinfat-portfolio.key ubuntu@<server-ip>`
 - Repo: `bernardjbs/sinfat-portfolio` (private), code at `/Users/bernard/code/sinfat-portfolio`
 - GitHub Actions secrets set ✅ (`SERVER_HOST`, `SERVER_SSH_KEY`)
 

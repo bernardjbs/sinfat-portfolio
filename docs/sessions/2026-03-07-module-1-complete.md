@@ -15,12 +15,12 @@ Four remaining Module 1 tasks completed in one session:
 
 ## Oracle VM IP
 
-`140.238.202.198` — recorded in `specs/module-01-infrastructure.md`
+`<server-ip>` — recorded in `specs/module-01-infrastructure.md`
 
 ## GitHub Actions Secrets Still Needed
 
 Two secrets must be added in GitHub repo → Settings → Secrets → Actions:
-- `SERVER_HOST` → `140.238.202.198`
+- `SERVER_HOST` → `<server-ip>`
 - `SERVER_SSH_KEY` → contents of `~/.ssh/sinfat-portfolio.key`
 
 Until these are set, the deploy workflow will fail on push.

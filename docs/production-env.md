@@ -61,7 +61,7 @@ Location on server: `/var/www/sinfat/.env`
 ## How to Edit
 
 ```bash
-ssh -i ~/.ssh/sinfat-portfolio.key ubuntu@140.238.202.198
+ssh -i ~/.ssh/sinfat-portfolio.key ubuntu@<server-ip>
 sudo nano /var/www/sinfat/.env
 cd /var/www/sinfat && php artisan config:cache
 ```

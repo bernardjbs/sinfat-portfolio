@@ -74,7 +74,7 @@ numprocs=1
 user=ubuntu
 ```
 
-**Oracle VM public IP:** `140.238.202.198`
+**Oracle VM public IP:** `<server-ip>`
 
 ### Acceptance Criteria
 - [x] `redis-cli ping` returns `PONG`

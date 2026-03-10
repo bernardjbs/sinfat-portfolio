@@ -29,7 +29,7 @@ git push origin main
 9. `sudo systemctl reload nginx` — reload Nginx gracefully
 
 **Secrets required** (set in GitHub repo → Settings → Secrets):
-- `SERVER_HOST` — Oracle VM IP (`140.238.202.198`)
+- `SERVER_HOST` — Oracle VM IP (`<server-ip>`)
 - `SERVER_SSH_KEY` — contents of `~/.ssh/sinfat-portfolio.key`
 
 **Monitor:** Check the Actions tab at `github.com/bernardjbs/sinfat-portfolio/actions`
@@ -42,7 +42,7 @@ If GitHub Actions fails or you need to deploy manually:
 
 ```bash
 # SSH into the server
-ssh -i ~/.ssh/sinfat-portfolio.key ubuntu@140.238.202.198
+ssh -i ~/.ssh/sinfat-portfolio.key ubuntu@<server-ip>
 
 # Deploy
 cd /var/www/sinfat
@@ -78,7 +78,7 @@ Before pushing to `main`:
 If a deploy breaks the site:
 
 ```bash
-ssh -i ~/.ssh/sinfat-portfolio.key ubuntu@140.238.202.198
+ssh -i ~/.ssh/sinfat-portfolio.key ubuntu@<server-ip>
 cd /var/www/sinfat
 
 # Find the last good commit
@@ -103,7 +103,7 @@ Then fix the issue locally, push a fix to `main`, and let auto-deploy bring the 
 |------|-------|
 | Provider | Oracle Cloud (Arm A1, free tier) |
 | OS | Ubuntu 22.04 |
-| IP | `140.238.202.198` |
+| IP | `<server-ip>` |
 | Web root | `/var/www/sinfat` |
 | PHP | 8.3-FPM |
 | DB | MySQL 8 |

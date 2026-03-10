@@ -10,6 +10,7 @@
     <meta property="og:description" content="Bernard — full-stack developer (Laravel + Vue) based in Perth, Australia.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://sinfat.com">
+    <link rel="alternate" type="application/rss+xml" title="sinfat.com RSS" href="/feed.xml">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="bg-bg text-text antialiased">

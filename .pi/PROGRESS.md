@@ -75,9 +75,9 @@
 - SSH key: `~/.ssh/sinfat-portfolio.key`
 
 ### Infrastructure Still Needed
-- [ ] Redis on VM
-- [ ] Let's Encrypt SSL (Cloudflare Full mode)
-- [ ] GitHub Actions auto-deploy
+- [x] Redis on VM
+- [x] Let's Encrypt SSL (Cloudflare Full mode)
+- [x] GitHub Actions auto-deploy
 - [ ] Supervisor for queue workers
 
 ### Tech Decisions
@@ -97,17 +97,23 @@
 ### Build Modules (from SPEC.md)
 | Module | Title | Status | Model |
 |--------|-------|--------|-------|
-| 1 | Infrastructure & Server Setup | ⬜ | 🟢 Sonnet |
-| 2 | Database Schema | ⬜ | 🔴 Opus |
-| 3 | Authentication | ⬜ | 🟢 Sonnet |
-| 4 | API Contract | ⬜ | 🔴 Opus |
-| 5 | Blog (Admin + Public) | ⬜ | 🟢 Sonnet |
-| 6 | AI Integration | ⬜ | 🔴 Opus |
-| 7 | Guest Playground | ⬜ | 🔴 Opus |
-| 8 | Frontend SPA Foundation | ⬜ | 🟢 Sonnet |
-| 9 | Static Pages | ⬜ | 🟢 Sonnet |
-| 10 | Sitemap + SEO | ⬜ | 🟢 Sonnet |
-| 11 | Deploy Pipeline Polish | ⬜ | 🟢 Sonnet |
+| 1 | Infrastructure & Server Setup | ✅ | 🟢 Sonnet |
+| 2 | Database Schema | ✅ | 🔴 Opus |
+| 3 | Authentication | ✅ | 🟢 Sonnet |
+| 4 | API Contract | ✅ | 🔴 Opus |
+| 5 | Blog (Admin + Public) | ✅ | 🟢 Sonnet |
+| 6 | AI Integration | ✅ | 🔴 Opus |
+| 7 | Guest Playground | ✅ | 🔴 Opus |
+| 8 | Frontend SPA Foundation | ✅ | 🟢 Sonnet |
+| 9 | Static Pages | ✅ | 🟢 Sonnet |
+| 10 | Sitemap + SEO | ✅ | 🟢 Sonnet |
+| 11 | Deploy Pipeline Polish | ✅ | 🟢 Sonnet |
+
+### AI Provider (2026-03-10)
+- **Production:** GitHub Models (gpt-4o-mini) — free via fine-grained PAT
+- **Local:** Ollama (llama3.2)
+- Gemini attempted but free tier requires billing account
+- Supported providers: `github`, `anthropic`, `gemini`, `ollama`
 
 ### Pi Skills (built 2026-03-07)
 - [x] `portfolio-context/SKILL.md` — architecture, stack, routes, env, colour tokens

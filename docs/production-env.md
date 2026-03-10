@@ -41,7 +41,9 @@ Location on server: `/var/www/sinfat/.env`
 
 | Key | Value | Notes |
 |-----|-------|-------|
-| `AI_PROVIDER` | `anthropic` | Or `gemini` — see `config/ai.php` |
+| `AI_PROVIDER` | `github` | Options: `github`, `anthropic`, `gemini`, `ollama` |
+| `GITHUB_MODELS_KEY` | `github_pat_...` | Required if provider is `github`. Free via GitHub PAT with Models permission |
+| `GITHUB_MODELS_MODEL` | `gpt-4o-mini` | Default model for GitHub Models |
 | `ANTHROPIC_API_KEY` | `sk-ant-...` | Required if provider is `anthropic` |
 | `ANTHROPIC_MODEL` | `claude-sonnet-4-5` | Or any supported model |
 | `GEMINI_API_KEY` | *(optional)* | Required if provider is `gemini` |

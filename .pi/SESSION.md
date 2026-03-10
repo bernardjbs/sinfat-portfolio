@@ -35,12 +35,12 @@ Read this file first at the start of every session. It tells you where you are a
 ## Current State
 - **Backend:** All API routes implemented. All services, controllers, resources built.
 - **Frontend:** Full SPA — Home, About, Blog, AI Chat, Playground, Admin. Per-route meta tags. Theme toggle.
-- **Tests:** 58 passing.
+- **AI:** Live on prod via GitHub Models (gpt-4o-mini). Free, no billing required.
+- **Tests:** 58 passing + 3 live AI tests (auto-skip on ollama).
 - **Infra:** sinfat.com live. GitHub Actions auto-deploy on push to main. Sitemap generated on deploy. Redis for session/cache/queue. PHP 8.3 + Nginx + MySQL 8.
 - **Deploy:** Push to main → live in ~80 seconds. Manual fallback documented in `docs/deploy-guide.md`.
 
 ## Outstanding Items
-- Prod `.env` needs `AI_PROVIDER` + `ANTHROPIC_API_KEY` set before AI works on sinfat.com
 - Email `bernard@sinfat.com` mailbox not configured
 - Football Analytics description is placeholder — real story TBD
 - `og:image` not set — no images on the site yet

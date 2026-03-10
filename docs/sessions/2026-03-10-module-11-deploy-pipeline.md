@@ -39,8 +39,18 @@
 
 ---
 
+## Post-Module Fixes
+
+### AI Provider Setup (2026-03-10)
+- Gemini API key had `limit: 0` — Google requires billing account even for free tier
+- Switched to **GitHub Models** (free, no billing) via `OpenAILike` Neuron AI provider
+- Added `github` provider to `BlogWriterAgent`, `GuestBlogWriterAgent`, and `config/services.php`
+- Fixed `PlaygroundController` hardcoded Anthropic key fallback → now reads active provider's key
+- Added error logging to `GuestUsageService` and `AiService` (was swallowing exceptions silently)
+- Added live AI integration tests (`AiLiveTest.php`) — chat, streaming, guest agent. Auto-skip on ollama.
+- **Tests:** 58 passing + 3 live AI tests (skipped when provider is ollama)
+
 ## Outstanding Items
-- Prod `.env` still needs `AI_PROVIDER` + `ANTHROPIC_API_KEY` before AI features work on sinfat.com
 - Email `bernard@sinfat.com` mailbox not configured
 - Football Analytics project description is placeholder
 - `og:image` not set (no images on site yet)
@@ -53,3 +63,6 @@
 - Always pin `platform.php` in `composer.json` when local PHP > server PHP
 - Redis server ≠ PHP Redis extension — both are required
 - `composer install --no-dev` fails silently in GitHub Actions SSH if lock file has incompatible packages
+- Gemini free tier requires a billing account (limit: 0 without one)
+- GitHub Models is truly free — just needs a fine-grained PAT with Models read permission
+- Never swallow exceptions silently — always log the real error

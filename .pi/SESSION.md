@@ -27,7 +27,7 @@ Read this file first at the start of every session. It tells you where you are a
 | 9 | Static Pages | ✅ Complete |
 | 10 | Sitemap + SEO | ✅ Complete |
 | 11 | Deploy Pipeline Polish | ✅ Complete |
-| 12 | Blog Polish | ⬜ |
+| 12 | Blog Polish | ✅ Complete |
 
 **All 11 modules complete. 🎉**
 
@@ -37,7 +37,7 @@ Read this file first at the start of every session. It tells you where you are a
 - **Backend:** All API routes implemented. All services, controllers, resources built.
 - **Frontend:** Full SPA — Home, About, Blog, AI Chat, Playground, Admin. Per-route meta tags. Theme toggle.
 - **AI:** Live on prod via GitHub Models (gpt-4o-mini). Free, no billing required.
-- **Tests:** 58 passing + 3 live AI tests (auto-skip on ollama).
+- **Tests:** 65 passing + 3 live AI tests (auto-skip on ollama).
 - **Infra:** sinfat.com live. GitHub Actions auto-deploy on push to main. Sitemap generated on deploy. Redis for session/cache/queue. PHP 8.3 + Nginx + MySQL 8.
 - **Deploy:** Push to main → live in ~80 seconds. Manual fallback documented in `docs/deploy-guide.md`.
 
@@ -50,7 +50,7 @@ Read this file first at the start of every session. It tells you where you are a
 - Supervisor for queue workers not yet set up on prod
 
 ## What's Next
-Start Module 12 — Blog Polish. Spec at `specs/module-12-blog-polish.md`.
+All modules complete. Write first blog posts using the blog-writer skill.
 - Submit sitemap to Google Search Console
 - Polish light mode colours
 - Add og:image meta tags

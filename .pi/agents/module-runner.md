@@ -81,7 +81,7 @@ Rules:
 - `php artisan test` must pass before every commit — non-negotiable
 - Use `git add -p` — never `git add .` without reviewing
 - Never commit directly to `main`
-- Push to `main` triggers the GitHub Actions deploy — only push production-ready code
+- After pushing to `main`, run `just deploy` to deploy — only push production-ready code
 
 Use `git-assistant` to review staged changes and draft commit messages if needed.
 

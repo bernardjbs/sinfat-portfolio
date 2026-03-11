@@ -7,9 +7,9 @@ Read this file first at the start of every session. It tells you where you are a
 ## Key Facts
 - Local: `https://sinfat.test` (Valet)
 - Prod: `sinfat.com` — Oracle Cloud Arm A1 VM
-- SSH: `ssh -i ~/.ssh/sinfat-portfolio.key ubuntu@<server-ip>`
+- SSH: `ssh sinfat` (config in `~/.ssh/config`)
 - Repo: `bernardjbs/sinfat-portfolio` (private), code at `/Users/bernard/code/sinfat-portfolio`
-- GitHub Actions secrets set ✅ (`SERVER_HOST`, `SERVER_SSH_KEY`)
+- Deploy: `just deploy` (SSH + `scripts/deploy.sh` on server)
 
 ---
 
@@ -38,8 +38,8 @@ Read this file first at the start of every session. It tells you where you are a
 - **Frontend:** Full SPA — Home, About, Blog, AI Chat, Playground, Admin. Per-route meta tags. Theme toggle.
 - **AI:** Live on prod via GitHub Models (gpt-4o-mini). Free, no billing required.
 - **Tests:** 65 passing + 3 live AI tests (auto-skip on ollama).
-- **Infra:** sinfat.com live. GitHub Actions auto-deploy on push to main. Sitemap generated on deploy. Redis for session/cache/queue. PHP 8.3 + Nginx + MySQL 8.
-- **Deploy:** Push to main → live in ~80 seconds. Manual fallback documented in `docs/deploy-guide.md`.
+- **Infra:** sinfat.com live. Oracle Cloud Arm A1 (956MB RAM + 2GB swap). Redis for session/cache/queue. PHP 8.3 + Nginx + MySQL 8. Node 22 for Vite builds.
+- **Deploy:** `just deploy` — SSHes into server, runs `scripts/deploy.sh` (pull, composer, npm, build, migrate, cache, sitemap, nginx reload). See `docs/deploy-guide.md`.
 
 ## Outstanding Items
 - Email `bernard@sinfat.com` mailbox not configured

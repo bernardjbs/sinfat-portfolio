@@ -12,7 +12,7 @@ Personal portfolio and technical blog by Bernard — full-stack developer based 
 - **Frontend:** Vue 3 (Options API), Pinia, Tailwind CSS
 - **AI:** Neuron AI with GitHub Models (GPT-4o-mini)
 - **Database:** MySQL 8, Redis
-- **Server:** Oracle Cloud Arm A1, Nginx, GitHub Actions auto-deploy
+- **Server:** Oracle Cloud Arm A1, Nginx, deploy via `just deploy`
 - **Design:** Terminal aesthetic — Geist Mono, dark-first, green accents
 - **Dev workflow:** [pi](https://github.com/mariozechner/pi) coding agent with custom skills, agents, and module runner
 

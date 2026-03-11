@@ -77,7 +77,7 @@
 ### Infrastructure Still Needed
 - [x] Redis on VM
 - [x] Let's Encrypt SSL (Cloudflare Full mode)
-- [x] GitHub Actions auto-deploy
+- [x] Deploy script (`just deploy` → `scripts/deploy.sh`)
 - [ ] Supervisor for queue workers
 
 ### Tech Decisions

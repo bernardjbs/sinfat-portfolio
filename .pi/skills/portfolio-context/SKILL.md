@@ -207,11 +207,10 @@ cd /Users/bernard/code/sinfat-portfolio
 
 # Deploy
 git push origin main
-# → GitHub Actions auto-deploys to VM
+just deploy
+# → SSHes into server, runs scripts/deploy.sh
+# → pull, composer, npm install, vite build, migrate, cache, sitemap, nginx reload
 
-# Manual fallback
-ssh -i ~/.ssh/sinfat-portfolio.key ubuntu@<oracle-ip>
-cd /var/www/sinfat && git pull && composer install --no-dev --optimize-autoloader
-php artisan migrate --force && php artisan config:cache && php artisan route:cache
-php artisan sitemap:generate && sudo systemctl reload nginx
+# SSH into server directly
+just ssh
 ```

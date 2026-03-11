@@ -19,7 +19,7 @@ class BlogPostFactory extends Factory
             'slug'         => Str::slug($title),
             'excerpt'      => fake()->paragraph(),
             'content'      => fake()->paragraphs(3, true),
-            'category'     => fake()->randomElement(['laravel', 'vue', 'ai', 'devops', null]),
+            'category'     => 'development',
             'status'       => 'draft',
             'published_at' => null,
             'ai_generated' => false,

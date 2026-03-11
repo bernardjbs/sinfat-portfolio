@@ -21,12 +21,14 @@ git push origin main
 1. `git checkout .gitignore` — prevents server-side `.gitignore` drift
 2. `git pull origin main` — pull latest code
 3. `composer install --no-dev --optimize-autoloader` — install production deps
-4. `php artisan migrate --force` — run pending migrations
-5. `php artisan config:cache` — cache config
-6. `php artisan route:cache` — cache routes
-7. `php artisan view:cache` — cache Blade views
-8. `php artisan sitemap:generate` — regenerate sitemap.xml
-9. `sudo systemctl reload nginx` — reload Nginx gracefully
+4. `npm ci` — install frontend deps from lockfile (clean, deterministic)
+5. `npm run build` — compile Vue/Tailwind assets with Vite
+6. `php artisan migrate --force` — run pending migrations
+7. `php artisan config:cache` — cache config
+8. `php artisan route:cache` — cache routes
+9. `php artisan view:cache` — cache Blade views
+10. `php artisan sitemap:generate` — regenerate sitemap.xml
+11. `sudo systemctl reload nginx` — reload Nginx gracefully
 
 **Secrets required** (set in GitHub repo → Settings → Secrets):
 - `SERVER_HOST` — Oracle VM IP (`<server-ip>`)
@@ -48,6 +50,8 @@ ssh -i ~/.ssh/sinfat-portfolio.key ubuntu@<server-ip>
 cd /var/www/sinfat
 git pull origin main
 composer install --no-dev --optimize-autoloader
+npm ci
+npm run build
 php artisan migrate --force
 php artisan config:cache
 php artisan route:cache
@@ -67,9 +71,8 @@ sudo systemctl reload nginx
 
 Before pushing to `main`:
 1. `php artisan test` — all tests pass
-2. `npm run build` — frontend builds cleanly (if JS changed)
-3. No `dd()`, `console.log`, or debug code in the diff
-4. Commit message follows Conventional Commits format
+2. No `dd()`, `console.log`, or debug code in the diff
+3. Commit message follows Conventional Commits format
 
 ---
 

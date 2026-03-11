@@ -169,6 +169,13 @@
         class="flex-1 bg-transparent text-dim text-xs placeholder:text-dim
                border-none outline-none focus:outline-none"
       />
+      <input
+        v-model="category"
+        type="text"
+        placeholder="category"
+        class="shrink-0 w-32 bg-transparent text-dim text-xs placeholder:text-dim
+               border-none outline-none focus:outline-none text-right"
+      />
       <div v-if="isEditing && adminCurrentPost" class="flex items-center gap-4 shrink-0">
         <span class="text-dim text-xs">
           created {{ formattedDate(adminCurrentPost.created_at) }}
@@ -202,6 +209,7 @@ export default {
       title: '',
       content: '',
       excerpt: '',
+      category: 'development',
       currentStatus: 'draft',
       saving: null,
       toggling: false,
@@ -251,9 +259,10 @@ export default {
       this.saving = status
 
       const payload = {
-        title:   this.title.trim(),
-        content: this.content,
-        excerpt: this.excerpt.trim() || null,
+        title:    this.title.trim(),
+        content:  this.content,
+        excerpt:  this.excerpt.trim() || null,
+        category: this.category.trim() || null,
         status,
       }
 
@@ -288,6 +297,7 @@ export default {
       this.title         = post.title ?? ''
       this.content       = post.raw_content ?? ''
       this.excerpt       = post.excerpt ?? ''
+      this.category      = post.category ?? 'development'
       this.currentStatus = post.status ?? 'draft'
     },
 

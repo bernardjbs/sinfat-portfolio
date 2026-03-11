@@ -51,12 +51,12 @@ class FeedControllerTest extends TestCase
     {
         BlogPost::factory()->published()->create([
             'title'    => 'Laravel Tips',
-            'category' => 'laravel',
+            'category' => 'development',
         ]);
 
         $response = $this->get('/feed.xml');
 
-        $this->assertStringContainsString('<category>laravel</category>', $response->getContent());
+        $this->assertStringContainsString('<category>development</category>', $response->getContent());
     }
 
     public function test_feed_returns_valid_xml_with_no_posts(): void

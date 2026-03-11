@@ -36,3 +36,11 @@ test:
 # tinker — open Laravel tinker REPL
 tinker:
     php artisan tinker
+
+# deploy — deploy to production (requires SSH config for 'sinfat' host)
+deploy:
+    ssh sinfat "bash /var/www/sinfat/scripts/deploy.sh"
+
+# ssh — open SSH session to production server
+ssh:
+    ssh sinfat

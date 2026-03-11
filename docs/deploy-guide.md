@@ -4,66 +4,53 @@ How code gets from your machine to `sinfat.com`.
 
 ---
 
-## Automatic Deploy (GitHub Actions)
+## Deploy
 
-Every push to `main` triggers the deploy workflow.
-
-**Flow:**
-```
-git push origin main
-  → GitHub Actions triggers `.github/workflows/deploy.yml`
-  → SSH into Oracle VM
-  → git pull, composer install, migrate, cache, sitemap, nginx reload
-  → Live in ~60 seconds
+```bash
+just deploy
 ```
 
-**What the action does:**
-1. `git checkout .gitignore` — prevents server-side `.gitignore` drift
-2. `git pull origin main` — pull latest code
-3. `composer install --no-dev --optimize-autoloader` — install production deps
-4. `npm ci` — install frontend deps from lockfile (clean, deterministic)
-5. `npm run build` — compile Vue/Tailwind assets with Vite
-6. `php artisan migrate --force` — run pending migrations
-7. `php artisan config:cache` — cache config
-8. `php artisan route:cache` — cache routes
-9. `php artisan view:cache` — cache Blade views
-10. `php artisan sitemap:generate` — regenerate sitemap.xml
-11. `sudo systemctl reload nginx` — reload Nginx gracefully
+That's it. This SSHes into the server and runs `scripts/deploy.sh`, which:
 
-**Secrets required** (set in GitHub repo → Settings → Secrets):
-- `SERVER_HOST` — Oracle VM IP (`<server-ip>`)
-- `SERVER_SSH_KEY` — contents of `~/.ssh/sinfat-portfolio.key`
-
-**Monitor:** Check the Actions tab at `github.com/bernardjbs/sinfat-portfolio/actions`
+1. `git pull origin main` — pull latest code
+2. `composer install --no-dev --optimize-autoloader` — install PHP deps
+3. `npm install --prefer-offline` — install frontend deps (reuses existing node_modules)
+4. `npm run build` — compile Vue/Tailwind assets with Vite
+5. `php artisan migrate --force` — run pending migrations
+6. `php artisan config:cache` — cache config
+7. `php artisan route:cache` — cache routes
+8. `php artisan view:cache` — cache Blade views
+9. `php artisan sitemap:generate` — regenerate sitemap.xml
+10. `sudo systemctl reload nginx` — reload Nginx gracefully
 
 ---
 
-## Manual Deploy Fallback
+## SSH Config
 
-If GitHub Actions fails or you need to deploy manually:
+The deploy command uses an SSH alias. Add this to `~/.ssh/config`:
 
-```bash
-# SSH into the server
-ssh -i ~/.ssh/sinfat-portfolio.key ubuntu@<server-ip>
-
-# Deploy
-cd /var/www/sinfat
-git pull origin main
-composer install --no-dev --optimize-autoloader
-npm ci
-npm run build
-php artisan migrate --force
-php artisan config:cache
-php artisan route:cache
-php artisan view:cache
-php artisan sitemap:generate
-sudo systemctl reload nginx
+```
+Host sinfat
+    HostName <server-ip>
+    User ubuntu
+    IdentityFile ~/.ssh/sinfat-portfolio.key
 ```
 
-**When to use manual deploy:**
-- GitHub Actions runner is down
-- You need to deploy a hotfix immediately
-- You need to run a one-off artisan command on the server
+Then `ssh sinfat` or `just ssh` connects directly.
+
+---
+
+## Manual Deploy
+
+If you need to run steps individually:
+
+```bash
+just ssh
+cd /var/www/sinfat
+bash scripts/deploy.sh
+```
+
+Or run individual commands as needed.
 
 ---
 
@@ -81,7 +68,7 @@ Before pushing to `main`:
 If a deploy breaks the site:
 
 ```bash
-ssh -i ~/.ssh/sinfat-portfolio.key ubuntu@<server-ip>
+just ssh
 cd /var/www/sinfat
 
 # Find the last good commit
@@ -90,13 +77,15 @@ git log --oneline -10
 # Reset to it
 git checkout <commit-hash> .
 composer install --no-dev --optimize-autoloader
+npm install --prefer-offline
+npm run build
 php artisan config:cache
 php artisan route:cache
 php artisan view:cache
 sudo systemctl reload nginx
 ```
 
-Then fix the issue locally, push a fix to `main`, and let auto-deploy bring the server back to head.
+Then fix the issue locally, push a fix to `main`, and `just deploy`.
 
 ---
 
@@ -106,7 +95,6 @@ Then fix the issue locally, push a fix to `main`, and let auto-deploy bring the 
 |------|-------|
 | Provider | Oracle Cloud (Arm A1, free tier) |
 | OS | Ubuntu 22.04 |
-| IP | `<server-ip>` |
 | Web root | `/var/www/sinfat` |
 | PHP | 8.3-FPM |
 | DB | MySQL 8 |

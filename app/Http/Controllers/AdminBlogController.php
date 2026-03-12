@@ -20,7 +20,13 @@ class AdminBlogController extends Controller
 
     public function store(StoreBlogPostRequest $request): \Illuminate\Http\JsonResponse
     {
-        $post = BlogPost::create($request->validated());
+        $data = $request->validated();
+
+        if (($data['status'] ?? null) === 'published' && empty($data['published_at'])) {
+            $data['published_at'] = now();
+        }
+
+        $post = BlogPost::create($data);
 
         return (new BlogPostResource($post))->response()->setStatusCode(201);
     }
@@ -35,7 +41,13 @@ class AdminBlogController extends Controller
     public function update(StoreBlogPostRequest $request, int $id): BlogPostResource
     {
         $post = BlogPost::findOrFail($id);
-        $post->update($request->validated());
+        $data = $request->validated();
+
+        if (($data['status'] ?? null) === 'published' && !$post->published_at) {
+            $data['published_at'] = now();
+        }
+
+        $post->update($data);
 
         return new BlogPostResource($post);
     }

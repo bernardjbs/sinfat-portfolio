@@ -31,14 +31,14 @@
         {{ currentStatus }}
       </span>
 
-      <!-- Save draft -->
+      <!-- Save -->
       <button
         class="shrink-0 border border-border text-text px-3 py-1.5 text-xs
                hover:border-accent hover:text-accent transition-colors"
         :disabled="saving"
-        @click="save('draft')"
+        @click="save(currentStatus)"
       >
-        {{ saving === 'draft' ? 'saving...' : 'save draft' }}
+        {{ saving === currentStatus ? 'saving...' : 'save' }}
       </button>
 
       <!-- Publish / Unpublish -->
@@ -135,8 +135,8 @@
                  placeholder:text-dim"
           placeholder="write markdown here..."
           spellcheck="false"
-          @keydown.ctrl.s.prevent="save('draft')"
-          @keydown.meta.s.prevent="save('draft')"
+          @keydown.ctrl.s.prevent="save(currentStatus)"
+          @keydown.meta.s.prevent="save(currentStatus)"
         />
       </div>
 

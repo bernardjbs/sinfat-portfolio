@@ -48,7 +48,7 @@ Read this file first at the start of every session. It tells you where you are a
 - Light mode could use further colour tuning
 - Submit sitemap to Google Search Console after launch
 - Supervisor for queue workers not yet set up on prod
-- Neuron AI blog tools — give the BlogWriterAgent tools to read skills, query posts, and read project files so it can write project-aware posts from the admin UI
+- Neuron AI blog tools — give the BlogWriterAgent tools to read skills, query posts, and read project files so it can write project-aware posts from the admin UI. Apply LLM security patterns: tool filtering by role, permissions enforced at the handler, scoped data access
 
 ## What's Next
 All modules complete. Write first blog posts using the blog-writer skill.

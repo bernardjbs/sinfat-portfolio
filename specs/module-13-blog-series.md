@@ -34,14 +34,14 @@ All posts: `development`
 - Sources: 05, 06, 08
 - Words: 703
 
-#### Post 2
+#### Post 2 ✅ DRAFTED
 **"Learning Pi — What 12 Modules Taught Me About AI Coding Agents"**
 - The pi tutorial journey — from vanilla agent to agent teams and meta-agents
 - What "open and extensible" actually means vs Claude Code
 - The toolkit that came out of it (5 extensions, 3-layer architecture)
 - Sources: 01, 02, 03, 04, 05
 
-#### Post 3
+#### Post 3 ✅ DRAFTED
 **"I Spent a Full Day Planning Before Writing a Single Line of Code"**
 - Skills and agents — teaching AI about your specific project, not generic frameworks
 - The module runner workflow — plan → execute → test → security → commit → document
@@ -52,14 +52,14 @@ All posts: `development`
 
 ### Act 2: The Build
 
-#### Post 4
+#### Post 4 ✅ DRAFTED
 **"Setting Up an Oracle Cloud Arm VM for Laravel — Five Roadblocks and How AI Helped"**
 - Oracle Cloud free tier, Cloudflare, Nginx, PHP-FPM, MySQL
 - The five roadblocks (VCN, Composer, SQLite default, 522, iptables double firewall)
 - What AI got right immediately vs what took conversation
 - Sources: 06, 10
 
-#### Post 5
+#### Post 5 ✅ DRAFTED
 **"Database Schema Decisions That Saved Me Later"**
 - Why we dropped the guest_usage table
 - No foreign keys — deliberate choice for a solo project

@@ -59,6 +59,21 @@ Update `.pi/SESSION.md`:
 - Any new conventions or gotchas discovered?
 - Captured in the relevant skill file?
 
+### 8. Living Documents — Updated
+If the session changed architecture, workflow, infrastructure, or conventions, update these files to reflect the **current** state:
+
+| File | Contains |
+|------|----------|
+| `.pi/SESSION.md` | Current state, outstanding items, what's next |
+| `.pi/PROGRESS.md` | Module status, infrastructure checklist, outstanding items |
+| `.pi/skills/*.md` | Conventions, patterns, workflow rules |
+| `.pi/agents/*.md` | Agent personas and instructions |
+| `README.md` | Stack, features, architecture overview |
+| `docs/deploy-guide.md` | Deploy steps and server details |
+| `docs/production-env.md` | Env vars and server config |
+
+**Only update what changed this session.** Don't touch historical docs (session notes, specs, summaries) — those are accurate for when they were written.
+
 ---
 
 ## Closing Report Format
@@ -73,6 +88,7 @@ Session closed — [date]
 5. Outstanding  ✅/❌ — [count or "none"]
 6. Blog summary ✅/❌ — [filename or "not needed this session"]
 7. Skills       ✅/❌ — [what changed or "no changes"]
+8. Living docs  ✅/❌ — [files updated or "no changes needed"]
 
 Next session starts at: [exact instruction]
 ```

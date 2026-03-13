@@ -46,6 +46,5 @@
 - `--force` flag skips confirmation but keeps all safety validations
 
 ## Outstanding Items
-- Posts 11–14 not yet published on sinfat.com (drafts ready for review)
+- All 14 posts published on sinfat.com
 - Em dash pass across all 14 posts (deferred)
-- Post 10 and 7 updated on prod, but 12/13/14 are drafts (no prod sync needed yet)

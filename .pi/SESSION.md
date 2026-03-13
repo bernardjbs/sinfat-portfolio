@@ -52,7 +52,7 @@ Read this file first at the start of every session. It tells you where you are a
 
 ## What's Next
 Continue Module 13 — Blog Series:
-- Posts 11–14 drafted locally, need final review and publish on sinfat.com
+- All 14 posts published on sinfat.com
 - Do an em dash reduction pass across all 14 posts
 - Read spec: `specs/module-13-blog-series.md`
 - Use blog-writer skill for tone/conventions

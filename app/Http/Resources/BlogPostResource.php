@@ -4,7 +4,10 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Str;
+use League\CommonMark\Environment\Environment;
+use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
+use League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkExtension;
+use League\CommonMark\MarkdownConverter;
 
 class BlogPostResource extends JsonResource
 {
@@ -18,7 +21,7 @@ class BlogPostResource extends JsonResource
             'category'     => $this->category,
             'content'      => $this->when(
                 $request->routeIs('api.blog.show'),
-                fn() => Str::markdown((string) $this->content)
+                fn() => $this->renderMarkdown((string) $this->content)
             ),
             'raw_content'  => $this->when(
                 $request->routeIs('api.admin.blog.show'),
@@ -41,5 +44,25 @@ class BlogPostResource extends JsonResource
                 $this->updated_at?->toISOString()
             ),
         ];
+    }
+
+    private function renderMarkdown(string $content): string
+    {
+        $environment = new Environment([
+            'heading_permalink' => [
+                'html_class'      => 'heading-permalink',
+                'id_prefix'       => '',
+                'fragment_prefix' => '',
+                'insert'          => 'before',
+                'symbol'          => '',
+            ],
+        ]);
+
+        $environment->addExtension(new CommonMarkCoreExtension());
+        $environment->addExtension(new HeadingPermalinkExtension());
+
+        $converter = new MarkdownConverter($environment);
+
+        return $converter->convert($content)->getContent();
     }
 }

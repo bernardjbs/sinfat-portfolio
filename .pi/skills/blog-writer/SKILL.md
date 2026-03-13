@@ -50,7 +50,7 @@ All posts use the category **`development`**. This is a single-topic blog about 
 
 ## Tone & Style
 
-The blog reflects the terminal aesthetic — technical, opinionated, concise.
+The blog reflects the terminal aesthetic — technical, opinionated, concise. But above all: **honest**. The author is a developer learning in public, not a conference speaker or thought leader. If he doesn't know something, he says so. If the AI did most of the thinking, he admits it. The voice is someone figuring things out — not someone who already has.
 
 **Do:**
 - Write in first person ("I built", "I discovered")
@@ -61,10 +61,17 @@ The blog reflects the terminal aesthetic — technical, opinionated, concise.
 - Include gotchas and what didn't work
 - Keep paragraphs short (2-4 sentences)
 - Use markdown headings, code blocks, and bullet points
+- **Admit uncertainty** — "I don't know if this is the right approach", "I'm not sure how much this matters"
+- **Say when the AI carried you** — if you followed the AI's lead without fully understanding, say that
+- **Sound like a person talking, not a blog post being written** — conversational, not polished
 
 **Don't:**
 - Start with "In this blog post, I will..." — just start
 - Use filler phrases ("It's worth noting that...", "As we all know...")
+- **Sound authoritative on topics you're not expert in** — don't explain SEO like an SEO consultant, don't explain design like a designer. Explain it like a backend dev who had to figure it out
+- **Wrap up with neat lessons** unless the lesson was genuinely surprising. Skip the "What I Learned" section if it would just restate what the post already said
+- **Use polished summary sentences** like "SEO for a single-page app isn't hard" or "The consistency is what creates the aesthetic" — these sound like an AI wrapping up an essay
+- **Overuse em dashes (—)** — this is a major AI tell. One or two per post is fine. More than that and the writing sounds generated. Use periods, commas, or colons instead. Prefer short sentences over joining clauses with dashes. Real writing has rough edges. AI writing is too polished.
 - Write generic tutorials — this is a project journal
 - Over-explain basics (audience is experienced developers)
 - Use emoji in prose
@@ -98,34 +105,46 @@ Not every post needs "What I Learned" — use it when there are genuine surprise
 
 ---
 
-## Creating the Draft
+## Managing Posts
 
-After generating the content, create the post as a draft using artisan tinker:
+Use `php artisan blog:manage` for all post operations. **Do not use tinker for content updates** — heredoc escaping and variable scoping cause data loss.
+
+### Create a post
+
+Write the markdown to a file first, then create:
 
 ```bash
-php artisan tinker
+php artisan blog:manage create \
+    --title="Your Title Here" \
+    --excerpt="One sentence summary for the blog listing and RSS feed." \
+    --file=storage/app/blog-exports/draft.md
 ```
 
-```php
-App\Models\BlogPost::create([
-    'title'        => 'Your Title Here',
-    'excerpt'      => 'One sentence summary for the blog listing and RSS feed.',
-    'content'      => $content, // the full markdown
-    'category'     => 'development',
-    'status'       => 'draft',
-    'ai_generated' => true,
-    'ai_model'     => 'claude-sonnet-4-5', // or whichever model generated it
-]);
+Creates as draft. Slug is auto-generated from the title. Rejects content under 100 bytes.
+
+### Update a post
+
+Always export first as a backup:
+
+```bash
+php artisan blog:manage export --id=10
+# edit the file at storage/app/blog-exports/{slug}.md
+php artisan blog:manage update --id=10 --file=storage/app/blog-exports/{slug}.md
 ```
 
-The slug is auto-generated from the title. To publish later:
+Safety checks: rejects content under 100 bytes, rejects if new content is less than half the original length, asks for confirmation before saving.
 
-```php
-$post = App\Models\BlogPost::where('slug', 'your-slug')->first();
-$post->update(['status' => 'published', 'published_at' => now()]);
+### Export a post
+
+```bash
+php artisan blog:manage export --id=10
 ```
 
-Or use the admin UI at `/admin/blog` to review, edit, and publish.
+Saves to `storage/app/blog-exports/{slug}.md`.
+
+### Publish
+
+Use the admin UI at `/admin/blog` to review, edit, and publish.
 
 ---
 

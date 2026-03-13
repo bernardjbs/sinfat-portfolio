@@ -143,6 +143,15 @@ export default {
     scrollToTop() {
       window.scrollTo({ top: 0, behavior: 'smooth' })
     },
+
+    scrollToHash() {
+      const hash = window.location.hash?.slice(1)
+      if (!hash) return
+      this.$nextTick(() => {
+        const el = document.getElementById(hash)
+        if (el) el.scrollIntoView({ behavior: 'smooth' })
+      })
+    },
   },
 
   watch: {
@@ -162,6 +171,7 @@ export default {
           ogDesc.setAttribute('content', post.excerpt)
         }
         this.highlightCode()
+        this.scrollToHash()
       }
     },
   },

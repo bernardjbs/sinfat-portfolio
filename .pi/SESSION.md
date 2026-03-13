@@ -52,10 +52,11 @@ Read this file first at the start of every session. It tells you where you are a
 
 ## What's Next
 Continue Module 13 — Blog Series:
-- Draft Posts 11–14 (SEO, Deploy Pipeline, When Things Break, Going Public)
-- Publish Posts 6–10 on sinfat.com
+- Posts 11–14 drafted locally, need final review and publish on sinfat.com
+- Do an em dash reduction pass across all 14 posts
 - Read spec: `specs/module-13-blog-series.md`
 - Use blog-writer skill for tone/conventions
+- Use `php artisan blog:manage` for all post operations (not tinker)
 
 Other:
 - Submit sitemap to Google Search Console
@@ -68,6 +69,6 @@ Other:
 - Blog series spec → `specs/module-13-blog-series.md`
 - Deploy guide → `docs/deploy-guide.md`
 - Production env reference → `docs/production-env.md`
-- Last session note → `docs/sessions/2026-03-13-blog-series-and-deploy-rework.md`
+- Last session note → `docs/sessions/2026-03-13-blog-drafts-and-tone-review.md`
 - Full history → `.pi/PROGRESS.md`
 - Architecture decisions → `/Users/bernard/code/ai-learning/pi-vs-claude-code/docs/PORTFOLIO.md`

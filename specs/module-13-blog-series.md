@@ -67,7 +67,7 @@ All posts: `development`
 - The admin seeder that broke on prod
 - Sources: 11
 
-#### Post 6
+#### Post 6 ✅ DRAFTED
 **"Session Auth in a Vue SPA — Sanctum, CSRF, and the Refresh Problem"**
 - Building the entire Vue foundation just to get login working
 - The refresh problem (Pinia resets, server is source of truth)
@@ -75,7 +75,7 @@ All posts: `development`
 - The CSRF cookie approach
 - Sources: 12
 
-#### Post 7
+#### Post 7 ✅ DRAFTED
 **"Define the API Before You Build It"**
 - 12 endpoints locked in before business logic
 - Stub what's complex, implement what's trivial
@@ -83,7 +83,7 @@ All posts: `development`
 - The GuestRateLimit middleware — Cache facade over Redis facade
 - Sources: 13
 
-#### Post 8
+#### Post 8 ✅ DRAFTED
 **"SSE Streaming with Neuron AI in Laravel — The Nginx Buffering Trap"**
 - Why SSE over WebSockets for LLM streaming
 - Neuron AI agent pattern (provider → instructions → stream)
@@ -92,7 +92,7 @@ All posts: `development`
 - Multi-provider setup (swap LLMs with one env var)
 - Sources: 07, 17
 
-#### Post 9
+#### Post 9 ✅ DRAFTED
 **"Building a Guest AI Playground — Rate Limiting, Session Keys, and Three Bugs"**
 - Session-only API key storage (never persisted, never in responses)
 - RateLimiter facade vs raw cache
@@ -100,7 +100,7 @@ All posts: `development`
 - Testing that a key is NOT stored
 - Sources: 18
 
-#### Post 10
+#### Post 10 ✅ DRAFTED
 **"Terminal Aesthetic — Designing a Developer Portfolio That Doesn't Look Like Every Other One"**
 - Geist Mono, dark-first, green accents
 - Tailwind v4 CSS-based config (no tailwind.config.js)

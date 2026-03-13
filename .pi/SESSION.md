@@ -51,7 +51,13 @@ Read this file first at the start of every session. It tells you where you are a
 - Neuron AI blog tools — give the BlogWriterAgent tools to read skills, query posts, and read project files so it can write project-aware posts from the admin UI. Apply LLM security patterns: tool filtering by role, permissions enforced at the handler, scoped data access
 
 ## What's Next
-All modules complete. Write first blog posts using the blog-writer skill.
+Continue Module 13 — Blog Series:
+- Draft Posts 11–14 (SEO, Deploy Pipeline, When Things Break, Going Public)
+- Publish Posts 6–10 on sinfat.com
+- Read spec: `specs/module-13-blog-series.md`
+- Use blog-writer skill for tone/conventions
+
+Other:
 - Submit sitemap to Google Search Console
 - Polish light mode colours
 - Add og:image meta tags
@@ -59,8 +65,9 @@ All modules complete. Write first blog posts using the blog-writer skill.
 ---
 
 ## Reference Files (read only when needed)
+- Blog series spec → `specs/module-13-blog-series.md`
 - Deploy guide → `docs/deploy-guide.md`
 - Production env reference → `docs/production-env.md`
-- Last session note → `docs/sessions/2026-03-10-module-11-deploy-pipeline.md`
+- Last session note → `docs/sessions/2026-03-13-blog-series-and-deploy-rework.md`
 - Full history → `.pi/PROGRESS.md`
 - Architecture decisions → `/Users/bernard/code/ai-learning/pi-vs-claude-code/docs/PORTFOLIO.md`

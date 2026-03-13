@@ -108,6 +108,7 @@
 | 9 | Static Pages | ✅ | 🟢 Sonnet |
 | 10 | Sitemap + SEO | ✅ | 🟢 Sonnet |
 | 11 | Deploy Pipeline Polish | ✅ | 🟢 Sonnet |
+| 13 | Blog Series (14 posts) | 🔄 10/14 drafted | 🟢 Sonnet |
 
 ### AI Provider (2026-03-10)
 - **Production:** GitHub Models (gpt-4o-mini) — free via fine-grained PAT

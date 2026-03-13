@@ -51,11 +51,10 @@ Read this file first at the start of every session. It tells you where you are a
 - Neuron AI blog tools — give the BlogWriterAgent tools to read skills, query posts, and read project files so it can write project-aware posts from the admin UI. Apply LLM security patterns: tool filtering by role, permissions enforced at the handler, scoped data access
 
 ## What's Next
-Continue Module 13 — Blog Series:
-- All 14 posts published on sinfat.com
-- Do an em dash reduction pass across all 14 posts
-- Read spec: `specs/module-13-blog-series.md`
-- Use blog-writer skill for tone/conventions
+**First thing:** Plan all outstanding items into prioritised modules before starting any work.
+
+Remaining blog task:
+- Em dash reduction pass across all 14 posts
 - Use `php artisan blog:manage` for all post operations (not tinker)
 
 Polish:
@@ -66,6 +65,7 @@ Polish:
 - Add og:image meta tags
 
 Other:
+- Setup email bernard@sinfat.com
 - Submit sitemap to Google Search Console
 
 ---

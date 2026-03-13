@@ -58,10 +58,15 @@ Continue Module 13 — Blog Series:
 - Use blog-writer skill for tone/conventions
 - Use `php artisan blog:manage` for all post operations (not tinker)
 
-Other:
-- Submit sitemap to Google Search Console
+Polish:
+- Add sorting and search filter to the blog
+- Add next/previous navigation buttons on blog posts
+- Fix sinfat home page overlapping nav on iPhone
 - Polish light mode colours
 - Add og:image meta tags
+
+Other:
+- Submit sitemap to Google Search Console
 
 ---
 

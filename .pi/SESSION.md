@@ -45,7 +45,7 @@ Read this file first at the start of every session. It tells you where you are a
 ## Outstanding Items
 - Email `bernard@sinfat.com` mailbox not configured
 - Football Analytics description is placeholder — real story TBD
-- `og:image` set to `/og-image.png` (static, same for all pages)
+
 
 - Submit sitemap to Google Search Console after launch
 - Supervisor for queue workers not yet set up on prod

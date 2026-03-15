@@ -50,5 +50,14 @@
 - Sitemap regenerated, cache cleared
 - Table fix deployed in a follow-up commit
 
+### Page Content Updates
+- **Home:** updated hero copy to reflect AI coding agent workflow, added blog link, fixed Football Analytics description and tags from CV
+- **About:** replaced generic "how I work" with repo-evidenced description, fixed education title, updated skills to match full CV, removed cliché "solving real problems" line
+- **Uses:** clarified tools are project-specific, removed "hardware" mention
+- **OG image:** created terminal-aesthetic og-image.png (2400×1260), added og:image and twitter:card meta tags
+
+### Table Rendering Fix
+- Registered `TableExtension` in CommonMark renderer — tables in posts 2 and 3 now render on public blog
+
 ## Outstanding Items
 - All outstanding items from SESSION.md unchanged

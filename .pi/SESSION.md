@@ -28,6 +28,7 @@ Read this file first at the start of every session. It tells you where you are a
 | 10 | Sitemap + SEO | ✅ Complete |
 | 11 | Deploy Pipeline Polish | ✅ Complete |
 | 12 | Blog Polish | ✅ Complete |
+| 14 | Blog Polish II | ⬜ Planning |
 
 **All 11 modules complete. 🎉**
 

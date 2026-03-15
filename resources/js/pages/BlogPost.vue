@@ -47,8 +47,35 @@
         v-html="currentPost.content"
       />
 
+      <!-- Next/Previous navigation -->
+      <nav v-if="previousPost || nextPost" class="flex items-stretch justify-between gap-4 mt-12 pt-6 border-t border-border">
+        <router-link
+          v-if="previousPost"
+          :to="{ name: 'blog-post', params: { slug: previousPost.slug } }"
+          class="group flex-1 min-w-0"
+        >
+          <span class="text-dim text-xs">← previous</span>
+          <span class="block text-sm text-text group-hover:text-accent transition-colors truncate mt-0.5">
+            {{ previousPost.title }}
+          </span>
+        </router-link>
+        <div v-else class="flex-1"></div>
+
+        <router-link
+          v-if="nextPost"
+          :to="{ name: 'blog-post', params: { slug: nextPost.slug } }"
+          class="group flex-1 min-w-0 text-right"
+        >
+          <span class="text-dim text-xs">next →</span>
+          <span class="block text-sm text-text group-hover:text-accent transition-colors truncate mt-0.5">
+            {{ nextPost.title }}
+          </span>
+        </router-link>
+        <div v-else class="flex-1"></div>
+      </nav>
+
       <!-- Post footer -->
-      <footer class="flex items-center justify-between mt-12 pt-6 border-t border-border">
+      <footer class="flex items-center justify-between mt-6 pt-6 border-t border-border">
         <button
           class="text-dim text-xs hover:text-accent transition-colors"
           @click="copyLink"
@@ -110,7 +137,7 @@ export default {
   },
 
   computed: {
-    ...mapState(useBlogStore, ['currentPost', 'loading', 'error']),
+    ...mapState(useBlogStore, ['currentPost', 'nextPost', 'previousPost', 'loading', 'error']),
 
     formattedDate() {
       if (!this.currentPost?.published_at) return ''

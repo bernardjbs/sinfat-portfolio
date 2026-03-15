@@ -5,7 +5,11 @@ export const useBlogStore = defineStore('blog', {
         // Public
         posts: [],
         currentPost: null,
+        nextPost: null,
+        previousPost: null,
         meta: null,
+        search: '',
+        sort: 'newest',
         // Admin
         adminPosts: [],
         adminMeta: null,
@@ -22,7 +26,11 @@ export const useBlogStore = defineStore('blog', {
             this.loading = true
             this.error = null
             try {
-                const res = await fetch(`/api/blog?page=${page}`)
+                const params = new URLSearchParams({ page })
+                if (this.search) params.set('search', this.search)
+                if (this.sort !== 'newest') params.set('sort', this.sort)
+
+                const res = await fetch(`/api/blog?${params}`)
                 const json = await res.json()
                 this.posts = json.data
                 this.meta = json.meta
@@ -37,6 +45,8 @@ export const useBlogStore = defineStore('blog', {
             this.loading = true
             this.error = null
             this.currentPost = null
+            this.nextPost = null
+            this.previousPost = null
             try {
                 const res = await fetch(`/api/blog/${slug}`)
                 if (res.status === 404) {
@@ -45,6 +55,8 @@ export const useBlogStore = defineStore('blog', {
                 }
                 const json = await res.json()
                 this.currentPost = json.data
+                this.nextPost = json.next ?? null
+                this.previousPost = json.previous ?? null
             } catch (e) {
                 this.error = e.message
             } finally {

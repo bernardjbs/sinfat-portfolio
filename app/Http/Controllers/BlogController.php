@@ -11,9 +11,19 @@ class BlogController extends Controller
 {
     public function index(Request $request): AnonymousResourceCollection
     {
-        $posts = BlogPost::published()
-            ->orderByDesc('published_at')
-            ->paginate(10);
+        $query = BlogPost::published();
+
+        if ($search = $request->input('search')) {
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                  ->orWhere('excerpt', 'like', "%{$search}%");
+            });
+        }
+
+        $direction = $request->input('sort') === 'oldest' ? 'asc' : 'desc';
+        $query->orderBy('published_at', $direction);
+
+        $posts = $query->paginate(10)->appends($request->only(['search', 'sort']));
 
         return BlogPostResource::collection($posts);
     }
@@ -24,6 +34,20 @@ class BlogController extends Controller
             ->where('slug', $slug)
             ->firstOrFail();
 
-        return new BlogPostResource($post);
+        $next = BlogPost::published()
+            ->where('published_at', '>', $post->published_at)
+            ->orderBy('published_at', 'asc')
+            ->first(['title', 'slug']);
+
+        $previous = BlogPost::published()
+            ->where('published_at', '<', $post->published_at)
+            ->orderBy('published_at', 'desc')
+            ->first(['title', 'slug']);
+
+        return (new BlogPostResource($post))
+            ->additional([
+                'next' => $next ? ['title' => $next->title, 'slug' => $next->slug] : null,
+                'previous' => $previous ? ['title' => $previous->title, 'slug' => $previous->slug] : null,
+            ]);
     }
 }

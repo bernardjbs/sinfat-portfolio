@@ -130,6 +130,110 @@ class BlogControllerTest extends TestCase
         $this->assertArrayNotHasKey('raw_content', $response->json('data'));
     }
 
+    // Search
+
+    public function test_search_filters_by_title(): void
+    {
+        BlogPost::factory()->published()->create(['title' => 'Building with Laravel']);
+        BlogPost::factory()->published()->create(['title' => 'Vue SPA Guide']);
+
+        $this->getJson('/api/blog?search=Laravel')
+            ->assertOk()
+            ->assertJsonCount(1, 'data')
+            ->assertJsonPath('data.0.title', 'Building with Laravel');
+    }
+
+    public function test_search_filters_by_excerpt(): void
+    {
+        BlogPost::factory()->published()->create(['title' => 'Post A', 'excerpt' => 'About streaming SSE']);
+        BlogPost::factory()->published()->create(['title' => 'Post B', 'excerpt' => 'About databases']);
+
+        $this->getJson('/api/blog?search=streaming')
+            ->assertOk()
+            ->assertJsonCount(1, 'data')
+            ->assertJsonPath('data.0.title', 'Post A');
+    }
+
+    public function test_search_returns_empty_when_no_match(): void
+    {
+        BlogPost::factory()->published()->count(3)->create();
+
+        $this->getJson('/api/blog?search=zzzznotfound')
+            ->assertOk()
+            ->assertJsonCount(0, 'data');
+    }
+
+    // Sort
+
+    public function test_sort_oldest_returns_oldest_first(): void
+    {
+        $old = BlogPost::factory()->published()->create(['published_at' => now()->subDays(10)]);
+        $new = BlogPost::factory()->published()->create(['published_at' => now()->subDays(1)]);
+
+        $response = $this->getJson('/api/blog?sort=oldest')->assertOk();
+
+        $this->assertEquals($old->slug, $response->json('data.0.slug'));
+        $this->assertEquals($new->slug, $response->json('data.1.slug'));
+    }
+
+    public function test_sort_newest_is_default(): void
+    {
+        $old = BlogPost::factory()->published()->create(['published_at' => now()->subDays(10)]);
+        $new = BlogPost::factory()->published()->create(['published_at' => now()->subDays(1)]);
+
+        $response = $this->getJson('/api/blog')->assertOk();
+
+        $this->assertEquals($new->slug, $response->json('data.0.slug'));
+        $this->assertEquals($old->slug, $response->json('data.1.slug'));
+    }
+
+    // Next / Previous
+
+    public function test_show_includes_next_and_previous_posts(): void
+    {
+        $first = BlogPost::factory()->published()->create(['published_at' => now()->subDays(3)]);
+        $middle = BlogPost::factory()->published()->create(['published_at' => now()->subDays(2)]);
+        $last = BlogPost::factory()->published()->create(['published_at' => now()->subDays(1)]);
+
+        $response = $this->getJson("/api/blog/{$middle->slug}")->assertOk();
+
+        $this->assertEquals($last->slug, $response->json('next.slug'));
+        $this->assertEquals($first->slug, $response->json('previous.slug'));
+    }
+
+    public function test_first_post_has_no_previous(): void
+    {
+        $first = BlogPost::factory()->published()->create(['published_at' => now()->subDays(3)]);
+        BlogPost::factory()->published()->create(['published_at' => now()->subDays(1)]);
+
+        $response = $this->getJson("/api/blog/{$first->slug}")->assertOk();
+
+        $this->assertNull($response->json('previous'));
+        $this->assertNotNull($response->json('next'));
+    }
+
+    public function test_last_post_has_no_next(): void
+    {
+        BlogPost::factory()->published()->create(['published_at' => now()->subDays(3)]);
+        $last = BlogPost::factory()->published()->create(['published_at' => now()->subDays(1)]);
+
+        $response = $this->getJson("/api/blog/{$last->slug}")->assertOk();
+
+        $this->assertNotNull($response->json('previous'));
+        $this->assertNull($response->json('next'));
+    }
+
+    public function test_next_previous_excludes_draft_posts(): void
+    {
+        $first = BlogPost::factory()->published()->create(['published_at' => now()->subDays(3)]);
+        BlogPost::factory()->draft()->create(['published_at' => now()->subDays(2)]);
+        $last = BlogPost::factory()->published()->create(['published_at' => now()->subDays(1)]);
+
+        $response = $this->getJson("/api/blog/{$first->slug}")->assertOk();
+
+        $this->assertEquals($last->slug, $response->json('next.slug'));
+    }
+
     // Reading time
 
     public function test_listing_includes_reading_time(): void

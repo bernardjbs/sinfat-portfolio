@@ -6,11 +6,13 @@
             <p class="text-dim text-sm">hi, i'm</p>
             <h1 class="text-3xl text-text font-semibold">bernard</h1>
             <p class="text-base text-dim leading-relaxed max-w-xl">
-                Full-stack developer (Laravel + Vue) — helping teams integrate AI responsibly.
+                Full-stack developer (Laravel + Vue) who builds with AI coding agents.
             </p>
             <p class="text-sm text-dim leading-relaxed max-w-xl">
-                Perth-based. Building web applications, exploring AI tooling,
-                and writing about what I learn along the way.
+                Perth-based. I use tools like Claude Code and pi to ship software faster.
+                This entire site was built that way. Read the
+                <router-link to="/blog" class="text-accent hover:underline">blog</router-link>
+                for the full journey.
             </p>
             <div class="flex gap-4 pt-2">
                 <a
@@ -143,9 +145,9 @@ export default {
                 },
                 {
                     name: 'Football Analytics',
-                    description: 'Sports analytics platform — 5 iterations from monolith to microservices. A story about learning by rebuilding.',
+                    description: 'Distributed data pipeline for European football. Node.js, BullMQ, Playwright with stealth, and a 3-tier proxy system. Five architectural iterations.',
                     url: null,
-                    tags: ['Laravel', 'Python', 'Data pipelines'],
+                    tags: ['Node.js', 'BullMQ', 'Playwright', 'MySQL'],
                 },
             ]
         },

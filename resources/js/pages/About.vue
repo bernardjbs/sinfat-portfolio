@@ -11,8 +11,8 @@
             </p>
             <p class="text-dim text-sm leading-relaxed">
                 Before that, I studied Computer Science at Edith Cowan University and completed
-                a certificate program at the University of Western Australia. I like solving
-                real problems with practical tools — not chasing trends.
+                a certificate program at the University of Western Australia. I picked up AI
+                coding agents early and haven't looked back.
             </p>
         </section>
 
@@ -60,10 +60,10 @@
         <section class="space-y-4">
             <h2 class="text-lg text-text">how i work</h2>
             <p class="text-dim text-sm leading-relaxed">
-                I prefer simple, boring infrastructure over clever abstractions. I write tests
-                before shipping. I document decisions so the next person (or future me) doesn't
-                have to guess. I think AI is a tool — useful when applied carefully, harmful
-                when applied blindly.
+                I build the workflow before the product. For this site, that meant writing
+                12 skill files and a module runner before a single line of application code.
+                The AI follows my conventions, not the other way around. Every session ends
+                with documentation. Every merge passes tests and a security checklist.
             </p>
         </section>
 
@@ -91,19 +91,19 @@ export default {
             skillGroups: [
                 {
                     category: 'Backend',
-                    items: ['Laravel', 'PHP', 'MySQL', 'Redis', 'REST APIs', 'Queue workers'],
+                    items: ['PHP 8.2+', 'Laravel 12', 'Node.js', 'Express', 'REST APIs', 'MySQL', 'Redis'],
                 },
                 {
                     category: 'Frontend',
-                    items: ['Vue 3', 'Tailwind CSS', 'Pinia', 'Vue Router', 'Vite'],
+                    items: ['JavaScript (ES6+)', 'TypeScript', 'Vue 3', 'Quasar Framework', 'Pinia', 'Tailwind CSS', 'Vite'],
+                },
+                {
+                    category: 'Testing & DevOps',
+                    items: ['PHPUnit', 'Playwright', 'TDD', 'Git', 'CI/CD', 'Laravel Dusk'],
                 },
                 {
                     category: 'AI & Tooling',
-                    items: ['Neuron AI', 'Ollama', 'Anthropic API', 'SSE streaming', 'pi framework'],
-                },
-                {
-                    category: 'Infrastructure',
-                    items: ['Oracle Cloud', 'Nginx', 'GitHub Actions', 'Supervisor', 'SSL/TLS'],
+                    items: ['Claude Code', 'Roo Code', 'GitHub Copilot', 'pi', 'Neuron AI', 'Ollama'],
                 },
             ],
 
@@ -113,7 +113,7 @@ export default {
                     institution: 'Edith Cowan University',
                 },
                 {
-                    title: 'Certificate in Software Development',
+                    title: 'Full Stack Web Development Certificate',
                     institution: 'University of Western Australia',
                 },
             ],

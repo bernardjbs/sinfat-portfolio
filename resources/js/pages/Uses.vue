@@ -4,7 +4,7 @@
         <section class="space-y-4">
             <h1 class="text-2xl text-text">uses</h1>
             <p class="text-dim text-sm leading-relaxed">
-                Tools, hardware, and software I use daily.
+                Tools and software used to build this project.
             </p>
         </section>
 

@@ -43,7 +43,10 @@
                hover:prose-a:underline
                prose-code:bg-surface prose-code:text-accent prose-code:rounded prose-code:px-1
                prose-pre:bg-surface prose-pre:border prose-pre:border-border
-               prose-strong:text-text prose-hr:border-border"
+               prose-strong:text-text prose-hr:border-border
+               prose-th:text-text prose-th:border-border prose-th:px-3 prose-th:py-1.5
+               prose-td:text-dim prose-td:border-border prose-td:px-3 prose-td:py-1.5
+               prose-table:border-collapse"
         v-html="currentPost.content"
       />
 

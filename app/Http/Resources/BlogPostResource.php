@@ -7,6 +7,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkExtension;
+use League\CommonMark\Extension\Table\TableExtension;
 use League\CommonMark\MarkdownConverter;
 
 class BlogPostResource extends JsonResource
@@ -59,6 +60,7 @@ class BlogPostResource extends JsonResource
         ]);
 
         $environment->addExtension(new CommonMarkCoreExtension());
+        $environment->addExtension(new TableExtension());
         $environment->addExtension(new HeadingPermalinkExtension());
 
         $converter = new MarkdownConverter($environment);

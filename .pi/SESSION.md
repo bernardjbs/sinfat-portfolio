@@ -28,7 +28,7 @@ Read this file first at the start of every session. It tells you where you are a
 | 10 | Sitemap + SEO | ✅ Complete |
 | 11 | Deploy Pipeline Polish | ✅ Complete |
 | 12 | Blog Polish | ✅ Complete |
-| 14 | Blog Polish II | ⬜ Planning |
+| 14 | Blog Polish II | ✅ Complete |
 
 **All 11 modules complete. 🎉**
 
@@ -38,7 +38,7 @@ Read this file first at the start of every session. It tells you where you are a
 - **Backend:** All API routes implemented. All services, controllers, resources built.
 - **Frontend:** Full SPA — Home, About, Blog, AI Chat, Playground, Admin. Per-route meta tags. Theme toggle.
 - **AI:** Live on prod via GitHub Models (gpt-4o-mini). Free, no billing required.
-- **Tests:** 65 passing + 3 live AI tests (auto-skip on ollama).
+- **Tests:** 74 passing + 3 skipped (live AI, auto-skip on ollama).
 - **Infra:** sinfat.com live. Oracle Cloud Arm A1 (956MB RAM + 2GB swap). Redis for session/cache/queue. PHP 8.3 + Nginx + MySQL 8. Node 22 for Vite builds.
 - **Deploy:** `just deploy` — SSHes into server, runs `scripts/deploy.sh` (pull, composer, npm, build, migrate, cache, sitemap, nginx reload). See `docs/deploy-guide.md`.
 
@@ -52,15 +52,10 @@ Read this file first at the start of every session. It tells you where you are a
 - Neuron AI blog tools — give the BlogWriterAgent tools to read skills, query posts, and read project files so it can write project-aware posts from the admin UI. Apply LLM security patterns: tool filtering by role, permissions enforced at the handler, scoped data access
 
 ## What's Next
-**First thing:** Plan all outstanding items into prioritised modules before starting any work.
-
-Remaining blog task:
-- Em dash reduction pass across all 14 posts
-- Use `php artisan blog:manage` for all post operations (not tinker)
+- Deploy Module 14 to production (`just deploy`)
+- Run em dash updates on prod database (export → update via artisan on server)
 
 Polish:
-- Add sorting and search filter to the blog
-- Add next/previous navigation buttons on blog posts
 - Fix sinfat home page overlapping nav on iPhone
 - Polish light mode colours
 - Add og:image meta tags
@@ -75,6 +70,6 @@ Other:
 - Blog series spec → `specs/module-13-blog-series.md`
 - Deploy guide → `docs/deploy-guide.md`
 - Production env reference → `docs/production-env.md`
-- Last session note → `docs/sessions/2026-03-13-blog-drafts-and-tone-review.md`
+- Last session note → `docs/sessions/2026-03-14-module-14-blog-polish-2.md`
 - Full history → `.pi/PROGRESS.md`
 - Architecture decisions → `/Users/bernard/code/ai-learning/pi-vs-claude-code/docs/PORTFOLIO.md`

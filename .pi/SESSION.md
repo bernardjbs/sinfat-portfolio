@@ -46,7 +46,7 @@ Read this file first at the start of every session. It tells you where you are a
 - Email `bernard@sinfat.com` mailbox not configured
 - Football Analytics description is placeholder — real story TBD
 - `og:image` not set — no images on the site yet
-- Light mode could use further colour tuning
+
 - Submit sitemap to Google Search Console after launch
 - Supervisor for queue workers not yet set up on prod
 - Neuron AI blog tools — give the BlogWriterAgent tools to read skills, query posts, and read project files so it can write project-aware posts from the admin UI. Apply LLM security patterns: tool filtering by role, permissions enforced at the handler, scoped data access
@@ -54,7 +54,6 @@ Read this file first at the start of every session. It tells you where you are a
 ## What's Next
 Polish:
 - Fix sinfat home page overlapping nav on iPhone
-- Polish light mode colours
 - Add og:image meta tags
 
 Other:

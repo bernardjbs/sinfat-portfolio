@@ -52,9 +52,6 @@ Read this file first at the start of every session. It tells you where you are a
 - Neuron AI blog tools — give the BlogWriterAgent tools to read skills, query posts, and read project files so it can write project-aware posts from the admin UI. Apply LLM security patterns: tool filtering by role, permissions enforced at the handler, scoped data access
 
 ## What's Next
-- Deploy Module 14 to production (`just deploy`)
-- Run em dash updates on prod database (export → update via artisan on server)
-
 Polish:
 - Fix sinfat home page overlapping nav on iPhone
 - Polish light mode colours

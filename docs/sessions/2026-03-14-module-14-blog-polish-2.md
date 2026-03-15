@@ -37,11 +37,18 @@
 - `.pi/SESSION.md` — module 14 added to status table
 - Database: 13 posts updated (em dash reduction)
 
-## Outstanding Items
-- Em dash changes are in the local database — need to run on production after deploy
-- All other outstanding items from SESSION.md unchanged
+### Post-Module Fixes
 
-## Next
-- Deploy to production
-- Run em dash updates on prod (export files, then update via artisan)
-- Step 8–10: Update SESSION.md, verify acceptance criteria, sign off
+**Table rendering** — Blog posts with markdown tables (posts 2 and 3) rendered tables in the admin preview (md-editor-v3) but not on the public blog. `CommonMarkCoreExtension` doesn't include GFM table support. Fix: registered `TableExtension` and added prose table styling (th/td borders, padding, colours).
+
+**Slug consistency** — Posts 1–3 had slugs without number prefixes (created before the convention). Updated to `01-`, `02-`, `03-` prefixes to match posts 4–14.
+
+### Production Deploy
+- Code deployed via `just deploy`
+- Slugs fixed for posts 1–3 on prod
+- Em dash updates applied to all 13 posts on prod via SCP + `blog:manage update`
+- Sitemap regenerated, cache cleared
+- Table fix deployed in a follow-up commit
+
+## Outstanding Items
+- All outstanding items from SESSION.md unchanged

@@ -57,7 +57,7 @@ Polish:
 
 
 Other:
-- Setup email bernard@sinfat.com
+- Setup email bernard@sinfat.com (Cloudflare email routing → Yahoo, plus send-as alias with SPF/DKIM)
 - Submit sitemap to Google Search Console
 
 ---

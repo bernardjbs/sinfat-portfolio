@@ -43,22 +43,14 @@ Read this file first at the start of every session. It tells you where you are a
 - **Deploy:** `just deploy` — SSHes into server, runs `scripts/deploy.sh` (pull, composer, npm, build, migrate, cache, sitemap, nginx reload). See `docs/deploy-guide.md`.
 
 ## Outstanding Items
-- Email `bernard@sinfat.com` mailbox not configured
 - Football Analytics description is placeholder — real story TBD
-
-
-- Submit sitemap to Google Search Console after launch
-- Supervisor for queue workers not yet set up on prod
+- ~~Submit sitemap to Google Search Console~~ — done 2026-03-14
+- Supervisor for queue workers not yet set up on prod (no queued jobs yet — skip until needed)
 - Neuron AI blog tools — give the BlogWriterAgent tools to read skills, query posts, and read project files so it can write project-aware posts from the admin UI. Apply LLM security patterns: tool filtering by role, permissions enforced at the handler, scoped data access
 
 ## What's Next
-Polish:
-- Fix sinfat home page overlapping nav on iPhone
-
-
-Other:
-- Setup email bernard@sinfat.com (Cloudflare email routing → Yahoo, plus send-as alias with SPF/DKIM)
-- Submit sitemap to Google Search Console
+- AI health check command (monitor GitHub Models PAT expiry)
+- Football Analytics project description
 
 ---
 
@@ -66,6 +58,6 @@ Other:
 - Blog series spec → `specs/module-13-blog-series.md`
 - Deploy guide → `docs/deploy-guide.md`
 - Production env reference → `docs/production-env.md`
-- Last session note → `docs/sessions/2026-03-14-module-14-blog-polish-2.md`
+- Last session note → `docs/sessions/2026-03-14-infra-email-seo.md`
 - Full history → `.pi/PROGRESS.md`
 - Architecture decisions → `/Users/bernard/code/ai-learning/pi-vs-claude-code/docs/PORTFOLIO.md`

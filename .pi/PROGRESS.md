@@ -164,13 +164,14 @@
 ---
 
 ## Outstanding Items
-- Email `bernard@sinfat.com` mailbox not configured
+- ~~Email `bernard@sinfat.com`~~ — configured 2026-03-14 (Cloudflare routing → Yahoo, Resend SMTP for outbound, Mac Mail send-as)
 - Football Analytics project description is placeholder — real story TBD
-- `og:image` not set — no images on the site yet
-- Light mode could use further colour tuning
-- Submit sitemap to Google Search Console
+- ~~`og:image`~~ — completed 2026-03-13
+- ~~Light mode tuning~~ — disregarded, good enough
+- ~~Submit sitemap to Google Search Console~~ — done 2026-03-14
 - Supervisor for queue workers not yet set up on prod
 - GitHub Models PAT (`sinfat-ai`) expires — check expiry and rotate before it lapses
+- ~~iPhone nav overlap~~ — fixed 2026-03-14 (mobile hamburger menu)
 
 ---
 

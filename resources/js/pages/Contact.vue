@@ -47,8 +47,8 @@ export default {
             links: [
                 {
                     label: 'email',
-                    display: 'bernardjbs@yahoo.com',
-                    url: 'mailto:bernardjbs@yahoo.com',
+                    display: 'bernard@sinfat.com',
+                    url: 'mailto:bernard@sinfat.com',
                     external: false,
                 },
                 {

@@ -170,7 +170,7 @@
 - ~~Light mode tuning~~ — disregarded, good enough
 - ~~Submit sitemap to Google Search Console~~ — done 2026-03-14
 - Supervisor for queue workers not yet set up on prod
-- GitHub Models PAT (`sinfat-ai`) expires — check expiry and rotate before it lapses
+- GitHub Models PAT (`sinfat-ai`) expires — deferred: build AI health check with email alert after Laravel mail is configured
 - ~~iPhone nav overlap~~ — fixed 2026-03-14 (mobile hamburger menu)
 
 ---

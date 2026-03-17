@@ -49,8 +49,9 @@ Read this file first at the start of every session. It tells you where you are a
 - Neuron AI blog tools — give the BlogWriterAgent tools to read skills, query posts, and read project files so it can write project-aware posts from the admin UI. Apply LLM security patterns: tool filtering by role, permissions enforced at the handler, scoped data access
 
 ## What's Next
-- AI health check command (monitor GitHub Models PAT expiry)
+- **Module 15 — Page Explainer** (🎓 learning module) → `specs/module-15-page-explainer.md`
 - Football Analytics project description
+- Laravel mail config (SMTP via Resend) — then add AI health check command with email alerts on PAT expiry
 
 ---
 

@@ -59,6 +59,20 @@ export default {
                     tags: ['Laravel 12', 'Vue 3', 'Pinia', 'Tailwind', 'Neuron AI', 'Oracle Cloud', 'GitHub Actions'],
                 },
                 {
+                    name: 'Claude Code Showcase',
+                    description: 'A full-stack todo app where the sophistication is in the Claude Code ecosystem — 9 custom skills, 6 hooks, 5 custom agents with model tiering (Opus/Sonnet/Haiku), MCP servers, and a memory system with session continuity.',
+                    story: null,
+                    url: 'https://github.com/bernardjbs/todo-app',
+                    tags: ['TypeScript', 'Hono', 'Vue 3', 'Supabase', 'Docker', 'GitHub Actions', 'Claude Code'],
+                },
+                {
+                    name: 'Pi Agent Toolkit',
+                    description: 'TypeScript extensions that hook into every stage of an LLM coding agent\'s execution loop — tool-call gating, dynamic prompt injection, subagent orchestration, and workflow analysis.',
+                    story: null,
+                    url: 'https://github.com/bernardjbs/pi-agent-toolkit',
+                    tags: ['TypeScript', 'AI Agents', 'LLM Security', 'Subagents'],
+                },
+                {
                     name: 'Football Analytics Platform',
                     description: 'Sports analytics platform for Australian football — data ingestion, statistical models, and match prediction dashboards.',
                     story: 'Five iterations over two years. Started as a Laravel monolith, moved to separate API + SPA, tried microservices, came back to a simpler architecture. The real lesson was knowing when to stop rebuilding and start shipping.',

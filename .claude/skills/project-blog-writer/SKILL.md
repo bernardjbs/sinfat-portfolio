@@ -28,7 +28,7 @@ Write a blog post from /Users/bernard/code/ai-learning/pi-vs-claude-code/docs/su
 The skill will:
 1. Read the summary file
 2. Generate a professional blog post framed around the AI development journey
-3. Create it as a draft via artisan tinker
+3. Create it as a draft via `php artisan blog:manage`
 
 ### Mode 2: Manual input
 
@@ -189,5 +189,5 @@ Before marking a post ready for review:
 1. **Generate** — use this skill to create the draft
 2. **Review** — read it in the admin UI at `/admin/blog`
 3. **Edit** — tweak the markdown if needed
-4. **Publish** — toggle publish in admin or via tinker
+4. **Publish** — toggle publish in admin
 5. **Verify** — check the live post at `sinfat.com/blog/[slug]`

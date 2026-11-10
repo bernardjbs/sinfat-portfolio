@@ -157,7 +157,7 @@ Smooth: new tokens append directly to content, no flicker
 - ❌ No hero images, stock photos, abstract gradients
 - ❌ No bright colours (no orange/purple/pink accents)
 - ❌ No rounded-full pill shapes on containers
-- ❌ No animations beyond subtle opacity/color transitions
+- ❌ No animations beyond subtle opacity/colour transitions
 - ❌ No loading spinners — use skeleton text or simple "loading..." text
 - ❌ No emoji in UI (exception: code examples or blog content)
 - ❌ No card shadows — borders only

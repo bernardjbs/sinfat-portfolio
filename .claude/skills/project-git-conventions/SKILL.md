@@ -116,8 +116,8 @@ php artisan route:list        # routes look correct (if changed)
 6. git commit -m "feat: ..."
 7. (repeat 3–6 for additional logical units in the module)
 8. git checkout main && git merge feat/module-X-description
-9. git push origin main
-10. just deploy  ← SSH into server, runs scripts/deploy.sh
+9. git push origin main  ← only on Bernard's word
+10. just deploy  ← only on Bernard's word; SSH into server, runs scripts/deploy.sh
 11. git branch -d feat/module-X-description
 ```
 
@@ -130,7 +130,7 @@ php artisan route:list        # routes look correct (if changed)
 3. **Tests pass before every commit** — `php artisan test` is non-negotiable
 4. **Stage with `git add -p`** — review every hunk before committing, catch debug code
 5. **Merge to main before pushing** — squash if the feature branch has noisy WIP commits
-6. **Deploy manually after push** — run `just deploy` to SSH and deploy to Oracle VM
+6. **Deploy manually after push, only on Bernard's word** — run `just deploy` to SSH and deploy to Oracle VM
 
 ---
 
@@ -154,7 +154,7 @@ git merge feat/module-X
 
 ## Deploy
 
-Deploy is manual — run `just deploy` after pushing to `main`. This SSHes into the Oracle VM and runs `scripts/deploy.sh` (pull, composer, npm install, vite build, migrate, cache, sitemap, nginx reload).
+Deploy is manual, and only on Bernard's word — run `just deploy` after pushing to `main`. This SSHes into the Oracle VM and runs `scripts/deploy.sh` (pull, composer, npm install, vite build, migrate, cache, sitemap, nginx reload).
 
 **Implication:** Only push to `main` when the code is production-ready.
 

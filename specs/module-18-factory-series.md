@@ -95,7 +95,7 @@ When the draft is ready (after any edits in the local admin editor):
 ```
 php artisan blog:manage export --id=45
 scp storage/app/blog-exports/do-i-need-a-software-factory-product-or-just-a-script.md sinfat:/tmp/factory-part-1.md
-ssh sinfat "cd /var/www/sinfat && php artisan blog:manage create --title='Do I need a software factory product, or just a script?' --excerpt='Three questions about AI software factories, what the published ones have in common, and why my answer was to build a thin one on what I already had.' --file=/tmp/factory-part-1.md --series=my-own-ai-software-factory --ai-model=claude-opus-5-5"
+ssh sinfat "cd /var/www/sinfat && php artisan blog:manage create --title='Do I need a software factory product, or just a script?' --excerpt='Three questions about AI software factories, what the published ones have in common, and why my answer was to build my own on what I already had.' --file=/tmp/factory-part-1.md --series=my-own-ai-software-factory --ai-model=claude-opus-5-5"
 ```
 
 It is created as a draft, part 1. Publish it in the production admin editor, then rebuild the sitemap so

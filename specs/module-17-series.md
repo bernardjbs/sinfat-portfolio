@@ -54,20 +54,20 @@ until the move runs) and **2b** (the UI).
 - [x] Feature tests, each guard mutation-proved
 
 #### 2b: UI
-- [ ] Series mark: Lucide `Layers`, 15px in the `link` colour, 13px in the posts-list tag
-- [ ] `/blog`: approved intro line; "Series" heading with the mark; at most three series rows (name,
+- [x] Series mark: Lucide `Layers`, 15px in the `link` colour, 13px in the posts-list tag
+- [x] `/blog`: approved intro line; "Series" heading with the mark; at most three series rows (name,
       part count, last updated, pitch); "All series (N)" link; then all posts, each series post tagged
       "Part N of <series>" with the mark
-- [ ] `/blog/series`: compact rows grouped "Being written" then "Complete"
-- [ ] `/blog/series/{slug}`: title and pitch, then every part in order (number, title, excerpt, date)
-- [ ] Post track: mark plus "Part 12 of 14" (complete) or "Part 3" (being written), then the series
+- [x] `/blog/series`: compact rows grouped "Being written" then "Complete"
+- [x] `/blog/series/{slug}`: title and pitch, then every part in order (number, title, excerpt, date)
+- [x] Post track: mark plus "Part 12 of 14" (complete) or "Part 3" (being written), then the series
       name linking to its page, above the contents list
-- [ ] End-of-post series box: "<series>, part N[ of M]", previous and next within the series, parts
+- [x] End-of-post series box: "<series>, part N[ of M]", previous and next within the series, parts
       list collapsed, windowed past 15 parts
-- [ ] Router entries and client meta for both series pages
-- [ ] Server meta for `/blog/series` (description: the blog intro) and `/blog/series/{slug}` (title and
+- [x] Router entries and client meta for both series pages
+- [x] Server meta for `/blog/series` (description: the blog intro) and `/blog/series/{slug}` (title and
       pitch), registered ahead of `/blog/{slug}`; 404 shell for an unknown series slug; tests
-- [ ] `project-terminal-aesthetic` and `project-portfolio-context` record the mark, the series pages
+- [x] `project-terminal-aesthetic` and `project-portfolio-context` record the mark, the series pages
       and the `series` table (through `/skills-builder`)
 
 ### Acceptance Criteria (fresh output in the report)
@@ -75,18 +75,27 @@ until the move runs) and **2b** (the UI).
       data; local database dumped to the session scratchpad first
 - [x] `/feed.xml` still has 14 items
 - [x] Previous/next from part 1 and from part 14 never leave the series (part 1 has no previous, part 14 no next)
-- [ ] A standalone fixture post keeps date-ordered previous/next and shows no series UI
-- [ ] Ordering rule proved with a fixture of five series (feature test; the index shows three and
+- [x] A standalone fixture post keeps date-ordered previous/next and shows no series UI
+- [x] Ordering rule proved with a fixture of five series (feature test; the index shows three and
       "All series (5)" in the browser, fixture removed afterwards)
-- [ ] `scrollWidth` equals the viewport at 390 and 1150px on `/blog`, `/blog/series`, a series page
+- [x] `scrollWidth` equals the viewport at 390 and 1150px on `/blog`, `/blog/series`, a series page
       and a post page
-- [ ] Post page contrast unchanged from module 16 (p, li, td 6.15 dark, 5.25 light)
-- [ ] `php artisan test`: baseline 80 passed and 3 skipped, plus the new tests, 0 failed
-- [ ] `git diff --stat main`
-- [ ] Report carries the exact production command for the data move
+- [x] Post page contrast unchanged from module 16 (p, li, td 6.15 dark, 5.25 light)
+- [x] `php artisan test`: baseline 80 passed and 3 skipped, plus the new tests, 0 failed
+- [x] `git diff --stat main`
+- [x] Report carries the exact production command for the data move
 
 ### Production (Bernard, after merge and `just deploy`)
-Dry run, read it, then apply and rebuild the sitemap. Exact command in the session report.
+Deploy runs the migrations. Then a dry run, read it, then apply and rebuild the sitemap (deploy
+generated it before the series had parts):
+
+```
+ssh sinfat "cd /var/www/sinfat && php artisan blog:move-building-sinfat"
+ssh sinfat "cd /var/www/sinfat && php artisan blog:move-building-sinfat --apply && php artisan sitemap:generate"
+```
+
+The dry run lists each change and writes nothing; locally it listed 35. If any title or excerpt has
+drifted from the approved table it refuses and writes nothing.
 
 ### Dependencies
 Module 16 (merged)
@@ -94,4 +103,4 @@ Module 16 (merged)
 ---
 
 *Created: 2026-11-10*
-*Status: 🚧 In progress (2a done)*
+*Status: ✅ Complete (on branch, awaiting merge)*

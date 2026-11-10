@@ -5,12 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-    <title>sinfat.com</title>
-    <meta name="description" content="Bernard — full-stack developer (Laravel + Vue) based in Perth, Australia.">
-    <meta property="og:title" content="sinfat.com">
-    <meta property="og:description" content="Bernard — full-stack developer (Laravel + Vue) based in Perth, Australia.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://sinfat.com">
+    @php
+        $siteDescription = 'Bernard — full-stack developer (Laravel + Vue) based in Perth, Australia.';
+        $meta = $meta ?? [];
+        $description = ($meta['description'] ?? null) ?: $siteDescription;
+    @endphp
+    <title>{{ isset($meta['title']) ? $meta['title'].' · sinfat.com' : 'sinfat.com' }}</title>
+    <meta name="description" content="{{ $description }}">
+    <meta property="og:title" content="{{ $meta['title'] ?? 'sinfat.com' }}">
+    <meta property="og:description" content="{{ $description }}">
+    <meta property="og:type" content="{{ $meta['type'] ?? 'website' }}">
+    <meta property="og:url" content="{{ $meta['url'] ?? 'https://sinfat.com' }}">
     <meta property="og:image" content="https://sinfat.com/og-image.png">
     <meta property="og:image:width" content="2400">
     <meta property="og:image:height" content="1260">

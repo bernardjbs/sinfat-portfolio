@@ -6,6 +6,7 @@ prod `sinfat.com`.
 ## Start here
 
 - `docs/handover.md`: current state, outstanding items, what's next.
+- Owed work lives in `docs/backlog.md`; check it at session start.
 - Specs: `specs/module-NN-*.md`. Session notes: `docs/sessions/`.
 - Architecture decisions: `~/code/ai-learning/pi-vs-claude-code/docs/PORTFOLIO.md`.
 

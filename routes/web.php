@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminAuthController;
 use App\Http\Controllers\BlogPageController;
 use App\Http\Controllers\FeedController;
+use App\Http\Controllers\NotebookController;
 use App\Http\Controllers\SeriesPageController;
 use Illuminate\Support\Facades\Route;
 
@@ -11,6 +12,9 @@ Route::post('/login', [AdminAuthController::class, 'login']);
 Route::post('/logout', [AdminAuthController::class, 'logout'])->middleware('auth');
 
 Route::get('/feed.xml', FeedController::class)->name('feed');
+
+// Factory notebook snapshots: static pages, never the SPA
+Route::get('/notebook/{stamp}', NotebookController::class)->name('notebook.snapshot');
 
 // Series pages first, or /blog/{slug} would take /blog/series as a post slug
 Route::get('/blog/series', [SeriesPageController::class, 'index'])->name('blog.series.index');

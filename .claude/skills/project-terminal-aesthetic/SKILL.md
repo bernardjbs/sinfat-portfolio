@@ -26,25 +26,28 @@ These are the ONLY colours used. They match the Tailwind config tokens exactly.
 | `accent` | `#238636` | Primary accent — links, highlights, active states, focus rings, CTA buttons |
 | `text` | `#e6edf3` | Body text — off white |
 | `dim` | `#6e7681` | Secondary text — labels, metadata, dates, timestamps, muted descriptions |
+| `body` | `#8b949e` (light `#656d76`) | Blog post body text: paragraphs, list items, blockquotes, table cells. At least 4.5:1 in both themes |
 | `border` | `#30363d` | Borders, dividers, input outlines |
 
 **Error state:** `#f85149` (GitHub dark red) — validation errors, danger actions. Can be added to config as `danger`.
 **Warning:** `#d29922` (GitHub dark yellow) — sparingly, if needed.
 
-**Do not introduce new colours** without updating `tailwind.config.js` and this document.
+**Do not introduce new colours** without updating `resources/css/app.css` and this document.
 
 ---
 
 ## Typography
 
-**Font:** Geist Mono — loaded from Google Fonts
-- Monospace throughout — headings, body, UI labels, everything
-- No serif or sans-serif fonts on this site
-- Weights: 400 (regular), 500 (medium), 600 (semibold)
+**Font:** Geist Mono, loaded from Google Fonts
+- Monospace throughout: headings, UI labels, meta, nav, inline code, code blocks
+- **One exception:** blog post body text (paragraphs, list items, blockquotes) is Geist sans,
+  16px, `leading-relaxed` (ruled 2026-11-10, module 16)
+- No serif fonts
+- Weights: Geist Mono 400, 500, 600; Geist 400, 500
 
 ```css
 /* resources/css/app.css */
-@import url('https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@400;500&family=Geist+Mono:wght@400;500;600&display=swap');
 
 body {
   font-family: 'Geist Mono', monospace;
@@ -147,7 +150,7 @@ Smooth: new tokens append directly to content, no flicker
 - Dark is the default — `<html class="dark">` set on load
 - Light mode available via toggle — stored in localStorage
 - Toggle: sun/moon icon from lucide-vue-next, top-right nav
-- Light palette: invert bg/surface/text tokens in `tailwind.config.js`
+- Light palette: the `@theme` values in `resources/css/app.css` are light; `.dark` overrides them
 - Most development effort is dark-first
 
 ---
@@ -162,7 +165,7 @@ Smooth: new tokens append directly to content, no flicker
 - ❌ No emoji in UI (exception: code examples or blog content)
 - ❌ No card shadows — borders only
 - ❌ No gradients on backgrounds
-- ❌ No sans-serif or serif fonts — monospace always
+- ❌ No serif fonts; sans only for blog post body text
 
 ---
 
@@ -183,27 +186,40 @@ Smooth: new tokens append directly to content, no flicker
 
 ## Tailwind Config Reference
 
-```javascript
-// tailwind.config.js
-export default {
-  darkMode: 'class',
-  content: ['./resources/js/**/*.{vue,js}', './resources/views/**/*.blade.php'],
-  theme: {
-    extend: {
-      fontFamily: {
-        mono: ['Geist Mono', 'monospace'],
-      },
-      colors: {
-        bg:      '#0d1117',
-        surface: '#161b22',
-        accent:  '#238636',
-        text:    '#e6edf3',
-        dim:     '#6e7681',
-        border:  '#30363d',
-      },
-    },
-  },
-  plugins: [require('@tailwindcss/typography')],
+Tailwind v4: there is no `tailwind.config.js`. Tokens live in `resources/css/app.css`; light values in `@theme`, dark overrides under `.dark`. Read that file for the current values.
+
+```css
+/* resources/css/app.css */
+@import 'tailwindcss';
+@plugin '@tailwindcss/typography';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+    --font-mono: 'Geist Mono', ui-monospace, monospace;
+    --font-sans: 'Geist', ui-sans-serif, system-ui, sans-serif;
+
+    /* Light mode defaults */
+    --color-bg:      #ffffff;
+    --color-surface: #f6f8fa;
+    --color-accent:  #238636;
+    --color-text:    #1f2328;
+    --color-dim:     #656d76;
+    --color-body:    #656d76;
+    --color-border:  #d0d7de;
+    --color-danger:  #cf222e;
+}
+
+/* Dark mode overrides */
+.dark {
+    --color-bg:      #0d1117;
+    --color-surface: #161b22;
+    --color-accent:  #238636;
+    --color-text:    #e6edf3;
+    --color-dim:     #6e7681;
+    --color-body:    #8b949e;
+    --color-border:  #30363d;
+    --color-danger:  #f85149;
 }
 ```
 
@@ -211,15 +227,23 @@ export default {
 
 ## Prose (Blog Post) Styling
 
-Blog posts render markdown to HTML from Laravel. Style with `@tailwindcss/typography`:
+Blog posts render markdown to HTML from Laravel. Style with `@tailwindcss/typography`. Body text (paragraphs, list items, blockquotes) is Geist sans in the `body` colour; inline code is forced back to `font-mono` (it would inherit sans) and shows no backticks. Live classes: `resources/js/pages/BlogPost.vue`.
 
 ```vue
 <div class="prose prose-invert prose-sm max-w-none
             prose-headings:font-mono prose-headings:text-text
-            prose-p:text-dim prose-a:text-accent prose-a:no-underline
+            prose-p:font-sans prose-p:text-base/relaxed prose-p:text-body
+            prose-li:font-sans prose-li:text-base/relaxed prose-li:text-body
+            prose-blockquote:font-sans prose-blockquote:text-base/relaxed prose-blockquote:text-body
+            prose-a:text-accent prose-a:no-underline
             hover:prose-a:underline
-            prose-code:bg-surface prose-code:text-accent prose-code:rounded
-            prose-pre:bg-surface prose-pre:border prose-pre:border-border">
+            prose-code:font-mono prose-code:bg-surface prose-code:text-accent prose-code:rounded prose-code:px-1
+            prose-code:before:content-none prose-code:after:content-none
+            prose-pre:bg-surface prose-pre:border prose-pre:border-border
+            prose-strong:text-text prose-hr:border-border
+            prose-th:text-text prose-th:border-border prose-th:px-3 prose-th:py-1.5
+            prose-td:text-body prose-td:border-border prose-td:px-3 prose-td:py-1.5
+            prose-table:border-collapse">
   <div v-html="post.content" />
 </div>
 ```

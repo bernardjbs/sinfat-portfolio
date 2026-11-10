@@ -4,7 +4,7 @@
 
     <h1 class="text-2xl text-text mt-5 mb-3">All series</h1>
     <p class="font-sans text-body leading-relaxed mb-10">
-      Longer stories told in parts. Each one is read in order from part 1.
+      Longer projects, written up in parts as they happened.
     </p>
 
     <div v-if="seriesLoading" class="text-dim text-sm">loading...</div>

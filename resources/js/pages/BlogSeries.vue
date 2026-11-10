@@ -1,6 +1,6 @@
 <template>
   <div class="max-w-3xl mx-auto px-4 sm:px-6 py-16">
-    <router-link :to="{ name: 'blog' }" class="text-dim text-xs hover:text-text transition-colors">← blog</router-link>
+    <router-link :to="{ name: 'blog-series-index' }" class="text-dim text-xs hover:text-text transition-colors">← all series</router-link>
 
     <div v-if="seriesLoading" class="text-dim text-sm mt-5">loading...</div>
 

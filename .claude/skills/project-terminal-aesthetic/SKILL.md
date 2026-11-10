@@ -27,6 +27,7 @@ These are the ONLY colours used. They match the Tailwind config tokens exactly.
 | `text` | `#e6edf3` | Body text — off white |
 | `dim` | `#6e7681` | Secondary text — labels, metadata, dates, timestamps, muted descriptions |
 | `body` | `#8b949e` (light `#656d76`) | Blog post body text: paragraphs, list items, blockquotes, table cells. At least 4.5:1 in both themes |
+| `link` | `#3fb950` (light `#1a7f37`) | Prose links and inline code only; nav and buttons keep `accent` |
 | `border` | `#30363d` | Borders, dividers, input outlines |
 
 **Error state:** `#f85149` (GitHub dark red) — validation errors, danger actions. Can be added to config as `danger`.
@@ -41,7 +42,7 @@ These are the ONLY colours used. They match the Tailwind config tokens exactly.
 **Font:** Geist Mono, loaded from Google Fonts
 - Monospace throughout: headings, UI labels, meta, nav, inline code, code blocks
 - **One exception:** blog post body text (paragraphs, list items, blockquotes) is Geist sans,
-  16px, `leading-relaxed` (ruled 2026-11-10, module 16)
+  18px/1.6, 17px under 600px (ruled 2026-11-10, module 16); post title 36px/1.15 mono, h2 22px
 - No serif fonts
 - Weights: Geist Mono 400, 500, 600; Geist 400, 500
 
@@ -69,7 +70,7 @@ text-3xl  → homepage headline only
 
 ## Layout Principles
 
-1. **Max width:** `max-w-3xl` or `max-w-4xl` for content — never full bleed text; blog post pages: `max-w-xl` (about 70 characters of body text)
+1. **Max width:** `max-w-3xl` or `max-w-4xl` for content — never full bleed text; post pages: 38rem prose with a left 11rem contents track, code and tables break out right by 12rem; one column under 1100px (`.post-*` rules in `resources/css/app.css`)
 2. **Centering:** `mx-auto px-4 sm:px-6`
 3. **Vertical rhythm:** consistent `space-y-8` between sections, `space-y-4` within
 4. **No hero images** — text-first, no stock photos, no abstract gradients
@@ -192,17 +193,17 @@ Tailwind v4: there is no `tailwind.config.js`. Fonts and colour tokens live in `
 
 ## Prose (Blog Post) Styling
 
-Blog posts render markdown to HTML from Laravel. Style with `@tailwindcss/typography`. Body text (paragraphs, list items, blockquotes) is Geist sans in the `body` colour; inline code is forced back to `font-mono` (it would inherit sans) and shows no backticks. Live classes: `resources/js/pages/BlogPost.vue`.
+Blog posts render markdown to HTML from Laravel. Style with `@tailwindcss/typography`. Body text (paragraphs, list items, blockquotes) is Geist sans in the `body` colour, sized by `.post-prose` in `app.css`; inline code is forced back to `font-mono` (it would inherit sans) and shows no backticks. Live classes: `resources/js/pages/BlogPost.vue`.
 
 ```vue
-<div class="prose prose-invert prose-sm max-w-none
+<div class="prose prose-invert max-w-none post-prose
             prose-headings:font-mono prose-headings:text-text
-            prose-p:font-sans prose-p:text-base/relaxed prose-p:text-body
-            prose-li:font-sans prose-li:text-base/relaxed prose-li:text-body
-            prose-blockquote:font-sans prose-blockquote:text-base/relaxed prose-blockquote:text-body
-            prose-a:text-accent prose-a:no-underline
+            prose-p:font-sans prose-p:text-body
+            prose-li:font-sans prose-li:text-body
+            prose-blockquote:font-sans prose-blockquote:text-body
+            prose-a:text-link prose-a:no-underline
             hover:prose-a:underline
-            prose-code:font-mono prose-code:bg-surface prose-code:text-accent prose-code:rounded prose-code:px-1
+            prose-code:font-mono prose-code:bg-surface prose-code:text-link prose-code:rounded prose-code:px-1
             prose-code:before:content-none prose-code:after:content-none
             prose-pre:bg-surface prose-pre:border prose-pre:border-border
             prose-strong:text-text prose-hr:border-border

@@ -1,5 +1,5 @@
 <template>
-  <div class="max-w-3xl mx-auto px-4 sm:px-6 py-16">
+  <div class="max-w-xl mx-auto px-4 sm:px-6 py-16">
 
     <div v-if="loading" class="text-dim text-sm">loading...</div>
 

@@ -1,5 +1,5 @@
 ---
-name: terminal-aesthetic
+name: project-terminal-aesthetic
 description: Design system for sinfat.com. Use when making any UI decisions — colours, typography, spacing, or component design. Defines the exact Tailwind colour tokens, Geist Mono font rules, component shapes, and what the terminal aesthetic must not include.
 ---
 

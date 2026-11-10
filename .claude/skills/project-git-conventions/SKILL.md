@@ -1,5 +1,5 @@
 ---
-name: git-conventions
+name: project-git-conventions
 description: Git workflow for sinfat-portfolio. Use when creating branches, writing commit messages, or deciding when to commit. Covers branch naming (feat/fix/refactor/chore), Conventional Commits format, per-module workflow, and deploy trigger rules.
 ---
 
@@ -166,4 +166,3 @@ The repo is private. Still, never commit:
 - `.env` (it's in `.gitignore` by default — verify)
 - `storage/logs/*`
 - `node_modules/`
-- `.pi/agent-sessions/` (ephemeral session files)

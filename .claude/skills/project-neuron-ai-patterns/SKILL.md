@@ -1,5 +1,5 @@
 ---
-name: neuron-ai-patterns
+name: project-neuron-ai-patterns
 description: Neuron AI implementation patterns for sinfat-portfolio. Use when building any AI feature — agent class structure, SSE streaming with Nginx buffering fix, guest API key session-only storage, rate limiting middleware, and LLM security rules.
 ---
 

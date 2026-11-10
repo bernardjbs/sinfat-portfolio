@@ -1,5 +1,5 @@
 ---
-name: portfolio-context
+name: project-portfolio-context
 description: Architecture reference for the sinfat-portfolio project. Use when working on any part of sinfat.com — covers stack decisions, environments, API routes, Vue Router routes, database tables, Pinia stores, design tokens, and deploy workflow.
 ---
 

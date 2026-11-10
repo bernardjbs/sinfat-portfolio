@@ -1,13 +1,7 @@
 set dotenv-load := true
 
-TOOLKIT := "/Users/bernard/code/ai-projects/pi-agent-toolkit/extensions/providers/AppExtensionProvider.ts"
-
 default:
     @just --list
-
-# toolkit — load pi-agent-toolkit (footer + observer + blog-writer + progress-tracker)
-toolkit:
-    pi -e {{TOOLKIT}}
 
 # dev — start Vite dev server
 dev:

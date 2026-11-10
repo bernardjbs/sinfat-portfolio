@@ -1,5 +1,5 @@
 ---
-name: test-writer
+name: project-test-writer
 description: Testing conventions for sinfat-portfolio. Use when writing PHPUnit feature tests for any module. Defines what to test per layer, naming conventions, factory patterns, the actingAsAdmin helper, and what NOT to test.
 ---
 

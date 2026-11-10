@@ -1,5 +1,5 @@
 ---
-name: laravel-conventions
+name: project-laravel-conventions
 description: Laravel coding conventions for sinfat-portfolio. Use when writing any PHP — controllers, services, models, migrations, middleware, API resources, or routes. Defines the Controller→Service→Resource pattern, naming rules, and what not to do.
 ---
 

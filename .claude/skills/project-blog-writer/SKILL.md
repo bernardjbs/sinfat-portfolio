@@ -1,5 +1,5 @@
 ---
-name: blog-writer
+name: project-blog-writer
 description: Generate professional blog posts for sinfat.com. Use when creating blog content from summary files or manual input. Covers tone, structure, category assignment, and the full draft-to-publish workflow.
 ---
 
@@ -150,7 +150,7 @@ Use the admin UI at `/admin/blog` to review, edit, and publish.
 
 ## Mapping Summaries to Blog Posts
 
-The summaries at `/Users/bernard/code/ai-learning/pi-vs-claude-code/docs/summaries/` cover the entire build journey. Here's a suggested mapping — all under `development`:
+The summaries at `/Users/bernard/code/ai-learning/pi-vs-claude-code/docs/summaries/` (a read-only archive: read from it, never add to it) cover the entire build journey. Here's a suggested mapping — all under `development`:
 
 | Summary | Blog Title |
 |---------|-----------|

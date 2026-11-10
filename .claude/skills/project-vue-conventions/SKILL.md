@@ -1,5 +1,5 @@
 ---
-name: vue-conventions
+name: project-vue-conventions
 description: Vue 3 coding conventions for sinfat-portfolio. Use when writing any frontend code — components, stores, routing, or API calls. Options API only, no Composition API, Pinia for shared state, fetch over Axios, SSE streaming pattern.
 ---
 

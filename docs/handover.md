@@ -60,5 +60,5 @@ Read this file first at the start of every session. It tells you where you are a
 - Deploy guide → `docs/deploy-guide.md`
 - Production env reference → `docs/production-env.md`
 - Last session note → `docs/sessions/2026-03-14-infra-email-seo.md`
-- Full history → `.pi/PROGRESS.md`
+- Full history → `docs/history/pi-progress.md`
 - Architecture decisions → `/Users/bernard/code/ai-learning/pi-vs-claude-code/docs/PORTFOLIO.md`

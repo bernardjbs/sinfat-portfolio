@@ -1,5 +1,5 @@
 ---
-name: security-review
+name: project-security-review
 description: Security checklist for sinfat-portfolio. Use before committing any module. Covers auth guards, mass assignment, input validation, XSS, CSRF, draft post leakage, rate limiting, and API response exposure.
 ---
 

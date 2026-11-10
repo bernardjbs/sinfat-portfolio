@@ -45,6 +45,8 @@ Agents never publish.
   production web server treats a folder URL, and so a feature test can prove it
 - In the copies only: every `file://` link unwrapped to its text, and each link to another snapshot
   (`<stamp>.html`) pointed at `/notebook/<stamp>/`
+- In the copies only, added 2026-11-10 after the part 1 fact-check: the trap line "One factory was shut
+  down after 3 months" replaced with the corrected line from Dex Horthy's own essay, marked as a correction
 - Six snapshots: `2026-11-09-2327` to `2026-11-10-1220`. A new snapshot is a new file plus a copy run
 
 ## The Posts

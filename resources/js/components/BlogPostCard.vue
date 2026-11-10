@@ -12,7 +12,7 @@
         {{ post.excerpt }}
       </p>
 
-      <div class="flex items-center gap-3 mt-2">
+      <div class="flex flex-wrap items-center gap-x-3 gap-y-1 mt-2">
         <span class="text-dim text-xs">{{ formattedDate }}</span>
         <span v-if="post.reading_time" class="text-dim text-xs">· {{ post.reading_time }} min read</span>
         <span
@@ -20,14 +20,22 @@
           class="text-xs text-dim border border-border rounded px-1.5 py-0.5"
         >{{ post.category }}</span>
         <span v-if="post.ai_generated" class="text-dim text-xs">· AI drafted</span>
+        <span v-if="post.series" class="inline-flex items-center gap-1 text-dim text-xs">
+          <Layers :size="13" class="text-link shrink-0" aria-hidden="true" />
+          Part {{ post.series.part }} of {{ post.series.title }}
+        </span>
       </div>
     </router-link>
   </div>
 </template>
 
 <script>
+import { Layers } from 'lucide-vue-next'
+
 export default {
   name: 'BlogPostCard',
+
+  components: { Layers },
 
   props: {
     post: {

@@ -13,8 +13,15 @@
     <div v-else-if="error" class="text-danger text-sm">{{ error }}</div>
 
     <div v-else-if="currentPost" class="post-grid">
-      <!-- Left track: contents built from the post's h2s -->
+      <!-- Left track: series part, then contents built from the post's h2s -->
       <aside class="post-track">
+        <div v-if="series" class="post-series">
+          <span class="post-part">
+            <Layers :size="15" class="text-link shrink-0" aria-hidden="true" />
+            {{ partLabel }}
+          </span>
+          <router-link :to="{ name: 'blog-series', params: { slug: series.slug } }">{{ series.title }}</router-link>
+        </div>
         <nav v-if="contents.length" class="post-toc" aria-label="Contents">
           <span>Contents</span>
           <a
@@ -62,8 +69,51 @@
           v-html="currentPost.content"
         />
 
+        <!-- Series posts step through the series; standalone posts by date -->
+        <section v-if="series" class="post-series-box" aria-label="Series">
+          <p class="post-series-head">{{ series.title }}, {{ partLabel.toLowerCase() }}</p>
+
+          <div class="post-series-pn">
+            <router-link
+              v-if="previousPost"
+              :to="{ name: 'blog-post', params: { slug: previousPost.slug } }"
+            >
+              <small>Previous, part {{ previousPost.part }}</small>
+              <span>{{ previousPost.title }}</span>
+            </router-link>
+            <div v-else></div>
+
+            <router-link
+              v-if="nextPost"
+              :to="{ name: 'blog-post', params: { slug: nextPost.slug } }"
+              class="post-series-next"
+            >
+              <small>Next, part {{ nextPost.part }}</small>
+              <span>{{ nextPost.title }}</span>
+            </router-link>
+          </div>
+
+          <details v-if="seriesParts">
+            <summary>{{ partsSummary }}</summary>
+            <ol :start="partsWindow[0]?.part">
+              <li
+                v-for="part in partsWindow"
+                :key="part.slug"
+                :class="{ current: part.slug === currentPost.slug }"
+              >
+                <router-link :to="{ name: 'blog-post', params: { slug: part.slug } }">{{ part.title }}</router-link>
+              </li>
+            </ol>
+            <router-link
+              v-if="partsWindowed"
+              :to="{ name: 'blog-series', params: { slug: series.slug } }"
+              class="post-series-all"
+            >All {{ seriesParts.length }} parts</router-link>
+          </details>
+        </section>
+
         <!-- Next/Previous navigation -->
-        <nav v-if="previousPost || nextPost" class="flex items-stretch justify-between gap-4 mt-12 pt-6 border-t border-border">
+        <nav v-else-if="previousPost || nextPost" class="flex items-stretch justify-between gap-4 mt-12 pt-6 border-t border-border">
           <router-link
             v-if="previousPost"
             :to="{ name: 'blog-post', params: { slug: previousPost.slug } }"
@@ -124,6 +174,11 @@ import css from 'highlight.js/lib/languages/css'
 import xml from 'highlight.js/lib/languages/xml'
 import sql from 'highlight.js/lib/languages/sql'
 import 'highlight.js/styles/github-dark.css'
+import { Layers } from 'lucide-vue-next'
+
+// Past this many parts, the end-of-post list shows only the parts either side of this one
+const FULL_LIST_MAX = 15
+const WINDOW_EACH_SIDE = 2
 
 hljs.registerLanguage('javascript', javascript)
 hljs.registerLanguage('js', javascript)
@@ -138,6 +193,8 @@ hljs.registerLanguage('sql', sql)
 
 export default {
   name: 'BlogPostPage',
+
+  components: { Layers },
 
   props: {
     slug: {
@@ -154,7 +211,34 @@ export default {
   },
 
   computed: {
-    ...mapState(useBlogStore, ['currentPost', 'nextPost', 'previousPost', 'loading', 'error']),
+    ...mapState(useBlogStore, ['currentPost', 'nextPost', 'previousPost', 'seriesParts', 'loading', 'error']),
+
+    series() {
+      return this.currentPost?.series ?? null
+    },
+
+    // "Part 12 of 14" once complete; "Part 3" while being written, which has no total yet
+    partLabel() {
+      const { part, total, status } = this.series
+      return status === 'complete' ? `Part ${part} of ${total}` : `Part ${part}`
+    },
+
+    partsWindowed() {
+      return (this.seriesParts?.length ?? 0) > FULL_LIST_MAX
+    },
+
+    partsWindow() {
+      if (!this.partsWindowed) return this.seriesParts ?? []
+      const i = this.seriesParts.findIndex(p => p.slug === this.currentPost.slug)
+      return this.seriesParts.slice(Math.max(0, i - WINDOW_EACH_SIDE), i + WINDOW_EACH_SIDE + 1)
+    },
+
+    partsSummary() {
+      if (!this.partsWindowed) return `All ${this.seriesParts.length} parts`
+      const first = this.partsWindow[0].part
+      const last = this.partsWindow[this.partsWindow.length - 1].part
+      return `Parts ${first} to ${last}`
+    },
 
     formattedDate() {
       if (!this.currentPost?.published_at) return ''

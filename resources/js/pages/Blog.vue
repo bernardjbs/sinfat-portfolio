@@ -1,6 +1,24 @@
 <template>
   <div class="max-w-3xl mx-auto px-4 sm:px-6 py-16">
-    <h1 class="text-2xl text-text mb-8">blog</h1>
+    <h1 class="text-2xl text-text mb-3">blog</h1>
+    <p class="font-sans text-body leading-relaxed mb-10">
+      Notes from building software with AI coding agents: what worked, what broke, and where the AI got it wrong.
+    </p>
+
+    <!-- Series: at most three, in the API's order -->
+    <section v-if="showSeries" class="mb-12" aria-labelledby="series-heading">
+      <h2 id="series-heading" class="flex items-center gap-2 text-dim text-sm mb-1">
+        <Layers :size="15" class="text-link" aria-hidden="true" />
+        Series
+      </h2>
+      <SeriesRow v-for="series in featuredSeries" :key="series.slug" :series="series" />
+      <router-link
+        :to="{ name: 'blog-series-index' }"
+        class="inline-block mt-4 text-link text-sm hover:underline"
+      >All series ({{ seriesList.length }})</router-link>
+    </section>
+
+    <h2 class="text-dim text-sm mb-3">All posts</h2>
 
     <!-- Search & Sort -->
     <div class="flex flex-col sm:flex-row sm:items-center gap-3 mb-8">
@@ -66,11 +84,13 @@
 import { mapState, mapActions, mapWritableState } from 'pinia'
 import { useBlogStore } from '../stores/blog.js'
 import BlogPostCard from '../components/BlogPostCard.vue'
+import SeriesRow from '../components/SeriesRow.vue'
+import { Layers } from 'lucide-vue-next'
 
 export default {
   name: 'BlogPage',
 
-  components: { BlogPostCard },
+  components: { BlogPostCard, SeriesRow, Layers },
 
   data() {
     return {
@@ -80,12 +100,21 @@ export default {
   },
 
   computed: {
-    ...mapState(useBlogStore, ['posts', 'meta', 'loading', 'error', 'sort']),
+    ...mapState(useBlogStore, ['posts', 'meta', 'loading', 'error', 'sort', 'seriesList']),
     ...mapWritableState(useBlogStore, ['search']),
+
+    // Searching or paging shows posts only
+    showSeries() {
+      return this.seriesList.length > 0 && !this.search && (this.meta?.current_page ?? 1) === 1
+    },
+
+    featuredSeries() {
+      return this.seriesList.slice(0, 3)
+    },
   },
 
   methods: {
-    ...mapActions(useBlogStore, ['fetchPosts']),
+    ...mapActions(useBlogStore, ['fetchPosts', 'fetchSeriesList']),
 
     onSearchInput() {
       clearTimeout(this.searchTimeout)
@@ -111,6 +140,7 @@ export default {
     const store = useBlogStore()
     this.searchInput = store.search
     this.fetchPosts()
+    this.fetchSeriesList()
   },
 }
 </script>

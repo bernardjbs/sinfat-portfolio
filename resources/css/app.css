@@ -104,3 +104,31 @@ body {
     .post-title { font-size: 30px; }
     .post-prose { font-size: 17px; }
 }
+
+/* Series: part line in the post track, and the box after the post */
+.post-series { margin-bottom: 2.25rem; }
+.post-part { display: flex; align-items: center; gap: 6px; color: var(--color-text); }
+.post-series a { color: var(--color-link); }
+.post-series a:hover { text-decoration: underline; }
+
+.post-series-box { margin-top: 4rem; padding-top: 1.25rem; border-top: 1px solid var(--color-border); font-size: 13px; color: var(--color-body); }
+.post-series-head { margin: 0 0 1rem; }
+.post-series-pn { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+.post-series-pn small { display: block; font-size: 12px; margin-bottom: 6px; }
+.post-series-pn span { font: 500 15px/1.4 var(--font-mono); color: var(--color-text); }
+.post-series-pn a:hover span { color: var(--color-link); }
+.post-series-next { text-align: right; }
+.post-series-box details { margin-top: 1.75rem; }
+.post-series-box summary { cursor: pointer; }
+.post-series-box ol { list-style: decimal; margin: 0.75rem 0 0; padding-left: 1.6em; font: 15px/1.5 var(--font-sans); }
+.post-series-box li { padding: 4px 0; }
+.post-series-box li a { color: var(--color-body); }
+.post-series-box li a:hover { color: var(--color-link); }
+.post-series-box li.current a { color: var(--color-text); }
+.post-series-all { display: inline-block; margin-top: 0.75rem; color: var(--color-link); }
+
+@media (max-width: 1099.98px) {
+    .post-series { margin-bottom: 1.5rem; }
+    .post-series-pn { grid-template-columns: 1fr; }
+    .post-series-next { text-align: left; }
+}

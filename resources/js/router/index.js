@@ -26,6 +26,25 @@ const routes = [
                 },
             },
             {
+                path: 'blog/series',
+                name: 'blog-series-index',
+                component: () => import('../pages/BlogSeriesIndex.vue'),
+                meta: {
+                    title: 'Series · sinfat.com',
+                    description: 'Notes from building software with AI coding agents: what worked, what broke, and where the AI got it wrong.',
+                },
+            },
+            {
+                path: 'blog/series/:slug',
+                name: 'blog-series',
+                component: () => import('../pages/BlogSeries.vue'),
+                props: true,
+                meta: {
+                    title: 'Series · sinfat.com',
+                    description: '',
+                },
+            },
+            {
                 path: 'blog/:slug',
                 name: 'blog-post',
                 component: () => import('../pages/BlogPost.vue'),

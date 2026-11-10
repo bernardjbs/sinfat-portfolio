@@ -7,9 +7,15 @@ export const useBlogStore = defineStore('blog', {
         currentPost: null,
         nextPost: null,
         previousPost: null,
+        seriesParts: null,
         meta: null,
         search: '',
         sort: 'newest',
+        // Series
+        seriesList: [],
+        currentSeries: null,
+        seriesLoading: false,
+        seriesError: null,
         // Admin
         adminPosts: [],
         adminMeta: null,
@@ -47,6 +53,7 @@ export const useBlogStore = defineStore('blog', {
             this.currentPost = null
             this.nextPost = null
             this.previousPost = null
+            this.seriesParts = null
             try {
                 const res = await fetch(`/api/blog/${slug}`)
                 if (res.status === 404) {
@@ -57,10 +64,47 @@ export const useBlogStore = defineStore('blog', {
                 this.currentPost = json.data
                 this.nextPost = json.next ?? null
                 this.previousPost = json.previous ?? null
+                this.seriesParts = json.series_parts ?? null
             } catch (e) {
                 this.error = e.message
             } finally {
                 this.loading = false
+            }
+        },
+
+        // ─── Series ────────────────────────────────────────────────────────
+
+        // Ordered by the API: being written first, then complete, newest part first
+        async fetchSeriesList() {
+            this.seriesLoading = true
+            this.seriesError = null
+            try {
+                const res = await fetch('/api/series')
+                const json = await res.json()
+                this.seriesList = json.data
+            } catch (e) {
+                this.seriesError = e.message
+            } finally {
+                this.seriesLoading = false
+            }
+        },
+
+        async fetchSeries(slug) {
+            this.seriesLoading = true
+            this.seriesError = null
+            this.currentSeries = null
+            try {
+                const res = await fetch(`/api/series/${slug}`)
+                if (res.status === 404) {
+                    this.seriesError = 'not_found'
+                    return
+                }
+                const json = await res.json()
+                this.currentSeries = json.data
+            } catch (e) {
+                this.seriesError = e.message
+            } finally {
+                this.seriesLoading = false
             }
         },
 

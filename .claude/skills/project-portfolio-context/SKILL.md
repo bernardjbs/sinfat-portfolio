@@ -85,6 +85,8 @@ There are NO Blade page templates — only `resources/views/app.blade.php` as th
 /about          About.vue
 /projects       Projects.vue      ← static hardcoded project showcase, no DB table
 /blog           Blog.vue
+/blog/series    BlogSeriesIndex.vue
+/blog/series/:slug  BlogSeries.vue
 /blog/:slug     BlogPost.vue
 /uses           Uses.vue
 /contact        Contact.vue       ← static links only (GitHub, LinkedIn, email mailto:) — no form, no DB table
@@ -104,8 +106,11 @@ There are NO Blade page templates — only `resources/views/app.blade.php` as th
 **Public:**
 ```
 GET  /api/blog          → paginated list of published posts
-GET  /api/blog/{slug}   → single published post (markdown rendered to HTML)
+GET  /api/blog/{slug}   → single published post (markdown rendered to HTML); series posts add series_parts, previous/next by part
+GET  /api/series        → public series: being written first, then complete, by latest part
+GET  /api/series/{slug} → one series with its published parts (404 if none)
 ```
+Posts in both blog endpoints carry `series` (slug, title, status, part, total) or null. Server meta: `/blog/{slug}`, `/blog/series`, `/blog/series/{slug}` (routes/web.php, ahead of the catch-all).
 
 **Admin (auth:sanctum):**
 ```
@@ -139,10 +144,13 @@ POST /logout  → auth
 |-------|---------|
 | `users` | Single admin user — no registration |
 | `blog_posts` | All blog posts with draft/published status |
+| `series` | Blog series: `slug`, `title`, `pitch`, `status` (writing/complete) |
 | `guest_usage` | Persistence layer for guest playground usage |
 | `ai_sessions` | Log of every AI generation (cost/usage monitoring) |
 
-**Key `blog_posts` columns:** `title`, `slug` (unique), `excerpt`, `content` (markdown), `status` (draft/published), `published_at`, `ai_generated` (bool), `ai_model`
+**Key `blog_posts` columns:** `title`, `slug` (unique), `excerpt`, `content` (markdown), `status` (draft/published), `published_at`, `ai_generated` (bool), `ai_model`, `series_id` + `series_part` (nullable, unique pair)
+
+**Series are data, not code:** `php artisan blog:manage series create|update|complete --slug=…`, and `--series=<slug> --part=<n>` on post create/update (omit `--part` to append; a taken part moves later parts up). Counts use published parts only.
 
 ---
 
@@ -152,7 +160,7 @@ POST /logout  → auth
 stores/auth.js       → isAuthenticated, user, login(), logout()
 stores/theme.js      → isDark, toggle()
 stores/playground.js → usageCount, isStreaming, content, apiKey
-stores/blog.js       → posts, currentPost, loading
+stores/blog.js       → posts, currentPost, loading, seriesList, currentSeries, seriesParts
 ```
 
 ---

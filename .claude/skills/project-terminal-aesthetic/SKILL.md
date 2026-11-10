@@ -27,7 +27,7 @@ These are the ONLY colours used. They match the Tailwind config tokens exactly.
 | `text` | `#e6edf3` | Body text — off white |
 | `dim` | `#6e7681` | Secondary text — labels, metadata, dates, timestamps, muted descriptions |
 | `body` | `#8b949e` (light `#656d76`) | Blog post body text: paragraphs, list items, blockquotes, table cells. At least 4.5:1 in both themes |
-| `link` | `#3fb950` (light `#1a7f37`) | Prose links and inline code only; nav and buttons keep `accent` |
+| `link` | `#3fb950` (light `#1a7f37`) | Prose links, inline code, the series mark and series links; nav and buttons keep `accent` |
 | `border` | `#30363d` | Borders, dividers, input outlines |
 
 **Error state:** `#f85149` (GitHub dark red) — validation errors, danger actions. Can be added to config as `danger`.
@@ -126,7 +126,15 @@ AI badge:  bg-surface text-dim text-xs px-2 py-0.5 rounded (small label: "AI dra
 border-b border-border py-6
 Title: text-text text-lg hover:text-accent transition (link)
 Excerpt: text-dim text-sm mt-1
-Meta row: text-dim text-xs — date · "AI drafted" if applicable
+Meta row: text-dim text-xs, flex-wrap: date · "AI drafted" if applicable · series tag
+```
+
+### Series (module 17)
+```
+Mark: lucide-vue-next Layers, 15px text-link (13px in a post card tag); standalone posts get none
+Row (SeriesRow.vue): name with mark, count right ("14 parts, complete" / "Being written, 3 parts so far"), pitch in font-sans text-body
+Post track: "Part N of M" only when complete, "Part N" while being written, then the series link
+After the post: series box replaces date previous/next; parts list collapsed, windowed to 2 either side past 15 (.post-series* in app.css)
 ```
 
 ### Code Blocks (in blog posts)

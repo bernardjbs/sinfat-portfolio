@@ -69,7 +69,7 @@ text-3xl  → homepage headline only
 
 ## Layout Principles
 
-1. **Max width:** `max-w-3xl` or `max-w-4xl` for content — never full bleed text
+1. **Max width:** `max-w-3xl` or `max-w-4xl` for content — never full bleed text; blog post pages: `max-w-xl` (about 70 characters of body text)
 2. **Centering:** `mx-auto px-4 sm:px-6`
 3. **Vertical rhythm:** consistent `space-y-8` between sections, `space-y-4` within
 4. **No hero images** — text-first, no stock photos, no abstract gradients
@@ -186,42 +186,7 @@ Smooth: new tokens append directly to content, no flicker
 
 ## Tailwind Config Reference
 
-Tailwind v4: there is no `tailwind.config.js`. Tokens live in `resources/css/app.css`; light values in `@theme`, dark overrides under `.dark`. Read that file for the current values.
-
-```css
-/* resources/css/app.css */
-@import 'tailwindcss';
-@plugin '@tailwindcss/typography';
-
-@custom-variant dark (&:where(.dark, .dark *));
-
-@theme {
-    --font-mono: 'Geist Mono', ui-monospace, monospace;
-    --font-sans: 'Geist', ui-sans-serif, system-ui, sans-serif;
-
-    /* Light mode defaults */
-    --color-bg:      #ffffff;
-    --color-surface: #f6f8fa;
-    --color-accent:  #238636;
-    --color-text:    #1f2328;
-    --color-dim:     #656d76;
-    --color-body:    #656d76;
-    --color-border:  #d0d7de;
-    --color-danger:  #cf222e;
-}
-
-/* Dark mode overrides */
-.dark {
-    --color-bg:      #0d1117;
-    --color-surface: #161b22;
-    --color-accent:  #238636;
-    --color-text:    #e6edf3;
-    --color-dim:     #6e7681;
-    --color-body:    #8b949e;
-    --color-border:  #30363d;
-    --color-danger:  #f85149;
-}
-```
+Tailwind v4: there is no `tailwind.config.js`. Fonts and colour tokens live in `resources/css/app.css`: light values in `@theme`, dark overrides under `.dark`. Read that file for the current values; do not copy them here.
 
 ---
 

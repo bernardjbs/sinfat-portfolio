@@ -55,28 +55,56 @@ Agents never publish.
   solo is real, quality is the goal, a control panel is not a quality system, the answer for me
 - Brief: `~/code/software-factory-research/docs/blog-post-01-brief.md` (its hard rules bind)
 - Links the notebook as it stood that night: `/notebook/2026-11-09-2327/`
-- Saved locally as a draft, part 1
+- Saved locally as a draft, part 1 (post #45 locally), 1,021 words
 
 ## Tasks
 
-- [ ] Snapshots copied and transformed; originals unchanged (checksums before and after)
-- [ ] `NotebookController` and route; 404 for an unknown or malformed stamp; feature tests
-- [ ] Series `my-own-ai-software-factory` created locally ("My own AI software factory", approved
+- [x] Snapshots copied and transformed; originals unchanged (checksums before and after)
+- [x] `NotebookController` and route; 404 for an unknown or malformed stamp; feature tests
+- [x] Series `my-own-ai-software-factory` created locally ("My own AI software factory", approved
       pitch, `writing`)
-- [ ] Post 1 drafted from the brief and saved as a draft, part 1, `ai_generated` true
-- [ ] Session note, handover
+- [x] Post 1 drafted from the brief and saved as a draft, part 1, `ai_generated` true
+- [x] Admin list shows a post's series and part ("Part 1 of My own AI software factory"), so the draft can be found as part 1
+- [x] Session note, handover
 
 ## Acceptance Criteria
 
-- [ ] `grep -c 'file://'` on every published copy is 0
-- [ ] Each `/notebook/<stamp>/` answers 200 on `sinfat.test` and renders (screenshot)
+- [x] `grep -c 'file://'` on every published copy is 0
+- [x] Each `/notebook/<stamp>/` answers 200 on `sinfat.test` and renders (screenshot)
 - [ ] The draft shows in the admin editor on `sinfat.test` as a draft, part 1 of the new series
-- [ ] Public `/blog` and `/api/blog` unchanged: 14 published posts, and the new series hidden because
+      (proved through the admin API and a feature test; the on-screen check needs Bernard's login)
+- [x] Public `/blog` and `/api/blog` unchanged: 14 published posts, and the new series hidden because
       it has no published part
-- [ ] Draft 800 to 1,100 words, no em dashes
-- [ ] `php artisan test`: baseline 110 passed and 3 skipped, plus the new tests, 0 failed
-- [ ] `git diff --stat main`
-- [ ] Report carries the exact production commands
+- [x] Draft 800 to 1,100 words, no em dashes
+- [x] `php artisan test`: baseline 110 passed and 3 skipped, plus the new tests, 0 failed
+- [x] `git diff --stat main`
+- [x] Report carries the exact production commands
+
+## Production (Bernard, after merge, push and `just deploy`)
+
+The deploy ships the snapshots: `/notebook/<stamp>/` is public from then on. Then:
+
+```
+ssh sinfat "cd /var/www/sinfat && php artisan blog:manage series create --slug=my-own-ai-software-factory --title='My own AI software factory' --pitch='A solo developer works out what a software factory means for one person, then builds it stage by stage.'"
+```
+
+When the draft is ready (after any edits in the local admin editor):
+
+```
+php artisan blog:manage export --id=45
+scp storage/app/blog-exports/do-i-need-a-software-factory-product-or-just-a-script.md sinfat:/tmp/factory-part-1.md
+ssh sinfat "cd /var/www/sinfat && php artisan blog:manage create --title='Do I need a software factory product, or just a script?' --excerpt='Three questions about AI software factories, what the published ones have in common, and why my answer was to build a thin one on what I already had.' --file=/tmp/factory-part-1.md --series=my-own-ai-software-factory --ai-model=claude-opus-5-5"
+```
+
+It is created as a draft, part 1. Publish it in the production admin editor, then rebuild the sitemap so
+the post and the series page are listed:
+
+```
+ssh sinfat "cd /var/www/sinfat && php artisan sitemap:generate"
+```
+
+The series row appears on `/blog` once the post is published. A changed title or excerpt goes in the
+create command, not the file.
 
 ### Dependencies
 Module 17 (merged)
@@ -84,4 +112,4 @@ Module 17 (merged)
 ---
 
 *Created: 2026-11-10*
-*Status: 🚧 In progress*
+*Status: ✅ Complete (on branch, awaiting merge; post not published)*

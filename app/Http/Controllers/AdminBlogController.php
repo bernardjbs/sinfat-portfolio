@@ -5,15 +5,18 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreBlogPostRequest;
 use App\Http\Resources\BlogPostResource;
 use App\Models\BlogPost;
+use App\Services\SeriesService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
 
 class AdminBlogController extends Controller
 {
+    public function __construct(private SeriesService $seriesService) {}
+
     public function index(): AnonymousResourceCollection
     {
-        $posts = BlogPost::orderByDesc('created_at')->paginate(15);
+        $posts = $this->seriesService->loadSeriesFor(BlogPost::orderByDesc('created_at'))->paginate(15);
 
         return BlogPostResource::collection($posts);
     }

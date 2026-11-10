@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\BlogPost;
+use App\Models\Series;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -175,5 +176,19 @@ class AdminBlogControllerTest extends TestCase
             ->patchJson("/api/admin/blog/{$post->id}/publish")
             ->assertOk()
             ->assertJsonPath('data.status', 'draft');
+    }
+
+    public function test_admin_listing_shows_a_draft_s_series_and_part(): void
+    {
+        $series = Series::factory()->create(['slug' => 'factory', 'title' => 'My own AI software factory']);
+        $draft = BlogPost::factory()->draft()->inSeries($series, 1)->create();
+        BlogPost::factory()->draft()->create();
+
+        $posts = collect($this->actingAsAdmin()->getJson('/api/admin/blog')->assertOk()->json('data'))->keyBy('id');
+
+        $this->assertSame('factory', $posts[$draft->id]['series']['slug']);
+        $this->assertSame(1, $posts[$draft->id]['series']['part']);
+        $this->assertSame('draft', $posts[$draft->id]['status']);
+        $this->assertNull($posts->firstWhere('id', '!=', $draft->id)['series']);
     }
 }

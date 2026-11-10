@@ -48,6 +48,7 @@
           <div class="text-dim text-xs mt-1">
             {{ formattedDate(post.created_at) }}
             <span v-if="post.ai_generated"> · AI drafted</span>
+            <span v-if="post.series"> · Part {{ post.series.part }} of {{ post.series.title }}</span>
           </div>
         </div>
 

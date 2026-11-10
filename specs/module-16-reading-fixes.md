@@ -12,13 +12,14 @@ paragraphs in Geist sans, everything else stays Geist Mono.
 #### Body font (ruling 2)
 - [ ] Load Geist (400, 500) alongside Geist Mono in the existing Google Fonts request
 - [ ] Add a `--font-sans` theme token for Geist
-- [ ] Post body paragraphs in Geist, 16px, line-height `relaxed` (1.625)
+- [ ] Post body text in Geist, 16px, line-height `relaxed` (1.625): paragraphs, list items and blockquotes
 - [ ] Headings, meta, nav, inline code and code blocks stay Geist Mono
 - [ ] Record the exception in `project-terminal-aesthetic` (through `/skills-builder`)
 
 #### Body text colour and width
 - [ ] Add a `body` colour token: dark `#8b949e`, light `#656d76`
-- [ ] Change `prose-p:text-dim` in `BlogPost.vue` to the new token; the `dim` token is unchanged
+- [ ] Change `prose-p:text-dim` in `BlogPost.vue` to the new token, and the same for list items,
+      blockquotes and table cells; the `dim` token is unchanged
 - [ ] Narrow the post column so body paragraphs run about 70 characters a line
 - [ ] Record the token in `project-terminal-aesthetic`
 
@@ -45,6 +46,12 @@ paragraphs in Geist sans, everything else stays Geist Mono.
 - [ ] `curl` of a missing slug returns 404
 - [ ] `php artisan test`: 74 passed and 3 skipped, plus the new tests, 0 failed
 - [ ] No regressions on mobile layout
+
+### Convention Change
+`project-terminal-aesthetic` no longer says "monospace always". Blog post body text (paragraphs,
+list items, blockquotes) is Geist sans, 16px, `leading-relaxed`, in the new `body` colour token;
+table cells take the `body` colour only. Everything else stays Geist Mono. Ruled 2026-11-10 (ruling
+2, then lists, tables and blockquotes as "prose body text").
 
 ### Dependencies
 Module 14 (complete)

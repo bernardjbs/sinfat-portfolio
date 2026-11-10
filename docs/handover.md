@@ -43,6 +43,7 @@ Read this file first at the start of every session. It tells you where you are a
 - **Deploy:** `just deploy` — SSHes into server, runs `scripts/deploy.sh` (pull, composer, npm, build, migrate, cache, sitemap, nginx reload). See `docs/deploy-guide.md`.
 
 ## Outstanding Items
+- No `BlogService`: `BlogController` and `BlogPageController` query the `BlogPost` model scope directly, while `project-laravel-conventions` describes Controller → Service. Either add the service or correct the skill (noted 2026-11-10, module 16)
 - Football Analytics description is placeholder — real story TBD
 - ~~Submit sitemap to Google Search Console~~ — done 2026-03-14
 - Supervisor for queue workers not yet set up on prod (no queued jobs yet — skip until needed)

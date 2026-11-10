@@ -1,5 +1,5 @@
 <template>
-  <div class="max-w-xl mx-auto px-4 sm:px-6 py-16">
+  <div class="post-page">
 
     <div v-if="loading" class="text-dim text-sm">loading...</div>
 
@@ -12,93 +12,102 @@
 
     <div v-else-if="error" class="text-danger text-sm">{{ error }}</div>
 
-    <article v-else-if="currentPost">
-      <!-- Header -->
-      <header class="mb-10">
-        <router-link
-          :to="{ name: 'blog' }"
-          class="text-dim text-xs hover:text-text transition-colors"
-        >
-          ← blog
-        </router-link>
+    <div v-else-if="currentPost" class="post-grid">
+      <!-- Left track: contents built from the post's h2s -->
+      <aside class="post-track">
+        <nav v-if="contents.length" class="post-toc" aria-label="Contents">
+          <span>Contents</span>
+          <a
+            v-for="item in contents"
+            :key="item.id"
+            :href="`#${item.id}`"
+            @click.prevent="goToHeading(item.id)"
+          >{{ item.text }}</a>
+        </nav>
+      </aside>
 
-        <h1 class="text-2xl text-text mt-4">{{ currentPost.title }}</h1>
+      <header class="post-head">
+        <router-link :to="{ name: 'blog' }" class="post-back">← blog</router-link>
 
-        <div class="flex items-center gap-3 mt-3">
-          <span class="text-dim text-xs">{{ formattedDate }}</span>
-          <span v-if="currentPost.reading_time" class="text-dim text-xs">· {{ currentPost.reading_time }} min read</span>
-          <span
-            v-if="currentPost.category"
-            class="text-xs text-dim border border-border rounded px-1.5 py-0.5"
-          >{{ currentPost.category }}</span>
-          <span v-if="currentPost.ai_generated" class="text-dim text-xs">· AI drafted</span>
-        </div>
+        <h1 class="post-title">{{ currentPost.title }}</h1>
+
+        <p class="post-meta">
+          {{ metaLead }}
+          <template v-if="currentPost.category">
+            {{ metaCategoryPrefix }}
+            <router-link :to="{ name: 'blog' }">{{ currentPost.category }}</router-link>.
+          </template>
+          <template v-else-if="currentPost.ai_generated">Drafted with AI.</template>
+        </p>
       </header>
 
-      <!-- Content — server-rendered markdown from Laravel, safe to use v-html -->
-      <div
-        class="prose prose-invert prose-sm max-w-none
-               prose-headings:font-mono prose-headings:text-text
-               prose-p:font-sans prose-p:text-base/relaxed prose-p:text-body
-               prose-li:font-sans prose-li:text-base/relaxed prose-li:text-body
-               prose-blockquote:font-sans prose-blockquote:text-base/relaxed prose-blockquote:text-body
-               prose-a:text-accent prose-a:no-underline
-               hover:prose-a:underline
-               prose-code:font-mono prose-code:bg-surface prose-code:text-accent prose-code:rounded prose-code:px-1
-               prose-code:before:content-none prose-code:after:content-none
-               prose-pre:bg-surface prose-pre:border prose-pre:border-border
-               prose-strong:text-text prose-hr:border-border
-               prose-th:text-text prose-th:border-border prose-th:px-3 prose-th:py-1.5
-               prose-td:text-body prose-td:border-border prose-td:px-3 prose-td:py-1.5
-               prose-table:border-collapse"
-        v-html="currentPost.content"
-      />
+      <article class="post-body">
+        <!-- Content — server-rendered markdown from Laravel, safe to use v-html -->
+        <div
+          ref="content"
+          class="prose prose-invert max-w-none post-prose
+                 prose-headings:font-mono prose-headings:text-text
+                 prose-p:font-sans prose-p:text-body
+                 prose-li:font-sans prose-li:text-body
+                 prose-blockquote:font-sans prose-blockquote:text-body
+                 prose-a:text-link prose-a:no-underline
+                 hover:prose-a:underline
+                 prose-code:font-mono prose-code:bg-surface prose-code:text-link prose-code:rounded prose-code:px-1
+                 prose-code:before:content-none prose-code:after:content-none
+                 prose-pre:bg-surface prose-pre:border prose-pre:border-border
+                 prose-strong:text-text prose-hr:border-border
+                 prose-th:text-text prose-th:border-border prose-th:px-3 prose-th:py-1.5
+                 prose-td:text-body prose-td:border-border prose-td:px-3 prose-td:py-1.5
+                 prose-table:border-collapse"
+          v-html="currentPost.content"
+        />
 
-      <!-- Next/Previous navigation -->
-      <nav v-if="previousPost || nextPost" class="flex items-stretch justify-between gap-4 mt-12 pt-6 border-t border-border">
-        <router-link
-          v-if="previousPost"
-          :to="{ name: 'blog-post', params: { slug: previousPost.slug } }"
-          class="group flex-1 min-w-0"
-        >
-          <span class="text-dim text-xs">← previous</span>
-          <span class="block text-sm text-text group-hover:text-accent transition-colors truncate mt-0.5">
-            {{ previousPost.title }}
-          </span>
-        </router-link>
-        <div v-else class="flex-1"></div>
+        <!-- Next/Previous navigation -->
+        <nav v-if="previousPost || nextPost" class="flex items-stretch justify-between gap-4 mt-12 pt-6 border-t border-border">
+          <router-link
+            v-if="previousPost"
+            :to="{ name: 'blog-post', params: { slug: previousPost.slug } }"
+            class="group flex-1 min-w-0"
+          >
+            <span class="text-dim text-xs">← previous</span>
+            <span class="block text-sm text-text group-hover:text-accent transition-colors truncate mt-0.5">
+              {{ previousPost.title }}
+            </span>
+          </router-link>
+          <div v-else class="flex-1"></div>
 
-        <router-link
-          v-if="nextPost"
-          :to="{ name: 'blog-post', params: { slug: nextPost.slug } }"
-          class="group flex-1 min-w-0 text-right"
-        >
-          <span class="text-dim text-xs">next →</span>
-          <span class="block text-sm text-text group-hover:text-accent transition-colors truncate mt-0.5">
-            {{ nextPost.title }}
-          </span>
-        </router-link>
-        <div v-else class="flex-1"></div>
-      </nav>
+          <router-link
+            v-if="nextPost"
+            :to="{ name: 'blog-post', params: { slug: nextPost.slug } }"
+            class="group flex-1 min-w-0 text-right"
+          >
+            <span class="text-dim text-xs">next →</span>
+            <span class="block text-sm text-text group-hover:text-accent transition-colors truncate mt-0.5">
+              {{ nextPost.title }}
+            </span>
+          </router-link>
+          <div v-else class="flex-1"></div>
+        </nav>
 
-      <!-- Post footer -->
-      <footer class="flex items-center justify-between mt-6 pt-6 border-t border-border">
-        <button
-          class="text-dim text-xs hover:text-accent transition-colors"
-          @click="copyLink"
-        >
-          {{ linkCopied ? 'copied!' : 'copy link' }}
-        </button>
+        <!-- Post footer -->
+        <footer class="flex items-center justify-between mt-6 pt-6 border-t border-border">
+          <button
+            class="text-dim text-xs hover:text-accent transition-colors"
+            @click="copyLink"
+          >
+            {{ linkCopied ? 'copied!' : 'copy link' }}
+          </button>
 
-        <a
-          href="#"
-          class="text-dim text-xs hover:text-accent transition-colors"
-          @click.prevent="scrollToTop"
-        >
-          ↑ top
-        </a>
-      </footer>
-    </article>
+          <a
+            href="#"
+            class="text-dim text-xs hover:text-accent transition-colors"
+            @click.prevent="scrollToTop"
+          >
+            ↑ top
+          </a>
+        </footer>
+      </article>
+    </div>
 
   </div>
 </template>
@@ -140,6 +149,7 @@ export default {
   data() {
     return {
       linkCopied: false,
+      contents: [],
     }
   },
 
@@ -154,6 +164,16 @@ export default {
         day: 'numeric',
       })
     },
+
+    // "13 March 2026, 5 minute read."
+    metaLead() {
+      const time = this.currentPost?.reading_time ? `, ${this.currentPost.reading_time} minute read` : ''
+      return `${this.formattedDate}${time}.`
+    },
+
+    metaCategoryPrefix() {
+      return this.currentPost?.ai_generated ? 'Drafted with AI, in' : 'In'
+    },
   },
 
   methods: {
@@ -166,6 +186,32 @@ export default {
           hljs.highlightElement(block)
         })
       })
+    },
+
+    // Give each h2 the id of its permalink anchor, then list them in the track
+    buildContents() {
+      this.$nextTick(() => {
+        const root = this.$refs.content
+        if (!root) {
+          this.contents = []
+          return
+        }
+        this.contents = [...root.querySelectorAll('h2')].map((h2, i) => {
+          const anchor = h2.querySelector('a.heading-permalink[id]')
+          if (!h2.id) {
+            h2.id = anchor ? anchor.id : `section-${i + 1}`
+          }
+          if (anchor) anchor.removeAttribute('id')
+          return { id: h2.id, text: h2.textContent.trim() }
+        })
+      })
+    },
+
+    goToHeading(id) {
+      const heading = this.$refs.content?.querySelector(`#${CSS.escape(id)}`)
+      if (!heading) return
+      heading.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      history.replaceState(history.state, '', `#${id}`)
     },
 
     copyLink() {
@@ -205,6 +251,7 @@ export default {
           ogDesc.setAttribute('content', post.excerpt)
         }
         this.highlightCode()
+        this.buildContents()
         this.scrollToHash()
       }
     },

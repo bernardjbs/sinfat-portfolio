@@ -53,7 +53,7 @@ Controllers are thin. Business logic lives in Services. API output shaped by Res
 
 ## Development Process
 
-This project was built using [pi](https://github.com/mariozechner/pi), a coding agent, with a structured module-by-module workflow. The Pi skills, agents and session state that guided the build (12 modules from infrastructure to deploy pipeline, each following a Plan → Execute → Test → Document cycle) are in git history before commit `c2de76d`, when the setup moved to Claude Code under `.claude/`.
+This project was built using [pi](https://github.com/mariozechner/pi), a coding agent, with a structured module-by-module workflow. The Pi skills, agents and session state that guided the build (12 modules from infrastructure to deploy pipeline, each following a Plan → Execute → Test → Document cycle) are in git history before the Pi to Claude Code port (November 2026), when the setup moved under `.claude/`.
 
 See `docs/sessions/` for per-module notes and `specs/` for the original module specs.
 

@@ -29,6 +29,7 @@ Read this file first at the start of every session. It tells you where you are a
 | 11 | Deploy Pipeline Polish | ✅ Complete |
 | 12 | Blog Polish | ✅ Complete |
 | 14 | Blog Polish II | ✅ Complete |
+| 16 | Reading Fixes and Honest URLs | ✅ Complete (branch `feat/module-16-reading-fixes`, awaiting merge) |
 
 **All 11 modules complete. 🎉**
 
@@ -38,7 +39,7 @@ Read this file first at the start of every session. It tells you where you are a
 - **Backend:** All API routes implemented. All services, controllers, resources built.
 - **Frontend:** Full SPA — Home, About, Blog, AI Chat, Playground, Admin. Per-route meta tags. Theme toggle.
 - **AI:** Live on prod via GitHub Models (gpt-4o-mini). Free, no billing required.
-- **Tests:** 74 passing + 3 skipped (live AI, auto-skip on ollama).
+- **Tests:** 80 passing + 3 skipped (live AI, auto-skip on ollama), on the module 16 branch.
 - **Infra:** sinfat.com live. Oracle Cloud Arm A1 (956MB RAM + 2GB swap). Redis for session/cache/queue. PHP 8.3 + Nginx + MySQL 8. Node 22 for Vite builds.
 - **Deploy:** `just deploy` — SSHes into server, runs `scripts/deploy.sh` (pull, composer, npm, build, migrate, cache, sitemap, nginx reload). See `docs/deploy-guide.md`.
 
@@ -60,6 +61,6 @@ Read this file first at the start of every session. It tells you where you are a
 - Blog series spec → `specs/module-13-blog-series.md`
 - Deploy guide → `docs/deploy-guide.md`
 - Production env reference → `docs/production-env.md`
-- Last session note → `docs/sessions/2026-03-14-infra-email-seo.md`
+- Last session note → `docs/sessions/2026-11-10-module-16-reading-fixes.md`
 - Full history → `docs/history/pi-progress.md`
 - Architecture decisions → `/Users/bernard/code/ai-learning/pi-vs-claude-code/docs/PORTFOLIO.md`

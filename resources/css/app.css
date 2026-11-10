@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@400;500&family=Geist+Mono:wght@400;500;600&display=swap');
 @import 'tailwindcss';
 @plugin '@tailwindcss/typography';
 
@@ -6,6 +6,7 @@
 
 @theme {
     --font-mono: 'Geist Mono', ui-monospace, monospace;
+    --font-sans: 'Geist', ui-sans-serif, system-ui, sans-serif;
 
     /* Light mode defaults */
     --color-bg:      #ffffff;
@@ -13,6 +14,7 @@
     --color-accent:  #238636;
     --color-text:    #1f2328;
     --color-dim:     #656d76;
+    --color-body:    #656d76;
     --color-border:  #d0d7de;
     --color-danger:  #cf222e;
 }
@@ -24,6 +26,7 @@
     --color-accent:  #238636;
     --color-text:    #e6edf3;
     --color-dim:     #6e7681;
+    --color-body:    #8b949e;
     --color-border:  #30363d;
     --color-danger:  #f85149;
 }

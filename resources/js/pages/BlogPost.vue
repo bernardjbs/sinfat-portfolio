@@ -39,13 +39,17 @@
       <div
         class="prose prose-invert prose-sm max-w-none
                prose-headings:font-mono prose-headings:text-text
-               prose-p:text-dim prose-a:text-accent prose-a:no-underline
+               prose-p:font-sans prose-p:text-base/relaxed prose-p:text-body
+               prose-li:font-sans prose-li:text-base/relaxed prose-li:text-body
+               prose-blockquote:font-sans prose-blockquote:text-base/relaxed prose-blockquote:text-body
+               prose-a:text-accent prose-a:no-underline
                hover:prose-a:underline
-               prose-code:bg-surface prose-code:text-accent prose-code:rounded prose-code:px-1
+               prose-code:font-mono prose-code:bg-surface prose-code:text-accent prose-code:rounded prose-code:px-1
+               prose-code:before:content-none prose-code:after:content-none
                prose-pre:bg-surface prose-pre:border prose-pre:border-border
                prose-strong:text-text prose-hr:border-border
                prose-th:text-text prose-th:border-border prose-th:px-3 prose-th:py-1.5
-               prose-td:text-dim prose-td:border-border prose-td:px-3 prose-td:py-1.5
+               prose-td:text-body prose-td:border-border prose-td:px-3 prose-td:py-1.5
                prose-table:border-collapse"
         v-html="currentPost.content"
       />

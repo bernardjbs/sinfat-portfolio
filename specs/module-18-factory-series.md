@@ -57,7 +57,8 @@ Agents never publish.
   solo is real, quality is the goal, a control panel is not a quality system, the answer for me
 - Brief: `~/code/software-factory-research/docs/blog-post-01-brief.md` (its hard rules bind)
 - Links the notebook as it stood that night: `/notebook/2026-11-09-2327/`
-- Saved locally as a draft, part 1 (post #45 locally), 1,021 words
+- Saved locally as a draft, part 1 (post #45 locally), 1,021 words; body replaced after a fact-check
+- Published on sinfat.com 2026-11-10, with the series and notebook snapshots live
 
 ## Tasks
 
@@ -73,8 +74,8 @@ Agents never publish.
 
 - [x] `grep -c 'file://'` on every published copy is 0
 - [x] Each `/notebook/<stamp>/` answers 200 on `sinfat.test` and renders (screenshot)
-- [ ] The draft shows in the admin editor on `sinfat.test` as a draft, part 1 of the new series
-      (proved through the admin API and a feature test; the on-screen check needs Bernard's login)
+- [x] The draft shows in the admin editor as a draft, part 1 of the new series (admin API and a
+      feature test; Bernard then published it from the production admin editor, 2026-11-10)
 - [x] Public `/blog` and `/api/blog` unchanged: 14 published posts, and the new series hidden because
       it has no published part
 - [x] Draft 800 to 1,100 words, no em dashes
@@ -82,7 +83,7 @@ Agents never publish.
 - [x] `git diff --stat main`
 - [x] Report carries the exact production commands
 
-## Production (Bernard, after merge, push and `just deploy`)
+## Production (run by Bernard 2026-11-10)
 
 The deploy ships the snapshots: `/notebook/<stamp>/` is public from then on. Then:
 
@@ -114,4 +115,4 @@ Module 17 (merged)
 ---
 
 *Created: 2026-11-10*
-*Status: ✅ Complete (on branch, awaiting merge; post not published)*
+*Status: ✅ Complete (merged `c1c75ea`; part 1 published 2026-11-10)*

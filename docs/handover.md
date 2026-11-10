@@ -31,7 +31,7 @@ Read this file first at the start of every session. It tells you where you are a
 | 14 | Blog Polish II | ✅ Complete |
 | 16 | Reading Fixes and Honest URLs | ✅ Complete |
 | 17 | Series | ✅ Complete |
-| 18 | Factory Series | ✅ Complete (branch `feat/module-18-factory-series`, awaiting merge; post 1 is a local draft, not published) |
+| 18 | Factory Series | ✅ Complete (merged to main `c1c75ea`; part 1 published on sinfat.com 2026-11-10) |
 
 **All 11 modules complete. 🎉**
 
@@ -41,12 +41,11 @@ Read this file first at the start of every session. It tells you where you are a
 - **Backend:** All API routes implemented. All services, controllers, resources built.
 - **Frontend:** Full SPA — Home, About, Blog, AI Chat, Playground, Admin. Per-route meta tags. Theme toggle.
 - **AI:** Live on prod via GitHub Models (gpt-4o-mini). Free, no billing required.
-- **Tests:** 116 passing + 3 skipped (live AI, auto-skip on ollama), on the module 18 branch.
+- **Tests:** 116 passing + 3 skipped (live AI, auto-skip on ollama), on main.
 - **Infra:** sinfat.com live. Oracle Cloud Arm A1 (956MB RAM + 2GB swap). Redis for session/cache/queue. PHP 8.3 + Nginx + MySQL 8. Node 22 for Vite builds.
 - **Deploy:** `just deploy` — SSHes into server, runs `scripts/deploy.sh` (pull, composer, npm, build, migrate, cache, sitemap, nginx reload). See `docs/deploy-guide.md`.
 
 ## Outstanding Items
-- Module 18 production: series create, then the draft via export, scp and `blog:manage create --series` (exact commands in `specs/module-18-factory-series.md`). Draft is local post #45
 - No `BlogService`: `BlogController` and `BlogPageController` query the `BlogPost` model scope directly, while `project-laravel-conventions` describes Controller → Service. Either add the service or correct the skill (noted 2026-11-10, module 16)
 - Football Analytics description is placeholder — real story TBD
 - ~~Submit sitemap to Google Search Console~~ — done 2026-03-14

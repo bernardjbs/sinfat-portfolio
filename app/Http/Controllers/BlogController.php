@@ -4,14 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\BlogPostResource;
 use App\Models\BlogPost;
+use App\Services\SeriesService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class BlogController extends Controller
 {
+    public function __construct(private SeriesService $seriesService) {}
+
     public function index(Request $request): AnonymousResourceCollection
     {
-        $query = BlogPost::published();
+        $query = $this->seriesService->loadSeriesFor(BlogPost::published());
 
         if ($search = $request->input('search')) {
             $query->where(function ($q) use ($search) {
@@ -34,20 +37,46 @@ class BlogController extends Controller
             ->where('slug', $slug)
             ->firstOrFail();
 
-        $next = BlogPost::published()
-            ->where('published_at', '>', $post->published_at)
-            ->orderBy('published_at', 'asc')
-            ->first(['title', 'slug']);
+        $this->seriesService->loadSeriesFor($post);
 
-        $previous = BlogPost::published()
-            ->where('published_at', '<', $post->published_at)
-            ->orderBy('published_at', 'desc')
-            ->first(['title', 'slug']);
+        // Series posts step through their series by part; standalone posts by date
+        if ($post->series) {
+            ['previous' => $previous, 'next' => $next] = $this->seriesService->neighbours($post);
+        } else {
+            $next = BlogPost::published()
+                ->where('published_at', '>', $post->published_at)
+                ->orderBy('published_at', 'asc')
+                ->first(['title', 'slug']);
+
+            $previous = BlogPost::published()
+                ->where('published_at', '<', $post->published_at)
+                ->orderBy('published_at', 'desc')
+                ->first(['title', 'slug']);
+        }
 
         return (new BlogPostResource($post))
             ->additional([
-                'next' => $next ? ['title' => $next->title, 'slug' => $next->slug] : null,
-                'previous' => $previous ? ['title' => $previous->title, 'slug' => $previous->slug] : null,
+                'next' => $this->link($next),
+                'previous' => $this->link($previous),
+                'series_parts' => $post->series
+                    ? $post->series->publishedPosts()->get(['title', 'slug', 'series_part'])
+                        ->map(fn (BlogPost $part) => $this->link($part))
+                    : null,
             ]);
+    }
+
+    private function link(?BlogPost $post): ?array
+    {
+        if (! $post) {
+            return null;
+        }
+
+        $link = ['title' => $post->title, 'slug' => $post->slug];
+
+        if ($post->series_part !== null) {
+            $link['part'] = $post->series_part;
+        }
+
+        return $link;
     }
 }

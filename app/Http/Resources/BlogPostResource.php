@@ -20,6 +20,16 @@ class BlogPostResource extends JsonResource
             'slug'         => $this->slug,
             'excerpt'      => $this->excerpt,
             'category'     => $this->category,
+            'series'       => $this->when(
+                $this->relationLoaded('series'),
+                fn() => $this->series ? [
+                    'slug'   => $this->series->slug,
+                    'title'  => $this->series->title,
+                    'status' => $this->series->status,
+                    'part'   => $this->series_part,
+                    'total'  => $this->series->part_count,
+                ] : null
+            ),
             'content'      => $this->when(
                 $request->routeIs('api.blog.show'),
                 fn() => $this->renderMarkdown((string) $this->content)

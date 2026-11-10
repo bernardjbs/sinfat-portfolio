@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Str;
 
 class BlogPost extends Model
@@ -17,6 +18,8 @@ class BlogPost extends Model
         'excerpt',
         'content',
         'category',
+        'series_id',
+        'series_part',
         'status',
         'published_at',
         'ai_generated',
@@ -33,6 +36,11 @@ class BlogPost extends Model
         static::creating(function (BlogPost $post) {
             $post->slug ??= Str::slug($post->title);
         });
+    }
+
+    public function series(): BelongsTo
+    {
+        return $this->belongsTo(Series::class);
     }
 
     public function scopePublished(Builder $query): Builder

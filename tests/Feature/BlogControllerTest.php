@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\BlogPost;
+use App\Models\Series;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -256,5 +257,87 @@ class BlogControllerTest extends TestCase
         $response = $this->getJson('/api/blog')->assertOk();
 
         $this->assertEquals(1, $response->json('data.0.reading_time'));
+    }
+
+    // Series
+
+    private function seriesWithParts(string $status = 'complete'): array
+    {
+        $series = Series::factory()->create(['slug' => 'building', 'status' => $status]);
+
+        // Dates out of part order, and a standalone post published between them
+        $parts = [
+            1 => BlogPost::factory()->published()->inSeries($series, 1)->create(['published_at' => now()->subDays(8)]),
+            2 => BlogPost::factory()->published()->inSeries($series, 2)->create(['published_at' => now()->subDays(9)]),
+            3 => BlogPost::factory()->published()->inSeries($series, 3)->create(['published_at' => now()->subDays(6)]),
+        ];
+        BlogPost::factory()->draft()->inSeries($series, 4)->create();
+        BlogPost::factory()->published()->create(['published_at' => now()->subDays(7)]);
+        BlogPost::factory()->published()->create(['published_at' => now()->subDay()]);
+
+        return [$series, $parts];
+    }
+
+    public function test_series_posts_carry_their_part_and_published_total(): void
+    {
+        [, $parts] = $this->seriesWithParts();
+
+        $listed = collect($this->getJson('/api/blog')->assertOk()->json('data'))->firstWhere('slug', $parts[2]->slug);
+
+        $this->assertSame(['slug' => 'building', 'title' => $parts[2]->series->title, 'status' => 'complete', 'part' => 2, 'total' => 3], $listed['series']);
+
+        $this->getJson("/api/blog/{$parts[2]->slug}")
+            ->assertOk()
+            ->assertJsonPath('data.series.part', 2)
+            ->assertJsonPath('data.series.total', 3);
+    }
+
+    public function test_first_part_has_no_previous_and_next_stays_in_the_series(): void
+    {
+        [, $parts] = $this->seriesWithParts();
+
+        $this->getJson("/api/blog/{$parts[1]->slug}")
+            ->assertOk()
+            ->assertJsonPath('previous', null)
+            ->assertJsonPath('next.slug', $parts[2]->slug)
+            ->assertJsonPath('next.part', 2);
+    }
+
+    public function test_last_published_part_has_no_next_and_previous_stays_in_the_series(): void
+    {
+        [, $parts] = $this->seriesWithParts();
+
+        $this->getJson("/api/blog/{$parts[3]->slug}")
+            ->assertOk()
+            ->assertJsonPath('next', null)
+            ->assertJsonPath('previous.slug', $parts[2]->slug);
+    }
+
+    public function test_series_post_lists_its_published_parts_in_order(): void
+    {
+        [, $parts] = $this->seriesWithParts();
+
+        $this->getJson("/api/blog/{$parts[2]->slug}")
+            ->assertOk()
+            ->assertJsonPath('series_parts.*.slug', [$parts[1]->slug, $parts[2]->slug, $parts[3]->slug])
+            ->assertJsonPath('series_parts.*.part', [1, 2, 3]);
+    }
+
+    public function test_standalone_post_keeps_date_order_and_has_no_series(): void
+    {
+        $older = BlogPost::factory()->published()->create(['published_at' => now()->subDays(3)]);
+        $post = BlogPost::factory()->published()->create(['published_at' => now()->subDays(2)]);
+        $newer = BlogPost::factory()->published()->create(['published_at' => now()->subDay()]);
+
+        $this->getJson("/api/blog/{$post->slug}")
+            ->assertOk()
+            ->assertJsonPath('data.series', null)
+            ->assertJsonPath('series_parts', null)
+            ->assertJsonPath('previous', ['title' => $older->title, 'slug' => $older->slug])
+            ->assertJsonPath('next', ['title' => $newer->title, 'slug' => $newer->slug]);
+
+        $listed = collect($this->getJson('/api/blog')->json('data'))->firstWhere('slug', $post->slug);
+        $this->assertArrayHasKey('series', $listed);
+        $this->assertNull($listed['series']);
     }
 }

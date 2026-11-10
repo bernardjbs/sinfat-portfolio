@@ -3,21 +3,28 @@
 namespace App\Console\Commands;
 
 use App\Models\BlogPost;
+use App\Models\Series;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\DB;
 
 class BlogManage extends Command
 {
     protected $signature = 'blog:manage
-        {action : create|update|export}
+        {action : create|update|export|series}
+        {subaction? : For series: create|update|complete}
         {--id= : Post ID (required for update/export)}
         {--file= : Markdown file path for content}
-        {--title= : Post title (create only)}
+        {--title= : Post or series title (post create, series create/update)}
         {--excerpt= : Post excerpt}
         {--category=development : Post category}
         {--ai-model=claude-sonnet-4-5 : AI model name}
+        {--series= : Series slug to put the post in (post create/update)}
+        {--part= : Part number in the series; omit to append}
+        {--slug= : Series slug (series actions)}
+        {--pitch= : Series pitch (series create/update)}
         {--force : Skip confirmation prompt}';
 
-    protected $description = 'Create, update, or export blog posts safely';
+    protected $description = 'Create, update, or export blog posts and manage series safely';
 
     public function handle(): int
     {
@@ -25,7 +32,8 @@ class BlogManage extends Command
             'create' => $this->createPost(),
             'update' => $this->updatePost(),
             'export' => $this->exportPost(),
-            default => $this->abort('Unknown action. Use: create, update, or export.'),
+            'series' => $this->manageSeries(),
+            default => $this->abort('Unknown action. Use: create, update, export, or series.'),
         };
     }
 
@@ -51,20 +59,38 @@ class BlogManage extends Command
             return 1;
         }
 
-        $post = BlogPost::create([
-            'title'        => $title,
-            'excerpt'      => $this->option('excerpt') ?? '',
-            'content'      => $content,
-            'category'     => $this->option('category'),
-            'status'       => 'draft',
-            'ai_generated' => true,
-            'ai_model'     => $this->option('ai-model'),
-        ]);
+        $placement = $this->seriesPlacement(null);
+
+        if ($placement === false) {
+            return 1;
+        }
+
+        $post = DB::transaction(function () use ($title, $content, $placement) {
+            $post = BlogPost::create([
+                'title'        => $title,
+                'excerpt'      => $this->option('excerpt') ?? '',
+                'content'      => $content,
+                'category'     => $this->option('category'),
+                'status'       => 'draft',
+                'ai_generated' => true,
+                'ai_model'     => $this->option('ai-model'),
+            ]);
+
+            if ($placement) {
+                $this->placeInSeries($post, ...$placement);
+            }
+
+            return $post;
+        });
 
         $this->info("Created post #{$post->id}: {$post->title}");
         $this->line("  Slug: {$post->slug}");
         $this->line("  Length: " . strlen($content) . " bytes");
         $this->line("  Status: draft");
+
+        if ($placement) {
+            $this->line("  Series: {$placement[0]->slug}, part {$post->series_part}");
+        }
 
         return 0;
     }
@@ -119,8 +145,18 @@ class BlogManage extends Command
             $this->line("  Excerpt: updated");
         }
 
-        if (empty($updates)) {
-            $this->warn('Nothing to update. Use --file and/or --excerpt.');
+        $placement = $this->seriesPlacement($post);
+
+        if ($placement === false) {
+            return 1;
+        }
+
+        if ($placement) {
+            $this->line("  Series: {$placement[0]->slug}, part " . ($placement[1] ?? 'appended'));
+        }
+
+        if (empty($updates) && ! $placement) {
+            $this->warn('Nothing to update. Use --file, --excerpt, --series and/or --part.');
             return 1;
         }
 
@@ -132,7 +168,16 @@ class BlogManage extends Command
             return 0;
         }
 
-        $post->update($updates);
+        DB::transaction(function () use ($post, $updates, $placement) {
+            if ($updates) {
+                $post->update($updates);
+            }
+
+            if ($placement) {
+                $this->placeInSeries($post, ...$placement);
+            }
+        });
+
         $this->info('Updated.');
 
         return 0;
@@ -167,6 +212,119 @@ class BlogManage extends Command
         $this->line("  Length: " . strlen($post->content) . " bytes");
 
         return 0;
+    }
+
+    private function manageSeries(): int
+    {
+        $slug = $this->option('slug');
+
+        if (! $slug) {
+            $this->error('--slug is required for series actions.');
+            return 1;
+        }
+
+        $subaction = $this->argument('subaction');
+
+        if ($subaction === 'create') {
+            if (Series::where('slug', $slug)->exists()) {
+                $this->error("Series already exists: {$slug}");
+                return 1;
+            }
+
+            if (! $this->option('title')) {
+                $this->error('--title is required for series create.');
+                return 1;
+            }
+
+            Series::create([
+                'slug'   => $slug,
+                'title'  => $this->option('title'),
+                'pitch'  => $this->option('pitch'),
+                'status' => 'writing',
+            ]);
+
+            $this->info("Created series {$slug} (being written)");
+            return 0;
+        }
+
+        $series = Series::where('slug', $slug)->first();
+
+        if (! $series) {
+            $this->error("Series not found: {$slug}");
+            return 1;
+        }
+
+        if ($subaction === 'complete') {
+            $series->update(['status' => 'complete']);
+            $this->info("Series {$slug} marked complete");
+            return 0;
+        }
+
+        if ($subaction === 'update') {
+            $updates = array_filter([
+                'title' => $this->option('title'),
+                'pitch' => $this->option('pitch'),
+            ], fn ($value) => $value !== null);
+
+            if (empty($updates)) {
+                $this->warn('Nothing to update. Use --title and/or --pitch.');
+                return 1;
+            }
+
+            $series->update($updates);
+            $this->info("Updated series {$slug}");
+            return 0;
+        }
+
+        return $this->abort('Unknown series action. Use: series create, series update, or series complete.');
+    }
+
+    /**
+     * The series and part asked for by --series/--part: null when neither is given, false on error.
+     */
+    private function seriesPlacement(?BlogPost $post): array|false|null
+    {
+        $slug = $this->option('series');
+        $part = $this->option('part');
+
+        if ($slug === null && $part === null) {
+            return null;
+        }
+
+        $series = $slug !== null ? Series::where('slug', $slug)->first() : $post?->series;
+
+        if (! $series) {
+            $this->error($slug !== null ? "Series not found: {$slug}" : '--part needs --series: the post is not in a series.');
+            return false;
+        }
+
+        if ($part !== null && (! ctype_digit((string) $part) || (int) $part < 1)) {
+            $this->error('--part must be a whole number from 1.');
+            return false;
+        }
+
+        return [$series, $part !== null ? (int) $part : null];
+    }
+
+    /**
+     * Put the post at the given part, or at the end. A taken part moves up by one, with every part after it.
+     */
+    private function placeInSeries(BlogPost $post, Series $series, ?int $part): void
+    {
+        // Free the post's own slot first, so a move within its series never collides with itself
+        $post->update(['series_id' => null, 'series_part' => null]);
+
+        $siblings = BlogPost::where('series_id', $series->id);
+
+        if ($part === null) {
+            $part = (int) (clone $siblings)->max('series_part') + 1;
+        } elseif ((clone $siblings)->where('series_part', $part)->exists()) {
+            // Highest first, so no two posts ever share a part mid-shift
+            (clone $siblings)->where('series_part', '>=', $part)->orderByDesc('series_part')->get()
+                ->each(fn (BlogPost $later) => $later->update(['series_part' => $later->series_part + 1]));
+        }
+
+        $post->update(['series_id' => $series->id, 'series_part' => $part]);
     }
 
     private function abort(string $message): int

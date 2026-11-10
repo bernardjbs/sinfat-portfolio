@@ -5,12 +5,19 @@ use App\Http\Controllers\AdminBlogController;
 use App\Http\Controllers\AiController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\PlaygroundController;
+use App\Http\Controllers\SeriesController;
 use Illuminate\Support\Facades\Route;
 
 // Public blog
 Route::prefix('blog')->group(function () {
     Route::get('/', [BlogController::class, 'index'])->name('api.blog.index');
     Route::get('/{slug}', [BlogController::class, 'show'])->name('api.blog.show');
+});
+
+// Public series
+Route::prefix('series')->group(function () {
+    Route::get('/', [SeriesController::class, 'index'])->name('api.series.index');
+    Route::get('/{slug}', [SeriesController::class, 'show'])->name('api.series.show');
 });
 
 // Admin (auth:sanctum)

@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\BlogPost;
+use App\Models\Series;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -48,6 +49,14 @@ class BlogPostFactory extends Factory
         return $this->state(fn () => [
             'ai_generated' => true,
             'ai_model'     => 'claude-sonnet-4-5',
+        ]);
+    }
+
+    public function inSeries(Series $series, int $part): static
+    {
+        return $this->state(fn () => [
+            'series_id'   => $series->id,
+            'series_part' => $part,
         ]);
     }
 }

@@ -13,6 +13,7 @@
       </h2>
       <SeriesRow v-for="series in featuredSeries" :key="series.slug" :series="series" />
       <router-link
+        v-if="seriesList.length > featuredSeries.length"
         :to="{ name: 'blog-series-index' }"
         class="inline-block mt-4 text-link text-sm hover:underline"
       >All series ({{ seriesList.length }})</router-link>

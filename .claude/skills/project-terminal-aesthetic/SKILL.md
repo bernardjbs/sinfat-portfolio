@@ -125,8 +125,8 @@ AI badge:  bg-surface text-dim text-xs px-2 py-0.5 rounded (small label: "AI dra
 ```
 border-b border-border py-6
 Title: text-text text-lg hover:text-accent transition (link)
-Excerpt: text-dim text-sm mt-1
-Meta row: text-dim text-xs, flex-wrap: date · "AI drafted" if applicable · series tag
+Excerpt: font-sans text-body text-sm mt-1
+Meta: text-dim text-xs sentence, "15 Mar 2026, 3 minute read." then, in a series, mark + "Part 14 of <series>."
 ```
 
 ### Series (module 17)

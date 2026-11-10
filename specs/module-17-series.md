@@ -70,6 +70,11 @@ until the move runs) and **2b** (the UI).
 - [x] `project-terminal-aesthetic` and `project-portfolio-context` record the mark, the series pages
       and the `series` table (through `/skills-builder`)
 
+#### Review fixes (2026-11-10)
+- [x] Post card meta is a sentence ("15 Mar 2026, 3 minute read. Part 14 of <series>."), no category pill or "AI drafted"
+- [x] Card excerpts in Geist at the `body` colour
+- [x] "All series (N)" only when there are more than three series
+
 ### Acceptance Criteria (fresh output in the report)
 - [x] Slug list from `/api/blog` (both pages) byte-identical before and after the data move on the local
       data; local database dumped to the session scratchpad first

@@ -8,23 +8,18 @@
         {{ post.title }}
       </h2>
 
-      <p v-if="post.excerpt" class="text-dim text-sm mt-1">
+      <p v-if="post.excerpt" class="font-sans text-body text-sm leading-relaxed mt-1">
         {{ post.excerpt }}
       </p>
 
-      <div class="flex flex-wrap items-center gap-x-3 gap-y-1 mt-2">
-        <span class="text-dim text-xs">{{ formattedDate }}</span>
-        <span v-if="post.reading_time" class="text-dim text-xs">· {{ post.reading_time }} min read</span>
-        <span
-          v-if="post.category"
-          class="text-xs text-dim border border-border rounded px-1.5 py-0.5"
-        >{{ post.category }}</span>
-        <span v-if="post.ai_generated" class="text-dim text-xs">· AI drafted</span>
-        <span v-if="post.series" class="inline-flex items-center gap-1 text-dim text-xs">
-          <Layers :size="13" class="text-link shrink-0" aria-hidden="true" />
-          Part {{ post.series.part }} of {{ post.series.title }}
-        </span>
-      </div>
+      <!-- "15 Mar 2026, 3 minute read. Part 14 of <series>." -->
+      <p class="text-dim text-xs mt-2">
+        {{ metaLead }}
+        <template v-if="post.series">
+          <Layers :size="13" class="inline align-text-bottom text-link" aria-hidden="true" />
+          Part {{ post.series.part }} of {{ post.series.title }}.
+        </template>
+      </p>
     </router-link>
   </div>
 </template>
@@ -45,6 +40,11 @@ export default {
   },
 
   computed: {
+    metaLead() {
+      const time = this.post.reading_time ? `, ${this.post.reading_time} minute read` : ''
+      return `${this.formattedDate}${time}.`
+    },
+
     formattedDate() {
       if (!this.post.published_at) return ''
       return new Date(this.post.published_at).toLocaleDateString('en-AU', {

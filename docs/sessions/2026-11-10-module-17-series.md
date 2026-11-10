@@ -39,6 +39,12 @@
 - Total: 110 passed, 3 skipped (369 assertions); baseline was 80 passed, 3 skipped
 - Mutation-proved: 21 of 22 server mutations red. The "free part" test first survived because it had no later parts to move; it now uses a gap and goes red. "Parts not ordered" survives, see below. 3 UI rules (three-series cap, 15-part window, "of N" only when complete) red in the browser after a rebuild, then restored and rebuilt
 
+## Review fixes
+- Post cards: meta is one sentence with the mark before "Part"; category pill and "AI drafted" dropped (the post page keeps both); excerpts in Geist at `body`, as the intro line
+- "All series (N)" shows only past three series: hidden with 1, "All series (4)" with a 4-series fixture (removed after)
+- `/blog` scrollWidth equals the viewport at 390, 1150 and 1440; tests 110 passed, 3 skipped
+- Skill split recorded as backlog row 2
+
 ## Outstanding
 - The explicit `orderBy('series_part')` on a series' parts cannot be proved by a test: MySQL reads through the `(series_id, series_part)` index and returns part order without it. The order stays explicit in code
 - A post whose slug is `series` would be shadowed by `/blog/series`; no post has it

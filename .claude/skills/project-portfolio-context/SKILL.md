@@ -5,7 +5,9 @@ description: Architecture reference for the sinfat-portfolio project. Use when w
 
 # Portfolio Context — sinfat.com
 
-Use this skill when working on any part of the sinfat-portfolio project. It provides the authoritative reference for architectural decisions, environment details, routes, and key technical constraints.
+Use this skill when working on any part of the sinfat-portfolio project. It is the reference for architectural decisions, environment details, routes, and key technical constraints.
+
+If `--help` appears anywhere in the user's invocation, read and display [help.md](help.md) and stop.
 
 ---
 
@@ -26,11 +28,11 @@ Use this skill when working on any part of the sinfat-portfolio project. It prov
 | Production | https://sinfat.com | Oracle Cloud Arm A1 VM |
 
 **Production server:**
-- Oracle Cloud Arm A1 (Ubuntu 22.04, 2 OCPU, 12GB RAM)
+- Oracle Cloud Arm A1, Ubuntu 22.04 (HISTORICAL, unverified: "2 OCPU, 12GB RAM"; `docs/handover.md` records 956MB RAM + 2GB swap)
 - Nginx + PHP 8.3-FPM + MySQL 8 + Redis
 - Cloudflare DNS + proxy + SSL
 - Laravel at `/var/www/sinfat`
-- SSH: `ssh -i ~/.ssh/sinfat-portfolio.key ubuntu@<oracle-ip>`
+- SSH: `ssh sinfat` (host alias in `~/.ssh/config`), or `just ssh`
 
 **GitHub:** `bernardjbs/sinfat-portfolio` (private)
 
@@ -45,7 +47,7 @@ Laravel (routes/api.php)  →  pure JSON API
 Vue SPA (resources/js/)   →  all page rendering
 ```
 
-There are NO Blade page templates — only `resources/views/app.blade.php` as the SPA entry point.
+There are NO Blade page templates — only `resources/views/app.blade.php` as the SPA entry point (plus the unused `welcome.blade.php` scaffold). Laravel serves that shell with server-filled meta for blog URLs, plus `/feed.xml` and the static `/notebook/{stamp}` snapshots.
 
 **Why SPA (not hybrid):**
 - Primary goal is employer visits via direct URL, not Google organic
@@ -68,118 +70,21 @@ There are NO Blade page templates — only `resources/views/app.blade.php` as th
 | CSS | Tailwind CSS | |
 | Font | Geist Mono | Monospace — terminal aesthetic |
 | Icons | lucide-vue-next | |
-| Markdown editor | md-editor-v3 | Admin only |
-| AI runtime | Neuron AI (`inspector-apm/neuron-ai`) | |
+| Markdown editor | `<textarea>` with a `marked` preview | Admin only |
+| AI runtime | Neuron AI (`neuron-core/neuron-ai`) | |
 | AI streaming | SSE (Server-Sent Events) | Not WebSockets |
-| AI provider | Anthropic Claude | `claude-sonnet-4-5` default |
+| AI provider | Switchable: `AI_PROVIDER` (anthropic, gemini, github, ollama) | Read `config/services.php` for models; prod per `docs/handover.md` |
 | Auth | Custom (no Breeze/Jetstream) | Single admin user |
 | Sitemap | spatie/laravel-sitemap | |
-| Markdown rendering | spatie/laravel-markdown or league/commonmark | |
+| Markdown rendering | league/commonmark | Configured in `BlogPostResource` |
 
 ---
 
-## Vue Router Routes
+## Routes, Tables and Stores
 
-```
-/               Home.vue
-/about          About.vue
-/projects       Projects.vue      ← static hardcoded project showcase, no DB table
-/blog           Blog.vue
-/blog/series    BlogSeriesIndex.vue
-/blog/series/:slug  BlogSeries.vue
-/blog/:slug     BlogPost.vue
-/uses           Uses.vue
-/contact        Contact.vue       ← static links only (GitHub, LinkedIn, email mailto:) — no form, no DB table
-/playground     Playground.vue
-/login          Login.vue
-/admin          AdminLayout.vue (requiresAuth: true)
-  /admin/       Dashboard.vue
-  /admin/blog   AdminBlog.vue
-  /admin/blog/:id  AdminBlogEditor.vue
-/:pathMatch(.*)*  NotFound.vue
-```
+Vue and Laravel routes (including server meta, `/feed.xml` and the `/notebook/{stamp}` snapshots), API routes, tables, series data and Pinia stores: [references/routes-and-data.md](references/routes-and-data.md). Read it before adding or changing a route, table or store.
 
----
-
-## API Routes
-
-**Public:**
-```
-GET  /api/blog          → paginated list of published posts
-GET  /api/blog/{slug}   → single published post (markdown rendered to HTML); series posts add series_parts, previous/next by part
-GET  /api/series        → public series: being written first, then complete, by latest part
-GET  /api/series/{slug} → one series with its published parts (404 if none)
-```
-Posts in both blog endpoints carry `series` (slug, title, status, part, total) or null. Server meta: `/blog/{slug}`, `/blog/series`, `/blog/series/{slug}` (routes/web.php, ahead of the catch-all).
-
-**Admin (auth:sanctum):**
-```
-GET    /api/admin/blog           → all posts (draft + published)
-POST   /api/admin/blog           → create post
-GET    /api/admin/blog/{id}      → get single post for editing
-PUT    /api/admin/blog/{id}      → update post
-DELETE /api/admin/blog/{id}      → delete post
-PATCH  /api/admin/blog/{id}/publish  → toggle publish status
-GET    /api/admin/me             → current user
-POST   /api/admin/ai/generate   → stream blog draft (SSE)
-```
-
-**Guest (rate limited):**
-```
-POST /api/playground/generate   → stream content (SSE, 3/day limit)
-POST /api/playground/key        → store guest API key in session
-```
-
-**Auth:**
-```
-POST /login   → public
-POST /logout  → auth
-```
-
----
-
-## Database Tables
-
-| Table | Purpose |
-|-------|---------|
-| `users` | Single admin user — no registration |
-| `blog_posts` | All blog posts with draft/published status |
-| `series` | Blog series: `slug`, `title`, `pitch`, `status` (writing/complete) |
-| `guest_usage` | Persistence layer for guest playground usage |
-| `ai_sessions` | Log of every AI generation (cost/usage monitoring) |
-
-**Key `blog_posts` columns:** `title`, `slug` (unique), `excerpt`, `content` (markdown), `status` (draft/published), `published_at`, `ai_generated` (bool), `ai_model`, `series_id` + `series_part` (nullable, unique pair)
-
-**Series are data, not code:** `php artisan blog:manage series create|update|complete --slug=…`, and `--series=<slug> --part=<n>` on post create/update (omit `--part` to append; a taken part moves later parts up). Counts use published parts only.
-
----
-
-## Pinia Stores
-
-```
-stores/auth.js       → isAuthenticated, user, login(), logout()
-stores/theme.js      → isDark, toggle()
-stores/playground.js → usageCount, isStreaming, content, apiKey
-stores/blog.js       → posts, currentPost, loading, seriesList, currentSeries, seriesParts
-```
-
----
-
-## Design System
-
-**Tailwind colour tokens (exact hex):**
-```
-bg:      #0d1117   ← near black — page background
-surface: #161b22   ← slightly lighter — cards, panels
-accent:  #238636   ← green — primary accent, links, highlights
-text:    #e6edf3   ← off white — body text
-dim:     #6e7681   ← muted — secondary text, labels, metadata
-border:  #30363d   ← subtle borders, dividers
-```
-
-**Font:** Geist Mono — monospace, loaded from Google Fonts
-**Icons:** lucide-vue-next
-**Dark mode:** class-based, dark default, light toggle available
+**Design system:** colours, fonts and components are in `project-terminal-aesthetic`; values live in `resources/css/app.css`.
 
 ---
 
@@ -189,7 +94,7 @@ border:  #30363d   ← subtle borders, dividers
 - Rate limiting at middleware layer (GuestRateLimit), enforced at handler not at prompt
 - Admin routes protected by `auth:sanctum` middleware
 - Single admin user — no registration route
-- Laravel Policies and Global Scopes apply normally to AI-initiated requests
+- No Policies or Global Scopes exist yet (2026-11-11); any added must apply to AI-initiated requests too
 
 ---
 

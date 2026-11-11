@@ -7,6 +7,10 @@ description: Design system for sinfat.com. Use when making any UI decisions — 
 
 Use this skill when making any UI decisions — layout, colour, typography, spacing, component design. The goal is a minimal, monospace, terminal-feel developer portfolio. Professional and quietly confident. Not flashy.
 
+If `--help` appears anywhere in the user's invocation, read and display [help.md](help.md) and stop.
+
+**Building or restyling a component** (nav, buttons, cards, inputs, badges, post cards, series, code blocks, streaming output), the spacing scale, or the blog prose classes: read [references/components.md](references/components.md).
+
 ---
 
 ## The Aesthetic in One Sentence
@@ -17,7 +21,7 @@ Use this skill when making any UI decisions — layout, colour, typography, spac
 
 ## Colour Palette
 
-These are the ONLY colours used. They match the Tailwind config tokens exactly.
+These tokens are the palette; the hex values are the dark theme's, copied 2026-11-11. Outside them, components use only Tailwind `white`, `black/60` (overlays) and the green and red shades in [references/components.md](references/components.md).
 
 | Token | Hex | Use |
 |-------|-----|-----|
@@ -30,7 +34,7 @@ These are the ONLY colours used. They match the Tailwind config tokens exactly.
 | `link` | `#3fb950` (light `#1a7f37`) | Prose links, inline code, the series mark and series links; nav and buttons keep `accent` |
 | `border` | `#30363d` | Borders, dividers, input outlines |
 
-**Error state:** `#f85149` (GitHub dark red) — validation errors, danger actions. Can be added to config as `danger`.
+**Error state:** token `danger` (`#f85149` dark, `#cf222e` light) — validation errors, danger actions.
 **Warning:** `#d29922` (GitHub dark yellow) — sparingly, if needed.
 
 **Do not introduce new colours** without updating `resources/css/app.css` and this document.
@@ -79,81 +83,6 @@ text-3xl  → homepage headline only
 
 ---
 
-## Components — What They Should Look Like
-
-### Navigation Bar
-```
-Dark background (bg-surface or bg-bg, with border-b border-border)
-Logo/name on left: "bernard" or "sinfat" in text-accent
-Links on right: text-dim, hover:text-text transition
-Active link: text-accent (no underline, no bold)
-No hamburger menus on mobile — use a simple stacked layout
-```
-
-### Buttons
-```
-Primary CTA: bg-accent text-white px-4 py-2 text-sm font-medium
-             hover:bg-green-700 transition
-Secondary:   border border-border text-text px-4 py-2 text-sm
-             hover:border-accent hover:text-accent transition
-Danger:      border border-red-800 text-red-400 — for delete actions
-```
-
-### Cards
-```
-bg-surface border border-border p-4 sm:p-6
-No box shadows
-Hover state: border-color transitions to accent (subtle)
-```
-
-### Inputs and Textareas
-```
-bg-bg border border-border text-text
-focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent
-placeholder:text-dim
-font-mono (inherited, but be explicit if overriding)
-```
-
-### Badges
-```
-Draft:     bg-surface text-dim border border-border text-xs px-2 py-0.5 rounded
-Published: bg-green-900/30 text-accent border border-green-800 text-xs px-2 py-0.5 rounded
-AI badge:  bg-surface text-dim text-xs px-2 py-0.5 rounded (small label: "AI drafted")
-```
-
-### Blog Post Cards
-```
-border-b border-border py-6
-Title: text-text text-lg hover:text-accent transition (link)
-Excerpt: font-sans text-body text-sm mt-1
-Meta: text-dim text-xs sentence, "15 Mar 2026, 3 minute read." then, in a series, mark + "Part 14 of <series>."
-```
-
-### Series (module 17)
-```
-Mark: lucide-vue-next Layers, 15px text-link (13px in a post card tag); standalone posts get none
-Row (SeriesRow.vue): name with mark, count right ("14 parts, complete" / "Being written, 3 parts so far"), pitch in font-sans text-body
-Post track: "Part N of M" only when complete, "Part N" while being written, then the series link
-After the post: series box replaces date previous/next; parts list collapsed, windowed to 2 either side past 15 (.post-series* in app.css)
-```
-
-### Code Blocks (in blog posts)
-```
-prose styling from @tailwindcss/typography — configured for dark mode
-background: bg-surface
-text: text-text with syntax highlighting classes
-border-l-2 border-accent for callout blocks
-```
-
-### Streaming Text Output (Playground / Admin)
-```
-bg-bg border border-border p-4 font-mono text-sm text-text
-Cursor blink: append "▌" while streaming is active
-Smooth: new tokens append directly to content, no flicker
-```
-
----
-
 ## Dark Mode
 
 - Dark is the default — `<html class="dark">` set on load
@@ -178,46 +107,6 @@ Smooth: new tokens append directly to content, no flicker
 
 ---
 
-## Spacing Reference (Tailwind)
-
-```
-4px  → p-1  / gap-1  ← tight elements, icon padding
-8px  → p-2  / gap-2  ← badge padding, small gaps
-12px → p-3  / gap-3  ← list item padding
-16px → p-4  / gap-4  ← standard padding
-24px → p-6  / gap-6  ← card padding, section spacing
-32px → p-8  / gap-8  ← large section gaps
-48px → p-12          ← hero section top padding
-64px → py-16         ← top-level page sections
-```
-
----
-
 ## Tailwind Config Reference
 
-Tailwind v4: there is no `tailwind.config.js`. Fonts and colour tokens live in `resources/css/app.css`: light values in `@theme`, dark overrides under `.dark`. Read that file for the current values; do not copy them here.
-
----
-
-## Prose (Blog Post) Styling
-
-Blog posts render markdown to HTML from Laravel. Style with `@tailwindcss/typography`. Body text (paragraphs, list items, blockquotes) is Geist sans in the `body` colour, sized by `.post-prose` in `app.css`; inline code is forced back to `font-mono` (it would inherit sans) and shows no backticks. Live classes: `resources/js/pages/BlogPost.vue`.
-
-```vue
-<div class="prose prose-invert max-w-none post-prose
-            prose-headings:font-mono prose-headings:text-text
-            prose-p:font-sans prose-p:text-body
-            prose-li:font-sans prose-li:text-body
-            prose-blockquote:font-sans prose-blockquote:text-body
-            prose-a:text-link prose-a:no-underline
-            hover:prose-a:underline
-            prose-code:font-mono prose-code:bg-surface prose-code:text-link prose-code:rounded prose-code:px-1
-            prose-code:before:content-none prose-code:after:content-none
-            prose-pre:bg-surface prose-pre:border prose-pre:border-border
-            prose-strong:text-text prose-hr:border-border
-            prose-th:text-text prose-th:border-border prose-th:px-3 prose-th:py-1.5
-            prose-td:text-body prose-td:border-border prose-td:px-3 prose-td:py-1.5
-            prose-table:border-collapse">
-  <div v-html="post.content" />
-</div>
-```
+Tailwind v4: there is no `tailwind.config.js`. Fonts and colour tokens live in `resources/css/app.css`: light values in `@theme`, dark overrides under `.dark`. Read that file for the current values; it wins over the dated copy in the palette table.

@@ -63,6 +63,6 @@ Read this file first at the start of every session. It tells you where you are a
 - Blog series spec → `specs/module-13-blog-series.md`
 - Deploy guide → `docs/deploy-guide.md`
 - Production env reference → `docs/production-env.md`
-- Last session note → `docs/sessions/2026-11-10-module-18-factory-series.md`
+- Last session note → `docs/sessions/2026-11-11-skills-rows-2-3.md`
 - Full history → `docs/history/pi-progress.md`
 - Architecture decisions → `/Users/bernard/code/ai-learning/pi-vs-claude-code/docs/PORTFOLIO.md`

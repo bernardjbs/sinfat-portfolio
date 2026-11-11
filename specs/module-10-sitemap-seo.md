@@ -1,6 +1,10 @@
 ## Module 10 — Sitemap + SEO
 > 🟢 Sonnet
 
+> **Superseded 2026-11-12:** the sitemap is no longer a file. `SitemapController` builds it from the database on
+> every request (`SitemapService`); the `GenerateSitemap` command is gone and the deploy removes any leftover
+> `public/sitemap.xml`. Session note `docs/sessions/2026-11-12-factory-parts-2-3-and-sitemap.md`.
+
 ### Goal
 Sitemap generated, meta tags per page, robots.txt in place.
 

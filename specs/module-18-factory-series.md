@@ -134,4 +134,4 @@ Module 17 (merged)
 ---
 
 *Created: 2026-11-10*
-*Status: ✅ Complete (merged `c1c75ea`; part 1 published 2026-11-10)*
+*Status: ✅ Complete (merged `c1c75ea`); parts 1 to 3 published by 2026-11-12, series still `writing`*

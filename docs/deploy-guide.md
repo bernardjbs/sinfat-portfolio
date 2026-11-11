@@ -20,9 +20,14 @@ That's it. This SSHes into the server and runs `scripts/deploy.sh`, which:
 6. `php artisan config:cache`: cache config
 7. `php artisan route:cache`: cache routes
 8. `php artisan view:cache`: cache Blade views
-9. `sudo rm -f public/sitemap.xml`: remove any sitemap file. `/sitemap.xml` is a route built from the database on each
+9. `sudo rm -f public/sitemap.xml`: remove any sitemap file. The sitemap is a route built from the database on each
    request, so it is never stale; nginx would serve a leftover file in its place
 10. `sudo systemctl reload nginx`: reload Nginx gracefully
+
+**Trap: a deploy that changes `scripts/deploy.sh` runs the old copy.** Step 1 pulls the new script, but bash
+keeps reading the one it started. Symptom: the run stops at an error from a removed or changed step, with no
+"✅ deployed" at the end (2026-11-12: the old sitemap step failed, nginx was not reloaded). Until backlog row 10
+lands, run `just deploy` a second time after any change to the script.
 
 ---
 

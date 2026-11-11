@@ -29,7 +29,7 @@ class GuestRateLimit
             ], 429);
         }
 
-        // Only hit the limiter on the generate endpoint, not on setKey
+        // Only the generate endpoint counts towards the limit
         if ($request->routeIs('api.playground.generate')) {
             RateLimiter::hit($key, self::DECAY_SECONDS);
         }

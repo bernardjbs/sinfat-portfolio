@@ -60,6 +60,14 @@ Agents never publish.
 - Saved locally as a draft, part 1 (post #45 locally), 1,021 words; body replaced after a fact-check
 - Published on sinfat.com 2026-11-10, with the series and notebook snapshots live
 
+#### Post 2
+**"Why merge is the last thing I'll automate"**
+- Merge as a question, the workshop's "earn trust", Bernard's question verbatim, the ladder and its
+  climb rules (the AI's starting points), planted failures, merge climbs last, everything at level 0
+- Brief: `~/code/software-factory-research/docs/blog-post-02-brief.md` (its hard rules bind)
+- Links `/notebook/2026-11-09-2354/` (the ladder) and `/notebook/2026-11-09-2344/` (just before)
+- Saved locally as a draft, part 2 (post #47), 935 words, 2026-11-11. Not on production yet
+
 ## Tasks
 
 - [x] Snapshots copied and transformed; originals unchanged (checksums before and after)

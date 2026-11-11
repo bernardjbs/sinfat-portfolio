@@ -65,6 +65,21 @@ class PlaygroundControllerTest extends TestCase
         $this->assertStringNotContainsString('sk-ant-', $response->getContent());
     }
 
+    public function test_set_key_works_after_free_limit_is_reached(): void
+    {
+        for ($i = 0; $i < 3; $i++) {
+            RateLimiter::hit('playground:127.0.0.1', 86400);
+        }
+
+        $this->postJson('/api/playground/key', ['api_key' => 'sk-ant-valid-key-1234567890123456'])
+            ->assertOk()
+            ->assertJsonPath('success', true);
+
+        // The saved key then lets the guest generate past the limit
+        $this->postJson('/api/playground/generate', ['topic' => 'after limit'])
+            ->assertOk();
+    }
+
     // POST /api/playground/generate
 
     public function test_generate_returns_stream_response(): void

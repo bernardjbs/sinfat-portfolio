@@ -5,6 +5,8 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use League\CommonMark\Environment\Environment;
+use League\CommonMark\Event\DocumentParsedEvent;
+use League\CommonMark\Extension\CommonMark\Node\Inline\Link;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkExtension;
 use League\CommonMark\Extension\Table\TableExtension;
@@ -72,6 +74,16 @@ class BlogPostResource extends JsonResource
         $environment->addExtension(new CommonMarkCoreExtension());
         $environment->addExtension(new TableExtension());
         $environment->addExtension(new HeadingPermalinkExtension());
+
+        // Notebook snapshots open in a new tab, so the reader keeps their place in the post
+        $environment->addEventListener(DocumentParsedEvent::class, function (DocumentParsedEvent $event) {
+            foreach ($event->getDocument()->iterator() as $node) {
+                if ($node instanceof Link && str_starts_with($node->getUrl(), '/notebook/')) {
+                    $node->data->set('attributes/target', '_blank');
+                    $node->data->set('attributes/rel', 'noopener');
+                }
+            }
+        });
 
         $converter = new MarkdownConverter($environment);
 

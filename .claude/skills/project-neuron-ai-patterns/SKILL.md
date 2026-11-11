@@ -16,7 +16,8 @@ composer require neuron-core/neuron-ai
 ```
 > Note: `inspector-apm/neuron-ai` is abandoned. Use `neuron-core/neuron-ai` instead.
 
-**Config in `.env`:**
+**Config in `.env`** (`github` is dead: GitHub Models was retired 2026-07-30, so the playground is off behind
+`PLAYGROUND_ENABLED` until a replacement provider is set; see `docs/backlog.md`):
 ```
 AI_PROVIDER=github          # options: github, anthropic, gemini, ollama
 

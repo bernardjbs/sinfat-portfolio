@@ -30,8 +30,8 @@ All posts: `development`
 2. This repo drafts it with `project-blog-writer` (manual input), saved locally as a draft in the
    series with `blog:manage create --series=my-own-ai-software-factory`
 3. Bernard reads and edits it in the admin editor on `sinfat.test`
-4. Export it (`blog:manage export --id=N`), copy the file to the server, and create it on production
-   with the same command, which puts it in the series
+4. `just post-to-prod <id>` (Bernard runs it): creates it on production as a draft in the same series
+   (`docs/deploy-guide.md`, "Posting to Production"; part 1 used the manual export and scp, HISTORICAL)
 5. Bernard publishes it in the production admin editor
 
 Agents never publish.

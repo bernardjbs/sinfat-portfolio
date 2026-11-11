@@ -35,10 +35,40 @@
   (docs.github.com/en/github-models, via the research agent): GitHub Models fully retired 2026-07-30
 - Playground switched off behind `PLAYGROUND_ENABLED` (default off): requests answer 503, the nav hides
   the link, the page says it is offline; checked on sinfat.test both ways. Branch `fix/playground-offline`
-- Registered this repo with `/user-wrap-up` (`workspaces/sinfat-portfolio.md`); the handover's
+- Registered this repo with `/user-wrap-up` (`~/.claude/skills/user-wrap-up/references/workspaces/sinfat-portfolio.md`); the handover's
   outstanding items moved to backlog rows 5 to 8, server facts to `docs/deploy-guide.md`;
   `PORTFOLIO.md` ruled a closed record
 - `php artisan test`: 134 passed, 3 skipped
+
+## Close of session
+- Merged and pushed to `main` (`adc2e92`), deployed by Bernard: the playground switch (sinfat.com
+  measured: status `enabled: false`, page shell `playground=off`, generate 503) and every tab title
+  using "·" instead of an em dash (backlog row 4, done)
+- Docs: the handover is now a pointer with a `## Pinned` rule (every wrap-up checks every document
+  the wrap-up entry lists); backlog rows 5 to 9; `docs/deploy-guide.md` (sitemap as `www-data`,
+  `post-to-prod`, patching PHP, server facts); module 16 and 17 spec status corrected (they still said
+  "awaiting merge" a day after both merged and deployed)
+- Wrap-up entry gained a `spec-status` check: adding `specs/` to the stale-phrasing sweep alone did not
+  catch "awaiting merge" (measured: all clear); the dedicated check flagged both lines, clean after the fix
+- Branch `feat/factory-series-part-2` carries the spec fixes, the pin and this wrap; per Bernard, small
+  fixes ride on the next work branch and merge with it
+- `project-blog-writer`: one voice line, routine work (audits, upgrades, patches) reads matter-of-fact,
+  from Bernard's edits to the PHP post
+- Wrap applied the pinned rule: module 11 and 12 specs said "ready to build" (completed 2026-03-10),
+  `docs/production-env.md` and the `project-portfolio-context` / `project-neuron-ai-patterns` skills
+  described GitHub Models as live or pointed at the old handover; all corrected. Module 15 spec gained a
+  status line; module 18's step 4 now uses `just post-to-prod`
+
+## Traps and where they now live
+- The deploy never patches PHP; production sat on 8.3.30 three weeks past a critical fix:
+  `docs/deploy-guide.md`, "Patching PHP"
+- `public/sitemap.xml` owned by the deploy user stopped the publish-time rebuild silently (the error is
+  caught and logged): `docs/deploy-guide.md` step 9
+- GitHub Models died with nothing noticing for months (last success 2026-03-14): backlog row 9 and the
+  planned AI health check in the handover's next steps
+- The wrap-up's stale-phrasing sweep does not know "awaiting merge": the entry's `spec-status` check
+- Branch checkouts that swap skill files trip the skills hook as if edited (false alarm, nothing to
+  undo): session record only
 
 ## Outstanding
 - Backlog row 9: choose the provider that replaces GitHub Models (admin draft writer also broken)

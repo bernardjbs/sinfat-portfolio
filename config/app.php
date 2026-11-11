@@ -15,6 +15,9 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
 
+    // Where sitemap:generate writes; tests point it at a scratch file
+    'sitemap_path' => public_path('sitemap.xml'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment

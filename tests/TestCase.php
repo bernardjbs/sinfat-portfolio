@@ -14,6 +14,9 @@ abstract class TestCase extends BaseTestCase
         // This overrides whatever .env loaded so the dev database is never touched.
         $app['config']->set('database.connections.mysql.database', 'sinfat_portfolio_test');
 
+        // Tests write the sitemap to a scratch file, never the real public/sitemap.xml
+        $app['config']->set('app.sitemap_path', storage_path('framework/testing/sitemap.xml'));
+
         return $app;
     }
 }

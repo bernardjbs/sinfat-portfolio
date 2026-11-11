@@ -18,7 +18,7 @@ class GenerateSitemapTest extends TestCase
         $empty = Series::factory()->create(['slug' => 'only-drafts']);
         BlogPost::factory()->draft()->inSeries($empty, 1)->create();
 
-        $path = public_path('sitemap.xml');
+        $path = config('app.sitemap_path');
         $original = is_file($path) ? file_get_contents($path) : null;
 
         try {

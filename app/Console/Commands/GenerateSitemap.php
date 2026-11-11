@@ -48,9 +48,9 @@ class GenerateSitemap extends Command
             );
         });
 
-        $sitemap->writeToFile(public_path('sitemap.xml'));
+        $sitemap->writeToFile(config('app.sitemap_path'));
 
-        $this->info('Sitemap generated at public/sitemap.xml');
+        $this->info('Sitemap generated at ' . config('app.sitemap_path'));
 
         return self::SUCCESS;
     }

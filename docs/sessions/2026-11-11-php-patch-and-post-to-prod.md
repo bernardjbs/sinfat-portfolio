@@ -24,6 +24,22 @@
 - `php artisan test`: 128 passed, 3 skipped
 - Neuron AI 3.17: real streamed reply via Ollama; all imported classes resolve (a fake class reports missing)
 
+## Later the same day
+- Bernard deployed, rebooted the server (back in about 80 s; site and SSH checked from outside), ran
+  `just post-to-prod 46` and published it: part 15 of `building-sinfat`, live, in the feed
+- Sitemap rebuild on publish failed on production: `public/sitemap.xml` was `ubuntu:ubuntu`, PHP-FPM runs
+  as `www-data`. `scripts/deploy.sh` now writes it as `www-data` (`66adda9`); Bernard ran the new step
+  by hand first: file `www-data`, part 15 listed
+- Live AI check: the playground answered `{"error":"Generation failed"}`. Server log: "Connection
+  refused" for `models.inference.ai.azure.com`; last completed AI request 2026-03-14. GitHub's docs
+  (docs.github.com/en/github-models, via the research agent): GitHub Models fully retired 2026-07-30
+- Playground switched off behind `PLAYGROUND_ENABLED` (default off): requests answer 503, the nav hides
+  the link, the page says it is offline; checked on sinfat.test both ways. Branch `fix/playground-offline`
+- Registered this repo with `/user-wrap-up` (`workspaces/sinfat-portfolio.md`); the handover's
+  outstanding items moved to backlog rows 5 to 8, server facts to `docs/deploy-guide.md`;
+  `PORTFOLIO.md` ruled a closed record
+- `php artisan test`: 134 passed, 3 skipped
+
 ## Outstanding
-- Deploy, then a live GitHub Models check; server reboot (blocked for the agent, Bernard's)
+- Backlog row 9: choose the provider that replaces GitHub Models (admin draft writer also broken)
 - Local playground crash on Ollama: fixed (`ca8dc55`)

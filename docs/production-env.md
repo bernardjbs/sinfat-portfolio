@@ -42,6 +42,7 @@ Location on server: `/var/www/sinfat/.env`
 | Key | Value | Notes |
 |-----|-------|-------|
 | `AI_PROVIDER` | `github` | Options: `github`, `anthropic`, `gemini`, `ollama` |
+| `PLAYGROUND_ENABLED` | *(unset)* | Off unless `true`. Off since 2026-11-11: GitHub Models was retired on 2026-07-30 (docs.github.com/en/github-models); switch on once a new provider is set |
 | `GITHUB_MODELS_KEY` | `github_pat_...` | Required if provider is `github`. Free via GitHub PAT with Models permission |
 | `GITHUB_MODELS_MODEL` | `gpt-4o-mini` | Default model for GitHub Models |
 | `ANTHROPIC_API_KEY` | `sk-ant-...` | Required if provider is `anthropic` |

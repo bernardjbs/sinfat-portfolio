@@ -8,6 +8,7 @@ prod `sinfat.com`.
 - `docs/handover.md`: where to resume (points at the latest session note, next steps, git state).
 - Owed work lives in `docs/backlog.md`; check it at session start.
 - Specs: `specs/module-NN-*.md`. Session notes: `docs/sessions/`.
+- Deploy, server facts and PHP patching: `docs/deploy-guide.md`. Production settings: `docs/production-env.md`.
 - Original plan (closed record, last changed 2026-03-07; never updated from here):
   `~/code/ai-learning/pi-vs-claude-code/docs/PORTFOLIO.md`. Decisions since live in `specs/`.
 

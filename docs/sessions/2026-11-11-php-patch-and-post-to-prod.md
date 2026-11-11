@@ -26,4 +26,4 @@
 
 ## Outstanding
 - Deploy, then a live GitHub Models check; server reboot (blocked for the agent, Bernard's)
-- Local playground crashes on Ollama (null API key); pre-existing, local only; fix-or-record put to Bernard
+- Local playground crash on Ollama: fixed (`ca8dc55`)

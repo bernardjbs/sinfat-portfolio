@@ -41,14 +41,14 @@ Read this file first at the start of every session. It tells you where you are a
 - **Backend:** All API routes implemented. All services, controllers, resources built.
 - **Frontend:** Full SPA — Home, About, Blog, AI Chat, Playground, Admin. Per-route meta tags. Theme toggle.
 - **AI:** Live on prod via GitHub Models (gpt-4o-mini). Free, no billing required.
-- **Tests:** 128 passing + 3 skipped (live AI, auto-skip on ollama), on `feat/post-to-prod`.
+- **Tests:** 129 passing + 3 skipped (live AI, auto-skip on ollama), on main.
 - **Infra:** sinfat.com live. Oracle Cloud Arm A1 (956MB RAM + 2GB swap). Redis for session/cache/queue. PHP 8.3.36 (patched 2026-11-11) + Nginx + MySQL 8. Node 22 for Vite builds.
 - **Deploy:** `just deploy` — SSHes into server, runs `scripts/deploy.sh` (pull, composer, npm, build, migrate, cache, sitemap, nginx reload). See `docs/deploy-guide.md`.
 
 ## Outstanding Items
 - Deploy pending (Bernard): main has the PHP package update, playground key fix, phone nav and notebook new-tab links; after it, check GitHub Models live (one playground or admin draft generation)
 - Server reboot pending (Bernard): `ssh sinfat 'sudo systemctl reboot'`; services run old copies of updated libraries, Ubuntu flags reboot-required
-- Draft #46 (PHP patch post) is local; send with `just post-to-prod 46` once `feat/post-to-prod` is deployed
+- Draft #46 (PHP patch post, part 15 of building-sinfat) is local; send with `just post-to-prod 46` once main is deployed
 - No `BlogService`: `BlogController` and `BlogPageController` query the `BlogPost` model scope directly, while `project-laravel-conventions` describes Controller → Service. Either add the service or correct the skill (noted 2026-11-10, module 16)
 - Football Analytics description is placeholder — real story TBD
 - ~~Submit sitemap to Google Search Console~~ — done 2026-03-14

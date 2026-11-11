@@ -107,7 +107,7 @@ Vue and Laravel routes (including server meta, `/feed.xml` and the `/notebook/{s
 | Time-Capsule Messaging App | GitHub if public — "Zero-AI deep dive" |
 | This portfolio site | The site itself is a demo |
 
-**Employer anonymity:** Do NOT name the current employer (Nano Solutions). Use: *"Currently working at a Perth-based SaaS company as a Full-Stack Developer since 2022"*
+**Employer anonymity:** Do NOT name the current employer anywhere on the site or in posts. Use: *"Currently working at a Perth-based SaaS company as a Full-Stack Developer since 2022"*
 
 ---
 

@@ -15,7 +15,7 @@ class GuestUsageService
      * Records are created by the controller before the stream starts.
      * This method handles the streaming and updates the status on completion.
      */
-    public function streamGeneration(string $topic, string $apiKey, GuestUsage $guestUsage, AiSession $aiSession): void
+    public function streamGeneration(string $topic, ?string $apiKey, GuestUsage $guestUsage, AiSession $aiSession): void
     {
         try {
             $agent = new GuestBlogWriterAgent($apiKey);

@@ -113,6 +113,17 @@ class PlaygroundControllerTest extends TestCase
         ]);
     }
 
+    public function test_generate_works_with_a_provider_that_has_no_key(): void
+    {
+        config(['services.ai.provider' => 'ollama']);
+
+        $response = $this->postJson('/api/playground/generate', ['topic' => 'no key needed'])->assertOk();
+        $response->streamedContent();
+
+        $this->assertDatabaseHas('guest_usage', ['topic' => 'no key needed', 'used_own_key' => false]);
+        $this->assertInstanceOf(\App\Agents\GuestBlogWriterAgent::class, new \App\Agents\GuestBlogWriterAgent(null));
+    }
+
     public function test_generate_with_own_key_flags_used_own_key(): void
     {
         $this->withSession(['guest_api_key' => 'sk-ant-test-key-12345678901234567890'])

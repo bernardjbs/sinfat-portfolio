@@ -11,7 +11,8 @@ use NeuronAI\Providers\OpenAILike;
 
 class GuestBlogWriterAgent extends Agent
 {
-    public function __construct(private string $apiKey)
+    // Null when the provider needs no key (Ollama)
+    public function __construct(private ?string $apiKey)
     {
         parent::__construct();
     }
@@ -26,16 +27,16 @@ class GuestBlogWriterAgent extends Agent
                 model: config('services.ollama.model'),
             ),
             'gemini' => new Gemini(
-                key: $this->apiKey,
+                key: $this->apiKey ?? '',
                 model: config('services.gemini.model'),
             ),
             'github' => new OpenAILike(
                 baseUri: config('services.github.url'),
-                key: $this->apiKey,
+                key: $this->apiKey ?? '',
                 model: config('services.github.model'),
             ),
             default => new Anthropic(
-                key: $this->apiKey,
+                key: $this->apiKey ?? '',
                 model: config('services.anthropic.model'),
             ),
         };

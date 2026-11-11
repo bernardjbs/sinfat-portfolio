@@ -7,7 +7,6 @@ use App\Http\Resources\BlogPostResource;
 use App\Models\BlogPost;
 use App\Services\SeriesService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
 
@@ -72,13 +71,6 @@ class AdminBlogController extends Controller
             $post->update(['status' => 'draft', 'published_at' => null]);
         } else {
             $post->update(['status' => 'published', 'published_at' => now()]);
-        }
-
-        // The sitemap lists published posts only, so it changes with every toggle; a failure must not undo the publish
-        try {
-            Artisan::call('sitemap:generate');
-        } catch (\Throwable $e) {
-            report($e);
         }
 
         return new BlogPostResource($post);

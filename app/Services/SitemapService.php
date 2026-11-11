@@ -1,22 +1,22 @@
 <?php
 
-namespace App\Console\Commands;
+namespace App\Services;
 
 use App\Models\BlogPost;
 use App\Models\Series;
-use App\Services\SeriesService;
 use Carbon\Carbon;
-use Illuminate\Console\Command;
 use Spatie\Sitemap\Sitemap;
 use Spatie\Sitemap\Tags\Url;
 
-class GenerateSitemap extends Command
+class SitemapService
 {
-    protected $signature = 'sitemap:generate';
+    public function __construct(private SeriesService $seriesService) {}
 
-    protected $description = 'Generate the sitemap.xml file';
-
-    public function handle(SeriesService $seriesService): int
+    /**
+     * The sitemap as the database stands now. Built per request and never stored, so no publish
+     * path has to remember to rebuild it and no file can go stale or belong to the wrong user.
+     */
+    public function build(): Sitemap
     {
         $sitemap = Sitemap::create()
             ->add(Url::create('/')->setPriority(1.0)->setChangeFrequency('weekly'))
@@ -39,7 +39,7 @@ class GenerateSitemap extends Command
                 );
             });
 
-        $seriesService->listPublic()->each(function (Series $series) use ($sitemap) {
+        $this->seriesService->listPublic()->each(function (Series $series) use ($sitemap) {
             $sitemap->add(
                 Url::create("/blog/series/{$series->slug}")
                     ->setLastModificationDate(Carbon::parse($series->last_published_at))
@@ -48,10 +48,6 @@ class GenerateSitemap extends Command
             );
         });
 
-        $sitemap->writeToFile(config('app.sitemap_path'));
-
-        $this->info('Sitemap generated at ' . config('app.sitemap_path'));
-
-        return self::SUCCESS;
+        return $sitemap;
     }
 }

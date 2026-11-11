@@ -20,7 +20,8 @@ That's it. This SSHes into the server and runs `scripts/deploy.sh`, which:
 6. `php artisan config:cache`: cache config
 7. `php artisan route:cache`: cache routes
 8. `php artisan view:cache`: cache Blade views
-9. `sudo -u www-data php artisan sitemap:generate`: regenerate sitemap.xml as www-data, the PHP-FPM user, so publishing in admin can rebuild it too
+9. `sudo rm -f public/sitemap.xml`: remove any sitemap file. `/sitemap.xml` is a route built from the database on each
+   request, so it is never stale; nginx would serve a leftover file in its place
 10. `sudo systemctl reload nginx`: reload Nginx gracefully
 
 ---
@@ -32,8 +33,8 @@ just post-to-prod <id>
 ```
 
 Sends local post `<id>` to production: a new slug is created as a draft, an existing one is backed up
-and updated (status unchanged). Then publish it in the production admin; publishing rebuilds the
-sitemap. Details: `.claude/skills/project-blog-writer/references/managing-posts.md`.
+and updated (status unchanged). Then publish it in the production admin; the sitemap lists it at once (it is
+built on each request). Details: `.claude/skills/project-blog-writer/references/managing-posts.md`.
 
 ---
 

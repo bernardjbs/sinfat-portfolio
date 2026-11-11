@@ -75,9 +75,9 @@ Agents never publish.
 #### Post 3
 **"Before deciding anything, I compared my factory with two others"**
 - Brief and text: `~/code/software-factory-research/docs/blog-post-03-brief.md` and `-draft.md`
-- Links `/notebook/2026-11-11-2343/`. Before publishing, Bernard hears the Warp quote at
-  https://www.youtube.com/watch?v=nKjPBAw_N_0&t=1298s (the brief's rule: auto-captions can mishear)
-- Saved locally as a draft, part 3 (post #48), 549 words, 2026-11-12. Not on production yet
+- Links `/notebook/2026-11-11-2343/`. The Warp quote at
+  https://www.youtube.com/watch?v=nKjPBAw_N_0&t=1298s confirmed by ear by Bernard, 2026-11-12
+- Saved locally as a draft, part 3 (post #48), 549 words, 2026-11-12. Published on sinfat.com 2026-11-12
 
 ## Tasks
 

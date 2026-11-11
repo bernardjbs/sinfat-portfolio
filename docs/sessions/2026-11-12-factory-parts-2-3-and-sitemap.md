@@ -31,7 +31,7 @@
 - The three skill wording edits approved; the Warp quote ("it's just overkill for an individual", 21:38)
   confirmed by ear before part 3 went live
 - Deploy self-update trap: fix on the next branch, recorded with a trigger (row 10)
-- Wrap commit rides the next work branch, `feat/replace-github-models`
+- Wrap commit rides the next work branch; named `temp-branch` until that work is chosen
 
 ## Decisions (mine, reported)
 - Part 2's notebook links stay relative: on production they resolve to `https://sinfat.com/notebook/<stamp>/`
@@ -76,7 +76,7 @@
   `~/code/software-factory-research/notebook/snapshots/2026-11-11-2343.html`
 
 ## Outstanding
-- Backlog row 10 (deploy pulls before starting the script), due 2026-11-26: on `feat/replace-github-models`
+- Backlog row 10 (deploy pulls before starting the script), due 2026-11-26: on `temp-branch`
 - Backlog row 9 (replace GitHub Models), due 2026-11-25, trigger fired
 - Backlog row 1 (help.md for project skills), due 2026-12-08, trigger fired: `project-git-conventions` has none
 - Not mine: `~/.claude/skills/user-playwright-verify/references/gotchas.md` changed during a command at

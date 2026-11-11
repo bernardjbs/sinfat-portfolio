@@ -9,8 +9,8 @@
 
 ## Next steps
 
-1. Backlog row 10, due 2026-11-26, on branch `feat/replace-github-models` (named for row 9, the branch's main
-   work; row 10 is a small fix riding it, per Bernard's small-fixes rule): edit `justfile` so `deploy` pulls
+1. Backlog row 10, due 2026-11-26, on branch `temp-branch` (a placeholder name: the next real work is not
+   chosen yet; rename it when it is, per Bernard's small-fixes rule): edit `justfile` so `deploy` pulls
    the code, then starts `scripts/deploy.sh`, and take `git pull` out of the script. It goes first because
    its trigger is this branch; the deploy after it is the first that will not need running twice when the
    script changes.
@@ -30,7 +30,8 @@ Owed work: `docs/backlog.md`. Deploy, server and PHP patching: `docs/deploy-guid
 
 - `main` at `19b1474`, pushed and deployed (sitemap built per request; parts 2 and 3 and the standalone
   post live).
-- Branch `feat/replace-github-models`, not pushed: this wrap and backlog row 10's record. Merges with row 10's fix.
+- Branch `temp-branch` (placeholder name, renamed 2026-11-12), not pushed: this wrap and backlog row 10's record.
+  Merges with row 10's fix.
 
 ## Plans in flight
 

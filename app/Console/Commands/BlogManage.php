@@ -10,10 +10,10 @@ use Illuminate\Support\Facades\DB;
 class BlogManage extends Command
 {
     protected $signature = 'blog:manage
-        {action : create|update|export|series}
+        {action : create|update|export|import|series}
         {subaction? : For series: create|update|complete}
         {--id= : Post ID (required for update/export)}
-        {--file= : Markdown file path for content}
+        {--file= : Markdown file path for content (import: - reads stdin)}
         {--title= : Post or series title (post create, series create/update)}
         {--excerpt= : Post excerpt}
         {--category=development : Post category}
@@ -24,7 +24,7 @@ class BlogManage extends Command
         {--pitch= : Series pitch (series create/update)}
         {--force : Skip confirmation prompt}';
 
-    protected $description = 'Create, update, or export blog posts and manage series safely';
+    protected $description = 'Create, update, export or import blog posts and manage series safely';
 
     public function handle(): int
     {
@@ -32,8 +32,9 @@ class BlogManage extends Command
             'create' => $this->createPost(),
             'update' => $this->updatePost(),
             'export' => $this->exportPost(),
+            'import' => $this->importPost(),
             'series' => $this->manageSeries(),
-            default => $this->abort('Unknown action. Use: create, update, export, or series.'),
+            default => $this->abort('Unknown action. Use: create, update, export, import, or series.'),
         };
     }
 
@@ -52,7 +53,7 @@ class BlogManage extends Command
             return 1;
         }
 
-        $content = file_get_contents($file);
+        [, $content] = $this->splitHeader(file_get_contents($file));
 
         if (strlen($content) < 100) {
             $this->error("Content is only " . strlen($content) . " bytes. That's suspiciously short. Aborting.");
@@ -120,7 +121,7 @@ class BlogManage extends Command
                 return 1;
             }
 
-            $newContent = file_get_contents($file);
+            [, $newContent] = $this->splitHeader(file_get_contents($file));
             $oldLength = strlen($post->content);
             $newLength = strlen($newContent);
 
@@ -206,12 +207,165 @@ class BlogManage extends Command
         }
 
         $filename = $dir . '/' . $post->slug . '.md';
-        file_put_contents($filename, $post->content);
+        file_put_contents($filename, $this->exportContents($post));
 
         $this->info("Exported post #{$id} to {$filename}");
         $this->line("  Length: " . strlen($post->content) . " bytes");
 
         return 0;
+    }
+
+    /**
+     * Create or update a post from an exported file, matched by slug. Never publishes.
+     */
+    private function importPost(): int
+    {
+        $file = $this->option('file');
+
+        if ($file === '-') {
+            $raw = stream_get_contents(STDIN);
+        } elseif ($file && file_exists($file)) {
+            $raw = file_get_contents($file);
+        } else {
+            $this->error('--file is required and must exist (or - for stdin).');
+            return 1;
+        }
+
+        [$meta, $content] = $this->splitHeader((string) $raw);
+
+        if (empty($meta['slug']) || empty($meta['title'])) {
+            $this->error('The file needs a header with slug and title. Make it with: php artisan blog:manage export --id=N');
+            return 1;
+        }
+
+        if (strlen($content) < 100) {
+            $this->error("Content is only " . strlen($content) . " bytes. That's suspiciously short. Aborting.");
+            return 1;
+        }
+
+        $series = null;
+        $part = isset($meta['part']) ? (int) $meta['part'] : null;
+
+        if (! empty($meta['series'])) {
+            $series = Series::where('slug', $meta['series'])->first();
+
+            if (! $series) {
+                $this->error("Series not found here: {$meta['series']}. Create it first: php artisan blog:manage series create --slug={$meta['series']} --title='...'");
+                return 1;
+            }
+        }
+
+        $post = BlogPost::where('slug', $meta['slug'])->first();
+
+        if ($series && $part !== null) {
+            $holder = BlogPost::where('series_id', $series->id)->where('series_part', $part)->first();
+
+            if ($holder && $holder->id !== $post?->id) {
+                $this->error("Part {$part} of {$series->slug} is already post #{$holder->id} ({$holder->slug}). Aborting.");
+                return 1;
+            }
+        }
+
+        if ($post && strlen($content) < strlen($post->content) * 0.5 && ! $this->option('force')) {
+            $this->error('New content is less than half the current length. Aborting; pass --force if that is intended.');
+            return 1;
+        }
+
+        $fields = [
+            'title'        => $meta['title'],
+            'excerpt'      => $meta['excerpt'] ?? '',
+            'content'      => $content,
+            'category'     => $meta['category'] ?? 'development',
+            'ai_generated' => (bool) ($meta['ai_generated'] ?? true),
+            'ai_model'     => $meta['ai_model'] ?? null,
+        ];
+
+        if ($post) {
+            $dir = storage_path('app/blog-exports/backups');
+
+            if (! is_dir($dir)) {
+                mkdir($dir, 0755, true);
+            }
+
+            $backup = $dir . '/' . $post->slug . '-' . now()->format('Ymd-His') . '.md';
+            file_put_contents($backup, $this->exportContents($post));
+        }
+
+        $post = DB::transaction(function () use ($post, $meta, $fields, $series, $part) {
+            if ($post) {
+                $post->update($fields);
+            } else {
+                $post = BlogPost::create($fields + ['slug' => $meta['slug'], 'status' => 'draft']);
+            }
+
+            // A header without a series leaves the post's series as it is
+            if ($series && ($post->series_id !== $series->id || ($part !== null && $post->series_part !== $part))) {
+                $this->placeInSeries($post, $series, $part);
+            }
+
+            return $post;
+        });
+
+        $this->info(($backup ?? null) ? "Updated post #{$post->id}: {$post->title}" : "Created post #{$post->id}: {$post->title}");
+        $this->line("  Slug: {$post->slug}");
+        $this->line("  Status: {$post->status}");
+
+        if (isset($backup)) {
+            $this->line("  Backup: {$backup}");
+        }
+
+        if ($post->series_id) {
+            $this->line("  Series: {$post->series->slug}, part {$post->series_part}");
+        }
+
+        $this->line("  Review and publish: /admin/blog/{$post->id}/edit");
+
+        return 0;
+    }
+
+    /**
+     * The export format: a header of key: JSON value lines between --- markers, then the content.
+     */
+    private function exportContents(BlogPost $post): string
+    {
+        $meta = [
+            'slug'         => $post->slug,
+            'title'        => $post->title,
+            'excerpt'      => $post->excerpt,
+            'category'     => $post->category,
+            'ai_generated' => (bool) $post->ai_generated,
+            'ai_model'     => $post->ai_model,
+            'series'       => $post->series?->slug,
+            'part'         => $post->series_part,
+        ];
+
+        $lines = array_map(
+            fn ($key, $value) => $key . ': ' . json_encode($value, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE),
+            array_keys($meta),
+            $meta,
+        );
+
+        return "---\n" . implode("\n", $lines) . "\n---\n" . $post->content;
+    }
+
+    /**
+     * [header fields, content]. A file without a header is all content.
+     */
+    private function splitHeader(string $raw): array
+    {
+        if (! str_starts_with($raw, "---\n") || ($end = strpos($raw, "\n---\n", 3)) === false) {
+            return [[], $raw];
+        }
+
+        $meta = [];
+
+        foreach (explode("\n", substr($raw, 4, $end - 4)) as $line) {
+            if (preg_match('/^([a-z_]+): (.*)$/', $line, $match)) {
+                $meta[$match[1]] = json_decode($match[2], true);
+            }
+        }
+
+        return [$meta, substr($raw, $end + 5)];
     }
 
     private function manageSeries(): int

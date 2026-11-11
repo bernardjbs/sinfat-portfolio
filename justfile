@@ -38,3 +38,7 @@ deploy:
 # ssh — open SSH session to production server
 ssh:
     ssh sinfat
+
+# post-to-prod: send local post <id> to production as a draft (updates the post with the same slug)
+post-to-prod id *args:
+    bash scripts/post-to-prod.sh {{id}} {{args}}

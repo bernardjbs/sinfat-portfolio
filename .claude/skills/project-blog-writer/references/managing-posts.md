@@ -67,4 +67,4 @@ A series shows on the site only once it has a published part.
 ## Publish
 
 Bernard publishes in the admin UI at `/admin/blog`. Agents never publish. Publishing or unpublishing
-rebuilds the sitemap.
+shows in the sitemap at once (it is built on each request).

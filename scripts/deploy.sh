@@ -23,11 +23,9 @@ php artisan config:cache
 php artisan route:cache
 php artisan view:cache
 
-echo "→ generating sitemap..."
-# Written as www-data, the PHP-FPM user, so publishing in admin can rebuild it too
-sudo touch public/sitemap.xml
-sudo chown www-data:www-data public/sitemap.xml
-sudo -u www-data php artisan sitemap:generate
+echo "→ removing any sitemap file..."
+# /sitemap.xml is a route built from the database; nginx would serve a stale file in its place
+sudo rm -f public/sitemap.xml
 
 echo "→ reloading nginx..."
 sudo systemctl reload nginx

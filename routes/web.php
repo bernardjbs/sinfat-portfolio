@@ -5,6 +5,7 @@ use App\Http\Controllers\BlogPageController;
 use App\Http\Controllers\FeedController;
 use App\Http\Controllers\NotebookController;
 use App\Http\Controllers\SeriesPageController;
+use App\Http\Controllers\SitemapController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/login', [AdminAuthController::class, 'show'])->name('login');
@@ -12,6 +13,9 @@ Route::post('/login', [AdminAuthController::class, 'login']);
 Route::post('/logout', [AdminAuthController::class, 'logout'])->middleware('auth');
 
 Route::get('/feed.xml', FeedController::class)->name('feed');
+
+// Built from the database on every request; a public/sitemap.xml file would be served instead
+Route::get('/sitemap.xml', SitemapController::class)->name('sitemap');
 
 // Factory notebook snapshots: static pages, never the SPA
 Route::get('/notebook/{stamp}', NotebookController::class)->name('notebook.snapshot');

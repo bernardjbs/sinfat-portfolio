@@ -154,7 +154,7 @@ git merge feat/module-X
 
 ## Deploy
 
-Deploy is manual, and only on Bernard's word — run `just deploy` after pushing to `main`. This SSHes into the Oracle VM and runs `scripts/deploy.sh` (pull, composer, npm install, vite build, migrate, cache, sitemap, nginx reload).
+Deploy is manual, and only on Bernard's word — run `just deploy` after pushing to `main`. This SSHes into the Oracle VM and runs `scripts/deploy.sh` (pull, composer, npm install, vite build, migrate, cache, remove any sitemap file, nginx reload).
 
 **Implication:** Only push to `main` when the code is production-ready.
 

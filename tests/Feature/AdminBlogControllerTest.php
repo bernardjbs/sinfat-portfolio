@@ -168,19 +168,6 @@ class AdminBlogControllerTest extends TestCase
         ]);
     }
 
-    public function test_publishing_and_unpublishing_rebuild_the_sitemap(): void
-    {
-        $post = BlogPost::factory()->draft()->create(['slug' => 'sitemap-on-publish']);
-        $path = config('app.sitemap_path');
-        @unlink($path);
-
-        $this->actingAsAdmin()->patchJson("/api/admin/blog/{$post->id}/publish")->assertOk();
-        $this->assertStringContainsString('/blog/sitemap-on-publish</loc>', file_get_contents($path));
-
-        $this->actingAsAdmin()->patchJson("/api/admin/blog/{$post->id}/publish")->assertOk();
-        $this->assertStringNotContainsString('/blog/sitemap-on-publish</loc>', file_get_contents($path));
-    }
-
     public function test_admin_can_unpublish_published_post(): void
     {
         $post = BlogPost::factory()->published()->create();

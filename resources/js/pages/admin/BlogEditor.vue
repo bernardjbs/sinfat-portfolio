@@ -190,9 +190,17 @@
 </template>
 
 <script>
-import { marked } from 'marked'
+import { Marked } from 'marked'
 import { mapState, mapActions } from 'pinia'
 import { useBlogStore } from '../../stores/blog.js'
+
+// Notebook snapshots open in a new tab, as on the post page (BlogPostResource),
+// so clicking one in the preview doesn't leave the editor
+const marked = new Marked({
+  hooks: {
+    postprocess: (html) => html.replaceAll('<a href="/notebook/', '<a target="_blank" rel="noopener" href="/notebook/'),
+  },
+})
 
 export default {
   name: 'AdminBlogEditor',
@@ -233,7 +241,7 @@ export default {
 
     renderedContent() {
       if (!this.content) return '<p class="text-dim">nothing to preview yet.</p>'
-      return marked(this.content)
+      return marked.parse(this.content)
     },
   },
 

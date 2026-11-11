@@ -340,4 +340,22 @@ class BlogControllerTest extends TestCase
         $this->assertArrayHasKey('series', $listed);
         $this->assertNull($listed['series']);
     }
+
+    public function test_notebook_links_open_in_a_new_tab_and_other_links_do_not(): void
+    {
+        $post = BlogPost::factory()->published()->create([
+            'content' => "See [the plan](/notebook/2026-11-09-2327/) and [another post](/blog/other).",
+        ]);
+
+        $html = $this->getJson("/api/blog/{$post->slug}")->assertOk()->json('data.content');
+
+        preg_match('#<a [^>]*href="/notebook/2026-11-09-2327/"[^>]*>#', $html, $notebook);
+        preg_match('#<a [^>]*href="/blog/other"[^>]*>#', $html, $other);
+
+        $this->assertNotEmpty($notebook, $html);
+        $this->assertStringContainsString('target="_blank"', $notebook[0]);
+        $this->assertStringContainsString('rel="noopener"', $notebook[0]);
+        $this->assertNotEmpty($other, $html);
+        $this->assertStringNotContainsString('target=', $other[0]);
+    }
 }

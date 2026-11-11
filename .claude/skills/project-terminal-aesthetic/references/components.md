@@ -11,7 +11,8 @@ Dark background (bg-surface or bg-bg, with border-b border-border)
 Logo/name on left: "bernard" or "sinfat" in text-accent
 Links on right: text-dim, hover:text-text transition
 Active link: text-accent (no underline, no bold)
-Mobile: theme toggle + hamburger (lucide Menu/X) opening a dropdown (live in NavBar.vue, 2026-11-11)
+Mobile (under sm): logo + theme toggle, then the links always visible in a second row
+  (flex-wrap gap-x-4 gap-y-2 pb-3); no hamburger (ruled 2026-11-11)
 ```
 
 ### Buttons

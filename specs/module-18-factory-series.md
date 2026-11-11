@@ -30,8 +30,8 @@ All posts: `development`
 2. This repo drafts it with `project-blog-writer` (manual input), saved locally as a draft in the
    series with `blog:manage create --series=my-own-ai-software-factory`
 3. Bernard reads and edits it in the admin editor on `sinfat.test`
-4. Export it (`blog:manage export --id=N`), copy the file to the server, and create it on production
-   with the same command, which puts it in the series
+4. `just post-to-prod <id>` (Bernard runs it): creates it on production as a draft in the same series
+   (`docs/deploy-guide.md`, "Posting to Production"; part 1 used the manual export and scp, HISTORICAL)
 5. Bernard publishes it in the production admin editor
 
 Agents never publish.
@@ -59,6 +59,15 @@ Agents never publish.
 - Links the notebook as it stood that night: `/notebook/2026-11-09-2327/`
 - Saved locally as a draft, part 1 (post #45 locally), 1,021 words; body replaced after a fact-check
 - Published on sinfat.com 2026-11-10, with the series and notebook snapshots live
+
+#### Post 2
+**"Why merge is the last thing I'll automate"**
+- Merge as a question, the workshop's "earn trust", Bernard's question verbatim, the ladder and its
+  climb rules (the AI's starting points), planted failures, merge climbs last, everything at level 0
+- Brief: `~/code/software-factory-research/docs/blog-post-02-brief.md` (its hard rules bind)
+- Links `/notebook/2026-11-09-2354/` (the ladder) and `/notebook/2026-11-09-2344/` (just before)
+- Saved locally as a draft, part 2 (post #47), 935 words, 2026-11-11. Body and excerpt then replaced
+  from `~/code/software-factory-research/docs/blog-post-02-draft.md` (1,032 words). Not on production yet
 
 ## Tasks
 

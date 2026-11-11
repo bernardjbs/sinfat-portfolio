@@ -28,7 +28,7 @@ If `--help` appears anywhere in the user's invocation, read and display [help.md
 | Production | https://sinfat.com | Oracle Cloud Arm A1 VM |
 
 **Production server:**
-- Oracle Cloud Arm A1, Ubuntu 22.04 (HISTORICAL, unverified: "2 OCPU, 12GB RAM"; `docs/handover.md` records 956MB RAM + 2GB swap)
+- Oracle Cloud Arm A1, Ubuntu 22.04 (HISTORICAL, unverified: "2 OCPU, 12GB RAM"; `docs/deploy-guide.md` records 956MB RAM + 2GB swap)
 - Nginx + PHP 8.3-FPM + MySQL 8 + Redis
 - Cloudflare DNS + proxy + SSL
 - Laravel at `/var/www/sinfat`
@@ -73,7 +73,7 @@ There are NO Blade page templates — only `resources/views/app.blade.php` as th
 | Markdown editor | `<textarea>` with a `marked` preview | Admin only |
 | AI runtime | Neuron AI (`neuron-core/neuron-ai`) | |
 | AI streaming | SSE (Server-Sent Events) | Not WebSockets |
-| AI provider | Switchable: `AI_PROVIDER` (anthropic, gemini, github, ollama) | Read `config/services.php` for models; prod per `docs/handover.md` |
+| AI provider | Switchable: `AI_PROVIDER` (anthropic, gemini, github, ollama) | Read `config/services.php` for models; prod per `docs/production-env.md`. GitHub Models (`github`) retired 2026-07-30: the playground is off (`PLAYGROUND_ENABLED`) until a replacement is chosen (`docs/backlog.md`) |
 | Auth | Custom (no Breeze/Jetstream) | Single admin user |
 | Sitemap | spatie/laravel-sitemap | |
 | Markdown rendering | league/commonmark | Configured in `BlogPostResource` |

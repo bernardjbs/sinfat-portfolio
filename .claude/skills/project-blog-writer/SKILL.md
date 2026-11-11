@@ -72,6 +72,7 @@ The blog reflects the terminal aesthetic: technical, opinionated, concise. But a
 - Keep paragraphs short (2 to 4 sentences)
 - Use markdown headings, code blocks, and bullet points
 - **Admit uncertainty:** "I don't know if this is the right approach", "I'm not sure how much this matters"
+- **Routine work reads as routine:** an audit, an upgrade or a patch is written matter-of-fact and competent. Keep "admit uncertainty" for what was genuinely unknown, never for normal maintenance
 - **Say when the AI carried you:** if you followed the AI's lead without fully understanding, say that
 - **Sound like a person talking, not a blog post being written:** conversational, not polished
 - UK English

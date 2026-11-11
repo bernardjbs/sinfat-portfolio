@@ -187,3 +187,7 @@ Review areas:
 - Branch: `feat/module-15-page-explainer`
 - Commits per lesson (one logical unit each)
 - Merge to main after Lesson 8, before Lesson 9 review
+
+---
+
+*Status: Not started*

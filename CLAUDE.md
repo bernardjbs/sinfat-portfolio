@@ -14,6 +14,7 @@ prod `sinfat.com`.
 
 - Tests: `php artisan test`.
 - Deploy is manual (`just deploy`) and runs only on Bernard's word.
+- A local post reaches production with `just post-to-prod <id>` (as a draft); also Bernard's to run.
 
 ## Project skills
 

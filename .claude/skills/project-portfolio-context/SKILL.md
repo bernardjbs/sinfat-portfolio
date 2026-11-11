@@ -124,6 +124,9 @@ just deploy
 # → SSHes into server, runs scripts/deploy.sh
 # → pull, composer, npm install, vite build, migrate, cache, sitemap, nginx reload
 
+# Send local post <id> to production as a draft (Bernard runs it)
+just post-to-prod <id>
+
 # SSH into server directly
 just ssh
 ```

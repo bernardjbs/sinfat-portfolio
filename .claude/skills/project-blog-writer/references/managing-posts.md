@@ -40,7 +40,19 @@ Rejects content under 100 bytes or under half the original length, and asks for 
 php artisan blog:manage export --id=10
 ```
 
-Saves to `storage/app/blog-exports/{slug}.md`. This file is also what goes to production.
+Saves to `storage/app/blog-exports/{slug}.md`: a header (`---` lines holding slug, title, excerpt, category,
+ai_generated, ai_model, series, part) above the content. Edit the content below the header; `create`
+and `update` ignore the header, so edit title or excerpt with their flags or in the header before
+sending to production.
+
+## Send to production
+
+`just post-to-prod <id>` (Bernard runs it: it writes to production). It exports the post and pipes it
+to `blog:manage import` on the server, which matches by slug: a new slug becomes a **draft**, an
+existing one is updated after a backup to `storage/app/blog-exports/backups/` (status unchanged).
+Import refuses a series missing on the server (create it first), a part held by another post, and
+content under half the current length without `--force` (`just post-to-prod <id> --force`). A header
+without a series leaves the server post's series as it is.
 
 ## Series
 
@@ -54,4 +66,5 @@ A series shows on the site only once it has a published part.
 
 ## Publish
 
-Bernard publishes in the admin UI at `/admin/blog`. Agents never publish.
+Bernard publishes in the admin UI at `/admin/blog`. Agents never publish. Publishing or unpublishing
+rebuilds the sitemap.

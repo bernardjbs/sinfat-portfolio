@@ -24,7 +24,10 @@ php artisan route:cache
 php artisan view:cache
 
 echo "→ generating sitemap..."
-php artisan sitemap:generate
+# Written as www-data, the PHP-FPM user, so publishing in admin can rebuild it too
+sudo touch public/sitemap.xml
+sudo chown www-data:www-data public/sitemap.xml
+sudo -u www-data php artisan sitemap:generate
 
 echo "→ reloading nginx..."
 sudo systemctl reload nginx

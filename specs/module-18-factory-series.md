@@ -48,6 +48,8 @@ Agents never publish.
 - In the copies only, added 2026-11-10 after the part 1 fact-check: the trap line "One factory was shut
   down after 3 months" replaced with the corrected line from Dex Horthy's own essay, marked as a correction
 - Six snapshots: `2026-11-09-2327` to `2026-11-10-1220`. A new snapshot is a new file plus a copy run
+- Added 2026-11-12: `2026-11-11-2343` (part 3 links it). Its links to the seven snapshots not published
+  (`2026-11-10-2015` to `2026-11-11-2313`) are dropped in the copy, so none leads to a 404
 
 ## The Posts
 
@@ -67,7 +69,15 @@ Agents never publish.
 - Brief: `~/code/software-factory-research/docs/blog-post-02-brief.md` (its hard rules bind)
 - Links `/notebook/2026-11-09-2354/` (the ladder) and `/notebook/2026-11-09-2344/` (just before)
 - Saved locally as a draft, part 2 (post #47), 935 words, 2026-11-11. Body and excerpt then replaced
-  from `~/code/software-factory-research/docs/blog-post-02-draft.md` (1,032 words). Not on production yet
+  from `~/code/software-factory-research/docs/blog-post-02-draft.md` (1,032 words). Published on
+  sinfat.com 2026-11-11
+
+#### Post 3
+**"Before deciding anything, I compared my factory with two others"**
+- Brief and text: `~/code/software-factory-research/docs/blog-post-03-brief.md` and `-draft.md`
+- Links `/notebook/2026-11-11-2343/`. Before publishing, Bernard hears the Warp quote at
+  https://www.youtube.com/watch?v=nKjPBAw_N_0&t=1298s (the brief's rule: auto-captions can mishear)
+- Saved locally as a draft, part 3 (post #48), 549 words, 2026-11-12. Not on production yet
 
 ## Tasks
 

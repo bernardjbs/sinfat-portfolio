@@ -66,7 +66,8 @@ Agents never publish.
   climb rules (the AI's starting points), planted failures, merge climbs last, everything at level 0
 - Brief: `~/code/software-factory-research/docs/blog-post-02-brief.md` (its hard rules bind)
 - Links `/notebook/2026-11-09-2354/` (the ladder) and `/notebook/2026-11-09-2344/` (just before)
-- Saved locally as a draft, part 2 (post #47), 935 words, 2026-11-11. Not on production yet
+- Saved locally as a draft, part 2 (post #47), 935 words, 2026-11-11. Body and excerpt then replaced
+  from `~/code/software-factory-research/docs/blog-post-02-draft.md` (1,032 words). Not on production yet
 
 ## Tasks
 

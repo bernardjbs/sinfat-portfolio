@@ -321,14 +321,14 @@ export default {
   watch: {
     currentPost(post) {
       if (post) {
-        document.title = `${post.title} — sinfat.com`
+        document.title = `${post.title} · sinfat.com`
         const metaDesc = document.querySelector('meta[name="description"]')
         if (metaDesc && post.excerpt) {
           metaDesc.setAttribute('content', post.excerpt)
         }
         const ogTitle = document.querySelector('meta[property="og:title"]')
         if (ogTitle) {
-          ogTitle.setAttribute('content', `${post.title} — sinfat.com`)
+          ogTitle.setAttribute('content', `${post.title} · sinfat.com`)
         }
         const ogDesc = document.querySelector('meta[property="og:description"]')
         if (ogDesc && post.excerpt) {

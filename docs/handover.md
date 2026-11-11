@@ -5,8 +5,7 @@
 1. Merge, push and deploy `fix/playground-offline` (Bernard): takes the broken playground off sinfat.com.
 2. Backlog row 9, due 2026-11-25: choose the AI provider that replaces GitHub Models, then switch the
    playground back on (`PLAYGROUND_ENABLED=true`).
-3. Backlog row 4: the post page's tab title em dash. Its trigger (the next deploy) has fired.
-4. Then: module 15, Page Explainer (`specs/module-15-page-explainer.md`); Laravel mail (SMTP via
+3. Then: module 15, Page Explainer (`specs/module-15-page-explainer.md`); Laravel mail (SMTP via
    Resend) with an AI health check that alerts when the provider stops answering.
 
 Owed work: `docs/backlog.md`. Deploy, server and PHP patching: `docs/deploy-guide.md`.

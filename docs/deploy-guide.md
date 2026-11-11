@@ -12,16 +12,41 @@ just deploy
 
 That's it. This SSHes into the server and runs `scripts/deploy.sh`, which:
 
-1. `git pull origin main` — pull latest code
-2. `composer install --no-dev --optimize-autoloader` — install PHP deps
-3. `npm install --prefer-offline` — install frontend deps (reuses existing node_modules)
-4. `npm run build` — compile Vue/Tailwind assets with Vite
-5. `php artisan migrate --force` — run pending migrations
-6. `php artisan config:cache` — cache config
-7. `php artisan route:cache` — cache routes
-8. `php artisan view:cache` — cache Blade views
-9. `php artisan sitemap:generate` — regenerate sitemap.xml
-10. `sudo systemctl reload nginx` — reload Nginx gracefully
+1. `git pull origin main`: pull latest code
+2. `composer install --no-dev --optimize-autoloader`: install PHP deps
+3. `npm install --prefer-offline`: install frontend deps (reuses existing node_modules)
+4. `npm run build`: compile Vue/Tailwind assets with Vite
+5. `php artisan migrate --force`: run pending migrations
+6. `php artisan config:cache`: cache config
+7. `php artisan route:cache`: cache routes
+8. `php artisan view:cache`: cache Blade views
+9. `sudo -u www-data php artisan sitemap:generate`: regenerate sitemap.xml as www-data, the PHP-FPM user, so publishing in admin can rebuild it too
+10. `sudo systemctl reload nginx`: reload Nginx gracefully
+
+---
+
+## Posting to Production
+
+```bash
+just post-to-prod <id>
+```
+
+Sends local post `<id>` to production: a new slug is created as a draft, an existing one is backed up
+and updated (status unchanged). Then publish it in the production admin; publishing rebuilds the
+sitemap. Details: `.claude/skills/project-blog-writer/references/managing-posts.md`.
+
+---
+
+## Patching PHP
+
+The deploy updates the app and its packages, never PHP itself. PHP comes from the ondrej/php PPA
+(`deb.sury.org`), which Ubuntu's automatic security updates do not cover by default, so check after
+every PHP security release:
+
+```bash
+ssh sinfat 'php -v | head -1; apt-cache policy php8.3-fpm | head -4'
+ssh -t sinfat 'sudo apt-get update && sudo apt-get install --only-upgrade "php8.3*" && sudo systemctl restart php8.3-fpm'
+```
 
 ---
 
@@ -93,12 +118,13 @@ Then fix the issue locally, push a fix to `main`, and `just deploy`.
 
 | Item | Value |
 |------|-------|
-| Provider | Oracle Cloud (Arm A1, free tier) |
+| Provider | Oracle Cloud (Arm A1, free tier), 956MB RAM + 2GB swap |
 | OS | Ubuntu 22.04 |
 | Web root | `/var/www/sinfat` |
-| PHP | 8.3-FPM |
+| PHP | 8.3-FPM from the ondrej/php PPA; 8.3.36 as of 2026-11-11 |
+| Node | 22, for Vite builds |
 | DB | MySQL 8 |
-| Cache | Redis |
+| Cache | Redis (cache, sessions, queue) |
 | Web server | Nginx |
 | SSL | Cloudflare (Full mode) |
 | DNS | Cloudflare |

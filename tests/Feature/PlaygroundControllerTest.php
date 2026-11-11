@@ -18,6 +18,7 @@ class PlaygroundControllerTest extends TestCase
     {
         parent::setUp();
         RateLimiter::clear('playground:127.0.0.1');
+        config(['services.ai.playground_enabled' => true]);
 
         // Mock the streaming service so tests don't hit the AI provider
         $mock = Mockery::mock(GuestUsageService::class);

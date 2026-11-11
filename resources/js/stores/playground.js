@@ -12,6 +12,8 @@ export const usePlaygroundStore = defineStore('playground', {
         hasOwnKey: false,
         showKeyModal: false,
         statusLoaded: false,
+        // The page shell says whether the playground is switched on
+        enabled: document.querySelector('meta[name="playground"]')?.content !== 'off',
     }),
 
     getters: {
@@ -33,6 +35,7 @@ export const usePlaygroundStore = defineStore('playground', {
                 })
                 if (res.ok) {
                     const data = await res.json()
+                    this.enabled = data.enabled !== false
                     this.remaining = data.remaining
                     this.hasOwnKey = data.has_own_key
                     this.limitReached = data.remaining <= 0 && !data.has_own_key

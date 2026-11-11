@@ -25,6 +25,7 @@ class PlaygroundController extends Controller
         $hasOwnKey = $request->session()->has('guest_api_key');
 
         return response()->json([
+            'enabled'     => (bool) config('services.ai.playground_enabled'),
             'remaining'   => $remaining,
             'has_own_key' => $hasOwnKey,
         ]);

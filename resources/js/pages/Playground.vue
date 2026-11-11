@@ -1,5 +1,10 @@
 <template>
     <div class="max-w-3xl mx-auto px-4 sm:px-6 py-12">
+        <div v-if="!enabled">
+            <h1 class="text-text text-2xl font-semibold mb-4">AI Blog Playground</h1>
+            <p class="text-dim text-sm">The playground is offline while the site moves to a new AI provider.</p>
+        </div>
+        <template v-else>
         <!-- Header -->
         <div class="flex items-center justify-between mb-8">
             <h1 class="text-text text-2xl font-semibold">AI Blog Playground</h1>
@@ -69,6 +74,7 @@
             :visible="showKeyModal"
             @close="showKeyModal = false"
         />
+        </template>
     </div>
 </template>
 
@@ -92,7 +98,7 @@ export default {
 
     computed: {
         ...mapState(usePlaygroundStore, [
-            'content', 'streaming', 'error', 'remaining',
+            'enabled', 'content', 'streaming', 'error', 'remaining',
             'remainingDisplay', 'hasOwnKey', 'canGenerate',
         ]),
         ...mapWritableState(usePlaygroundStore, ['topic', 'showKeyModal']),

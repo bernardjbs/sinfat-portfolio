@@ -37,6 +37,8 @@ return [
 
     'ai' => [
         'provider' => env('AI_PROVIDER', 'anthropic'),
+        // Off unless switched on: GitHub Models was retired on 2026-07-30 and no replacement is chosen yet
+        'playground_enabled' => (bool) env('PLAYGROUND_ENABLED', false),
     ],
 
     'anthropic' => [

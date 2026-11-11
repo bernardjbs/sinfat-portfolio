@@ -39,6 +39,7 @@ Route::middleware([
     \Illuminate\Cookie\Middleware\EncryptCookies::class,
     \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
     \Illuminate\Session\Middleware\StartSession::class,
+    'playground-enabled',
     'guest-rate-limit',
 ])->prefix('playground')->group(function () {
     Route::post('/generate', [PlaygroundController::class, 'generate'])->name('api.playground.generate');
@@ -51,5 +52,5 @@ Route::middleware([
     \Illuminate\Session\Middleware\StartSession::class,
 ])->prefix('playground')->group(function () {
     Route::get('/status', [PlaygroundController::class, 'status'])->name('api.playground.status');
-    Route::post('/key', [PlaygroundController::class, 'setKey'])->name('api.playground.setKey');
+    Route::post('/key', [PlaygroundController::class, 'setKey'])->middleware('playground-enabled')->name('api.playground.setKey');
 });

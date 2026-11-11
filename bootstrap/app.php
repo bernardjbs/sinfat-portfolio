@@ -18,6 +18,7 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
         $middleware->alias([
             'guest-rate-limit' => \App\Http\Middleware\GuestRateLimit::class,
+            'playground-enabled' => \App\Http\Middleware\PlaygroundEnabled::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

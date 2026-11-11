@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="playground" content="{{ config('services.ai.playground_enabled') ? 'on' : 'off' }}">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     @php
         $siteDescription = 'Bernard — full-stack developer (Laravel + Vue) based in Perth, Australia.';

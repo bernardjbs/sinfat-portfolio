@@ -10,7 +10,7 @@
                 <!-- Desktop nav links + theme toggle -->
                 <div class="hidden sm:flex items-center gap-6">
                     <router-link
-                        v-for="link in links"
+                        v-for="link in visibleLinks"
                         :key="link.to"
                         :to="link.to"
                         class="text-dim text-sm hover:text-text transition-colors"
@@ -31,7 +31,7 @@
             <!-- Mobile links: always visible, wrapping on the narrowest phones -->
             <div class="flex sm:hidden flex-wrap gap-x-4 gap-y-2 pb-3">
                 <router-link
-                    v-for="link in links"
+                    v-for="link in visibleLinks"
                     :key="link.to"
                     :to="link.to"
                     class="text-dim text-sm hover:text-text transition-colors"
@@ -45,7 +45,9 @@
 </template>
 
 <script>
+import { mapState } from 'pinia'
 import ThemeToggle from './ThemeToggle.vue'
+import { usePlaygroundStore } from '../stores/playground.js'
 
 export default {
     name: 'NavBar',
@@ -62,6 +64,14 @@ export default {
                 { to: '/playground', label: 'playground' },
             ],
         }
+    },
+
+    computed: {
+        ...mapState(usePlaygroundStore, ['enabled']),
+
+        visibleLinks() {
+            return this.links.filter(link => link.to !== '/playground' || this.enabled)
+        },
     },
 }
 </script>

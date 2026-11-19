@@ -14,12 +14,11 @@
    Reviewed (approve after fixes), all six findings settled: three fixed; on Bernard's rulings a future date is
    refused, a locally published post's date travels so both sites match, and the admin screens show the date. The run that takes the posts out:
    `~/code/software-factory-research/docs/2026-11-19-blog-drafts-to-prod-run.md`.
-1. Bernard: check Oracle Cloud disk snapshots in the console (backlog row 15, due 2026-11-26). The one-off dump below
-   covers this deploy, so it no longer blocks it.
-2. Bernard: merge `feat/module-19-notebook-snapshots` to `main` (reviewed and its six findings fixed after the wrap,
-   see the session note's last section), push (`ALLOW_GIT_PUSH=1`), `just deploy`. Then check
-   each of the 7 snapshots serves at `/notebook/<stamp>/` (the data migration loads them) and that one `just deploy` finished
-   through the nginx reload with no second run (backlog row 10's proof). Until then the factory session's snapshot send fails.
+1. Bernard: check Oracle Cloud disk snapshots in the console (backlog row 15, due 2026-11-26).
+2. Done 19 Nov (factory research session, on Bernard's ruling): merged, pushed and deployed once (`1b008e3`); the 7
+   committed snapshots and 4 more (`2026-11-12-2250`, `2026-11-13-2004`, `2026-11-16-1323`, `2026-11-18-2331`) serve;
+   series parts 4 to 10 are drafts on production (ids 20 to 26), dated to their sessions. Bernard previews and
+   publishes them; then row 14 closes.
 3. The first step for the next session (steps 1 and 2 are Bernard's, in deploy order): backlog row 9, due
    2026-11-25 (trigger fired): price the GitHub Models replacement via the `doc-researcher` agent, put
    the choice to Bernard, then `PLAYGROUND_ENABLED=true`. The admin draft writer is broken until then.
@@ -34,7 +33,7 @@ Owed work: `docs/backlog.md`. Deploy, server and PHP patching: `docs/deploy-guid
 
 ## Git state
 
-- `main` at `19b1474`, pushed and deployed.
+- `main` at `1b008e3`, pushed and deployed (the module 19 branch, merged fast-forward), plus this docs commit, not pushed.
 - Branch `feat/module-19-notebook-snapshots`, not pushed: rows 10 and 12 (`3c49c73`), their docs (`0ccad4a`), two
   blog-voice lines, this wrap, the review fixes (`c8cde50`, `a1fb95a`, `7617943`), two more voice lines with row 16
   (`0cbb07a`) and row 17 (`f09d002`). Carries the earlier `temp-branch` wrap commits.

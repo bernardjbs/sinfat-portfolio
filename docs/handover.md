@@ -10,7 +10,8 @@
 ## Next steps
 
 1. Bernard: check Oracle Cloud disk snapshots in the console (backlog row 15, due 2026-11-26), before the deploy.
-2. Bernard: merge `feat/module-19-notebook-snapshots` to `main`, push (`ALLOW_GIT_PUSH=1`), `just deploy`. Then check
+2. Bernard: merge `feat/module-19-notebook-snapshots` to `main` (reviewed and its six findings fixed after the wrap,
+   see the session note's last section), push (`ALLOW_GIT_PUSH=1`), `just deploy`. Then check
    each of the 7 snapshots serves at `/notebook/<stamp>/` (the data migration loads them) and that one `just deploy` finished
    through the nginx reload with no second run (backlog row 10's proof). Until then the factory session's snapshot send fails.
 3. The first step for the next session (steps 1 and 2 are Bernard's, in deploy order): backlog row 9, due
@@ -29,7 +30,8 @@ Owed work: `docs/backlog.md`. Deploy, server and PHP patching: `docs/deploy-guid
 
 - `main` at `19b1474`, pushed and deployed.
 - Branch `feat/module-19-notebook-snapshots`, not pushed: rows 10 and 12 (`3c49c73`), their docs (`0ccad4a`), two
-  blog-voice lines, and this wrap. Carries the earlier `temp-branch` wrap commits.
+  blog-voice lines, this wrap, and the review fixes (`c8cde50`, `a1fb95a`). Carries the earlier `temp-branch` wrap
+  commits.
 - One-off production dump, untracked, on the Mac: `~/backups/sinfat-portfolio/2026-11-19-before-module-19.sql.gz`.
 
 ## Plans in flight

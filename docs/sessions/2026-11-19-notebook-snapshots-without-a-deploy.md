@@ -64,6 +64,22 @@
 - The research session's commit `ae5b33d` swept my uncommitted backlog edits (shared tree): it agreed to commit named
   files only and not while this repo is being worked on; the rule is in `~/.claude/rules/multi-agent-orchestration.md`.
 
+## After the wrap: the branch reviewed and fixed (from the factory research session)
+- Reviewed before merge by this repo's `pr-reviewer` (read-only, production and network off limits): approve after
+  fixes, nothing critical. Tests at review: 153 passed, 3 skipped; 15 mutations each turned a test red.
+- All six findings fixed on Bernard's word ("fix all", "fix here"), test first, in `c8cde50` and `a1fb95a`:
+  1. the snapshot page header also blocks loading, framing and form submission, and an import refuses an
+     `http-equiv` meta tag (none of the 39 existing snapshots, here or in the research folder, hold one);
+  2. `notebook-to-prod.sh` passes nothing but `--force` to the server's shell;
+  3. `deploy.sh` stops unless the server is at `origin/main` (proved behind: exit 1, level: exit 0, in a throwaway
+     repo); the deploy guide's manual steps pull first;
+  4. migrations run straight after `composer install`, so the live code never queries a missing table during the build;
+  5. the missing-snapshot check also catches `/notebook/<stamp>` without the trailing slash;
+  6. the send script's first tests (`NotebookToProdScriptTest`, a recording stub for the server), each proved by
+     breaking the script.
+- Tests after: 159 passed, 3 skipped, exit 0.
+- Production backup confirmed before the deploy: the dump above is complete ("Dump completed"), 14 tables, taken 13:27.
+
 ## Still open
 - Bernard: Oracle Cloud disk snapshots (row 15, due 2026-11-26, before the deploy); then merge, push and deploy
   `feat/module-19-notebook-snapshots`. After the deploy, check `/notebook/<stamp>/` serves each of the 7 snapshots and

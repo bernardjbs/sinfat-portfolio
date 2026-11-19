@@ -75,6 +75,11 @@ class NotebookService
             $problems[] = 'The page holds a script.';
         }
 
+        // A refresh can send the reader elsewhere, and no header can stop it
+        if (stripos($html, 'http-equiv') !== false) {
+            $problems[] = 'The page holds an http-equiv meta tag.';
+        }
+
         if (str_contains($html, 'file://') || str_contains($html, '/Users/')) {
             $problems[] = 'The page holds a local file link or path.';
         }
@@ -92,13 +97,13 @@ class NotebookService
     }
 
     /**
-     * Snapshots that $text links at /notebook/<stamp>/ which are not stored here.
+     * Snapshots that $text links at /notebook/<stamp>, with or without the trailing slash, which are not stored here.
      *
      * @return list<string>
      */
     public function missingLinks(string $text, ?string $self = null): array
     {
-        preg_match_all('#/notebook/(\d{4}-\d{2}-\d{2}-\d{4})/#', $text, $m);
+        preg_match_all('#/notebook/(\d{4}-\d{2}-\d{2}-\d{4})(?!\d)#', $text, $m);
         $linked = array_values(array_diff(array_unique($m[1]), [$self]));
 
         return array_values(array_diff($linked, NotebookSnapshot::whereIn('stamp', $linked)->pluck('stamp')->all()));

@@ -111,6 +111,14 @@ class NotebookManageTest extends TestCase
         $this->assertDatabaseMissing('notebook_snapshots', ['stamp' => self::STAMP]);
     }
 
+    public function test_import_refuses_a_page_that_redirects(): void
+    {
+        $this->import(['--file' => $this->source('<meta http-equiv="refresh" content="0;url=https://example.com">')])
+            ->assertExitCode(1);
+
+        $this->assertDatabaseMissing('notebook_snapshots', ['stamp' => self::STAMP]);
+    }
+
     public function test_import_refuses_to_replace_a_snapshot_without_force(): void
     {
         $this->import(['--file' => $this->source('<p>First.</p>')])->assertExitCode(0);

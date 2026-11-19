@@ -23,8 +23,8 @@ class NotebookController extends Controller
 
         return response($snapshot->html, 200, [
             'Content-Type' => 'text/html; charset=UTF-8',
-            // Imported pages skip code review, so none may run code on this site
-            'Content-Security-Policy' => "script-src 'none'; object-src 'none'; base-uri 'none'",
+            // Imported pages skip code review, so none may run code, load anything, frame or send a form anywhere
+            'Content-Security-Policy' => "default-src 'none'; script-src 'none'; object-src 'none'; style-src 'unsafe-inline'; img-src data:; base-uri 'none'; form-action 'none'; frame-ancestors 'none'",
         ]);
     }
 }

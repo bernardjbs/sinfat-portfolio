@@ -57,6 +57,15 @@ class NotebookControllerTest extends TestCase
         $this->assertStringContainsString("script-src 'none'", $response->headers->get('Content-Security-Policy'));
     }
 
+    public function test_a_snapshot_page_loads_nothing_and_sends_nothing_elsewhere(): void
+    {
+        $policy = $this->get('/notebook/2026-11-09-2327/')->assertOk()->headers->get('Content-Security-Policy');
+
+        foreach (["default-src 'none'", "form-action 'none'", "frame-ancestors 'none'", "base-uri 'none'"] as $rule) {
+            $this->assertStringContainsString($rule, $policy);
+        }
+    }
+
     public function test_published_snapshots_carry_no_local_file_links(): void
     {
         foreach (NotebookSnapshot::all() as $snapshot) {

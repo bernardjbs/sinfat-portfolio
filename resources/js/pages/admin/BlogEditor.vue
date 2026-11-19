@@ -180,6 +180,10 @@
         <span class="text-dim text-xs">
           created {{ formattedDate(adminCurrentPost.created_at) }}
         </span>
+        <span v-if="adminCurrentPost.published_at" class="text-dim text-xs">
+          · {{ adminCurrentPost.status === 'published' ? 'published' : 'publishes as' }}
+          {{ formattedDate(adminCurrentPost.published_at) }}
+        </span>
         <span v-if="adminCurrentPost.ai_model" class="text-dim text-xs">
           · {{ adminCurrentPost.ai_model }}
         </span>

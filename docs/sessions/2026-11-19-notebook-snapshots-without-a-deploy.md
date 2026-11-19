@@ -80,6 +80,14 @@
 - Tests after: 159 passed, 3 skipped, exit 0.
 - Production backup confirmed before the deploy: the dump above is complete ("Dump completed"), 14 tables, taken 13:27.
 
+## Added later the same day: row 14 built (factory research session)
+
+- A draft can carry its publish date: `blog:manage create --published-at=<ISO 8601>` (strict: "tomorrow" is refused),
+  `published_at` in the export header, import takes it only for a new post or a draft, and the admin Publish button
+  keeps a date already set (it used to overwrite it with now()).
+- Tests first, each break proved red (10 mutations). `pr-reviewer`: approve after fixes; fixed two missing tests and the
+  loose date reading; three findings wait on Bernard. Tests after: 170 passed, 3 skipped, exit 0.
+
 ## Still open
 - Bernard: Oracle Cloud disk snapshots (row 15, due 2026-11-26, before the deploy); then merge, push and deploy
   `feat/module-19-notebook-snapshots`. After the deploy, check `/notebook/<stamp>/` serves each of the 7 snapshots and

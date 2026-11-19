@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Models\BlogPost;
 use App\Models\Series;
 use App\Services\NotebookService;
+use Carbon\CarbonImmutable;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 
@@ -23,6 +24,7 @@ class BlogManage extends Command
         {--part= : Part number in the series; omit to append}
         {--slug= : Series slug (series actions)}
         {--pitch= : Series pitch (series create/update)}
+        {--published-at= : Date the post shows once published, ISO 8601 (post create)}
         {--force : Skip confirmation prompt}';
 
     protected $description = 'Create, update, export or import blog posts and manage series safely';
@@ -61,19 +63,26 @@ class BlogManage extends Command
             return 1;
         }
 
+        $publishedAt = $this->parseDate($this->option('published-at'));
+
+        if ($publishedAt === false) {
+            return $this->abort('--published-at must be a date, e.g. 2026-11-12T23:15:00+08:00.');
+        }
+
         $placement = $this->seriesPlacement(null);
 
         if ($placement === false) {
             return 1;
         }
 
-        $post = DB::transaction(function () use ($title, $content, $placement) {
+        $post = DB::transaction(function () use ($title, $content, $placement, $publishedAt) {
             $post = BlogPost::create([
                 'title'        => $title,
                 'excerpt'      => $this->option('excerpt') ?? '',
                 'content'      => $content,
                 'category'     => $this->option('category'),
                 'status'       => 'draft',
+                'published_at' => $publishedAt,
                 'ai_generated' => true,
                 'ai_model'     => $this->option('ai-model'),
             ]);
@@ -89,6 +98,10 @@ class BlogManage extends Command
         $this->line("  Slug: {$post->slug}");
         $this->line("  Length: " . strlen($content) . " bytes");
         $this->line("  Status: draft");
+
+        if ($publishedAt) {
+            $this->line("  Published at (once published): {$post->published_at->toIso8601ZuluString()}");
+        }
 
         if ($placement) {
             $this->line("  Series: {$placement[0]->slug}, part {$post->series_part}");
@@ -250,6 +263,12 @@ class BlogManage extends Command
             return 1;
         }
 
+        $publishedAt = $this->parseDate($meta['published_at'] ?? null);
+
+        if ($publishedAt === false) {
+            return $this->abort('The header\'s published_at is not a date.');
+        }
+
         $series = null;
         $part = isset($meta['part']) ? (int) $meta['part'] : null;
 
@@ -286,6 +305,11 @@ class BlogManage extends Command
             'ai_generated' => (bool) ($meta['ai_generated'] ?? true),
             'ai_model'     => $meta['ai_model'] ?? null,
         ];
+
+        // A draft takes the header's date; a published post keeps the date it went live with
+        if (array_key_exists('published_at', $meta) && (! $post || $post->status === 'draft')) {
+            $fields['published_at'] = $publishedAt;
+        }
 
         if ($post) {
             $dir = storage_path('app/blog-exports/backups');
@@ -344,6 +368,7 @@ class BlogManage extends Command
             'ai_model'     => $post->ai_model,
             'series'       => $post->series?->slug,
             'part'         => $post->series_part,
+            'published_at' => $post->published_at?->toIso8601ZuluString(),
         ];
 
         $lines = array_map(
@@ -486,6 +511,27 @@ class BlogManage extends Command
         }
 
         $post->update(['series_id' => $series->id, 'series_part' => $part]);
+    }
+
+    /**
+     * The ISO 8601 date given, null when none is, false when it is anything else.
+     */
+    private function parseDate(?string $value): CarbonImmutable|false|null
+    {
+        if ($value === null || $value === '') {
+            return null;
+        }
+
+        // Carbon also reads "tomorrow" or "2026" (today at 20:26); only a full date and time with its offset will do
+        if (! preg_match('/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(:\d{2})?(Z|[+-]\d{2}:\d{2})$/', $value)) {
+            return false;
+        }
+
+        try {
+            return CarbonImmutable::parse($value)->utc();
+        } catch (\Throwable) {
+            return false;
+        }
     }
 
     private function abort(string $message): int

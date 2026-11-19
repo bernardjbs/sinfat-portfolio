@@ -168,6 +168,28 @@ class AdminBlogControllerTest extends TestCase
         ]);
     }
 
+    public function test_publishing_a_dated_draft_keeps_its_date(): void
+    {
+        $post = BlogPost::factory()->draft()->create(['published_at' => '2026-11-12 15:15:00']);
+
+        $this->actingAsAdmin()
+            ->patchJson("/api/admin/blog/{$post->id}/publish")
+            ->assertOk()
+            ->assertJsonPath('data.status', 'published');
+
+        $this->assertSame('2026-11-12T15:15:00Z', $post->fresh()->published_at->toIso8601ZuluString());
+    }
+
+    public function test_publishing_an_undated_draft_dates_it_now(): void
+    {
+        $this->freezeSecond();
+        $post = BlogPost::factory()->draft()->create();
+
+        $this->actingAsAdmin()->patchJson("/api/admin/blog/{$post->id}/publish")->assertOk();
+
+        $this->assertSame(now()->toIso8601ZuluString(), $post->fresh()->published_at->toIso8601ZuluString());
+    }
+
     public function test_admin_can_unpublish_published_post(): void
     {
         $post = BlogPost::factory()->published()->create();

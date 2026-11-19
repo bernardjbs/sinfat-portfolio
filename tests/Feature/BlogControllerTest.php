@@ -69,6 +69,14 @@ class BlogControllerTest extends TestCase
 
     // GET /api/blog/{slug}
 
+    public function test_a_draft_with_a_publish_date_stays_hidden(): void
+    {
+        $post = BlogPost::factory()->draft()->create(['published_at' => now()->subDay()]);
+
+        $this->getJson('/api/blog')->assertOk()->assertJsonCount(0, 'data');
+        $this->getJson("/api/blog/{$post->slug}")->assertNotFound();
+    }
+
     public function test_can_fetch_single_published_post_by_slug(): void
     {
         $post = BlogPost::factory()->published()->create();

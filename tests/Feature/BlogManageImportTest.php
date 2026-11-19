@@ -130,15 +130,17 @@ class BlogManageImportTest extends TestCase
             'content' => $this->body, 'ai_generated' => true, 'ai_model' => 'claude-opus-5-5',
         ]);
         $file = $this->exportFile($post);
+        $date = $post->published_at->toIso8601ZuluString();
         $post->delete();
 
         $this->artisan('blog:manage', ['action' => 'import', '--file' => $file])->assertExitCode(0);
 
         $created = BlogPost::where('slug', 'import-test-new')->firstOrFail();
         $this->assertSame(
-            ['New post', 'Its excerpt.', $this->body, 'draft', null, 'claude-opus-5-5', true, $series->id, 1],
-            [$created->title, $created->excerpt, $created->content, $created->status, $created->published_at,
-             $created->ai_model, $created->ai_generated, $created->series_id, $created->series_part],
+            ['New post', 'Its excerpt.', $this->body, 'draft', $date, 'claude-opus-5-5', true, $series->id, 1],
+            [$created->title, $created->excerpt, $created->content, $created->status,
+             $created->published_at?->toIso8601ZuluString(), $created->ai_model, $created->ai_generated,
+             $created->series_id, $created->series_part],
         );
     }
 
@@ -205,5 +207,113 @@ class BlogManageImportTest extends TestCase
         $this->artisan('blog:manage', ['action' => 'import', '--file' => $file])->assertExitCode(1);
 
         $this->assertSame(0, BlogPost::count());
+    }
+
+    // Publish dates (backlog row 14)
+
+    public function test_create_with_a_publish_date_stores_it_on_a_draft(): void
+    {
+        $file = $this->writeFile($this->body);
+
+        $this->artisan('blog:manage', [
+            'action' => 'create', '--title' => 'Dated draft', '--file' => $file,
+            '--published-at' => '2026-11-12T23:15:00+08:00',
+        ])->assertExitCode(0);
+
+        $post = BlogPost::where('title', 'Dated draft')->firstOrFail();
+        $this->assertSame(['draft', '2026-11-12T15:15:00Z'], [$post->status, $post->published_at->toIso8601ZuluString()]);
+    }
+
+    public function test_create_refuses_a_publish_date_it_cannot_read(): void
+    {
+        $file = $this->writeFile($this->body);
+
+        $this->artisan('blog:manage', [
+            'action' => 'create', '--title' => 'Bad date', '--file' => $file, '--published-at' => 'next tuesdayish',
+        ])->assertExitCode(1);
+
+        $this->assertSame(0, BlogPost::count());
+    }
+
+    public function test_create_refuses_a_publish_date_that_is_not_iso_8601(): void
+    {
+        $file = $this->writeFile($this->body);
+
+        foreach (['tomorrow', '2026', '+1 week', '12 November 2026'] as $value) {
+            $this->artisan('blog:manage', [
+                'action' => 'create', '--title' => 'Loose date', '--file' => $file, '--published-at' => $value,
+            ])->assertExitCode(1);
+        }
+
+        $this->assertSame(0, BlogPost::count());
+    }
+
+    public function test_export_writes_the_publish_date(): void
+    {
+        $post = BlogPost::factory()->draft()->create([
+            'slug' => 'import-test-dated', 'content' => $this->body, 'published_at' => '2026-11-12 15:15:00',
+        ]);
+
+        $this->assertStringContainsString(
+            "published_at: \"2026-11-12T15:15:00Z\"\n",
+            file_get_contents($this->exportFile($post)),
+        );
+    }
+
+    public function test_import_of_a_dated_draft_keeps_its_date(): void
+    {
+        $post = BlogPost::factory()->draft()->create([
+            'slug' => 'import-test-dated-new', 'content' => $this->body, 'published_at' => '2026-11-12 15:15:00',
+        ]);
+        $file = $this->exportFile($post);
+        $post->delete();
+
+        $this->artisan('blog:manage', ['action' => 'import', '--file' => $file])->assertExitCode(0);
+
+        $created = BlogPost::where('slug', 'import-test-dated-new')->firstOrFail();
+        $this->assertSame(['draft', '2026-11-12T15:15:00Z'], [$created->status, $created->published_at->toIso8601ZuluString()]);
+    }
+
+    public function test_import_onto_a_draft_takes_the_header_s_date(): void
+    {
+        $post = BlogPost::factory()->draft()->create([
+            'slug' => 'import-test-redated', 'content' => $this->body, 'published_at' => '2026-11-01 08:00:00',
+        ]);
+        $file = $this->writeFile($this->header([
+            'slug' => 'import-test-redated', 'title' => 'Same draft', 'published_at' => '2026-11-12T15:15:00Z',
+        ]) . $this->body);
+
+        $this->artisan('blog:manage', ['action' => 'import', '--file' => $file])->assertExitCode(0);
+
+        $this->assertSame('2026-11-12T15:15:00Z', $post->fresh()->published_at->toIso8601ZuluString());
+    }
+
+    public function test_import_refuses_a_header_date_it_cannot_read(): void
+    {
+        $post = BlogPost::factory()->draft()->create([
+            'slug' => 'import-test-bad-date', 'title' => 'Old title', 'content' => $this->body,
+        ]);
+        $file = $this->writeFile($this->header([
+            'slug' => 'import-test-bad-date', 'title' => 'New title', 'published_at' => 'garbage',
+        ]) . $this->body);
+
+        $this->artisan('blog:manage', ['action' => 'import', '--file' => $file])->assertExitCode(1);
+
+        $post->refresh();
+        $this->assertSame(['Old title', null], [$post->title, $post->published_at]);
+    }
+
+    public function test_import_onto_a_published_post_leaves_its_date_alone(): void
+    {
+        $post = BlogPost::factory()->published()->create([
+            'slug' => 'import-test-published', 'content' => $this->body, 'published_at' => '2026-11-01 08:00:00',
+        ]);
+        $file = $this->writeFile($this->header([
+            'slug' => 'import-test-published', 'title' => 'Same post', 'published_at' => '2026-11-12T15:15:00Z',
+        ]) . $this->body);
+
+        $this->artisan('blog:manage', ['action' => 'import', '--file' => $file])->assertExitCode(0);
+
+        $this->assertSame('2026-11-01T08:00:00Z', $post->fresh()->published_at->toIso8601ZuluString());
     }
 }

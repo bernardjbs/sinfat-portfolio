@@ -70,7 +70,8 @@ class AdminBlogController extends Controller
         if ($post->status === 'published') {
             $post->update(['status' => 'draft', 'published_at' => null]);
         } else {
-            $post->update(['status' => 'published', 'published_at' => now()]);
+            // A date set before publishing (a dated draft) is kept
+            $post->update(['status' => 'published', 'published_at' => $post->published_at ?? now()]);
         }
 
         return new BlogPostResource($post);

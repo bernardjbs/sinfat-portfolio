@@ -9,9 +9,11 @@
 
 ## Next steps
 
-0. The factory research session builds backlog row 14 (a draft carries its publish date) on this branch first, test
-   first, with a `pr-reviewer` pass, so the catch-up posts go out with their session dates. Its plan for getting the
-   posts out: `~/code/software-factory-research/docs/handover.md`.
+0. Row 14 (a draft carries its publish date) is built on this branch (19 Nov, factory research session): `create
+   --published-at`, the date in export and import (import dates a draft only), and Publish keeps a date already set.
+   Reviewed (approve after fixes); three fixes in, three findings wait on Bernard (future dates, local publish dates
+   travelling, the admin showing the date). The run that takes the posts out:
+   `~/code/software-factory-research/docs/2026-11-19-blog-drafts-to-prod-run.md`.
 1. Bernard: check Oracle Cloud disk snapshots in the console (backlog row 15, due 2026-11-26). The one-off dump below
    covers this deploy, so it no longer blocks it.
 2. Bernard: merge `feat/module-19-notebook-snapshots` to `main` (reviewed and its six findings fixed after the wrap,

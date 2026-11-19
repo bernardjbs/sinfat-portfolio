@@ -124,8 +124,8 @@ just deploy
 # → SSHes into server, pulls, then runs scripts/deploy.sh
 # → composer, npm install, vite build, migrate, cache, remove any sitemap file, nginx reload
 
-# Send local post <id> to production as a draft (Bernard runs it)
-just post-to-prod <id>
+# Send local post <id> to production: --publish (live, keeps its date) or --draft; one is required
+just post-to-prod <id> --publish
 
 # Send local notebook snapshot <stamp> to production, no deploy (before the post that links it)
 just notebook-to-prod <stamp>

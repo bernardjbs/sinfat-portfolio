@@ -327,6 +327,45 @@ class BlogManageImportTest extends TestCase
         $this->assertSame(['Old title', null], [$post->title, $post->published_at]);
     }
 
+    public function test_import_with_publish_puts_a_new_post_live_with_its_date(): void
+    {
+        $file = $this->writeFile($this->header([
+            'slug' => 'import-test-live', 'title' => 'Live', 'published_at' => '2026-11-12T15:15:00Z',
+        ]) . $this->body);
+
+        $this->artisan('blog:manage', ['action' => 'import', '--file' => $file, '--publish' => true])
+            ->expectsOutputToContain('Status: published')
+            ->assertExitCode(0);
+
+        $post = BlogPost::where('slug', 'import-test-live')->firstOrFail();
+        $this->assertSame(['published', '2026-11-12T15:15:00Z'], [$post->status, $post->published_at->toIso8601ZuluString()]);
+        $this->getJson('/api/blog/import-test-live')->assertOk();
+    }
+
+    public function test_import_with_publish_dates_an_undated_post_now(): void
+    {
+        $this->freezeSecond();
+        $file = $this->writeFile($this->header(['slug' => 'import-test-live-now', 'title' => 'Live now']) . $this->body);
+
+        $this->artisan('blog:manage', ['action' => 'import', '--file' => $file, '--publish' => true])->assertExitCode(0);
+
+        $post = BlogPost::where('slug', 'import-test-live-now')->firstOrFail();
+        $this->assertSame(['published', now()->toIso8601ZuluString()], [$post->status, $post->published_at->toIso8601ZuluString()]);
+    }
+
+    public function test_import_with_publish_publishes_an_existing_draft(): void
+    {
+        $post = BlogPost::factory()->draft()->create([
+            'slug' => 'import-test-draft-live', 'content' => $this->body, 'published_at' => '2026-11-01 08:00:00',
+        ]);
+        $file = $this->writeFile($this->header(['slug' => 'import-test-draft-live', 'title' => 'Draft goes live']) . $this->body);
+
+        $this->artisan('blog:manage', ['action' => 'import', '--file' => $file, '--publish' => true])->assertExitCode(0);
+
+        $post->refresh();
+        $this->assertSame(['published', '2026-11-01T08:00:00Z'], [$post->status, $post->published_at->toIso8601ZuluString()]);
+    }
+
     public function test_import_onto_a_published_post_leaves_its_date_alone(): void
     {
         $post = BlogPost::factory()->published()->create([

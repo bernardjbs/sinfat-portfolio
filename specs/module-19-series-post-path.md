@@ -58,6 +58,14 @@ Bernard: "yes, this version".
 
 Considered, not picked: keeping the separate blog session (the hand-over, ~57 minutes over four posts).
 
+**Changed 19 Nov, later the same day: publish from the send.** Bernard: "If I already approved it on the draft
+(static blog in temp), can we publish directly to prod? without me logging in and pressing publish?", then
+"let's make the options as --publish and --draft, with publish as default", then, on the point that a default
+would publish for any session still reading "post-to-prod sends a draft", "go with that, build it now": one of
+`--publish` or `--draft` is required, and a send naming neither is refused. Step 4 becomes: with `--publish`,
+the approved static preview is the review and the post is live on arrival; the session then loads the live page
+and checks it. `--draft` keeps the old step 4. Considered, not picked: publish as the default.
+
 ## Decision 2: snapshots without a deploy
 
 Bernard: "record it in the blog's backlog". A deploy rebuilds the whole site to ship one snapshot file.

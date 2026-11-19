@@ -16,8 +16,9 @@ prod `sinfat.com`.
 
 - Tests: `php artisan test`.
 - Deploy is manual (`just deploy`) and runs only on Bernard's word.
-- A local post reaches production with `just post-to-prod <id>` (as a draft). The factory research session may run it
-  for a new post; updating an already-published post goes live at once, so that stays Bernard's call
+- A local post reaches production with `just post-to-prod <id> --publish` (live at once, with its date) or `--draft`;
+  one is required. The factory research session may run it for a new post (`--publish` once Bernard has approved
+  its static preview); updating an already-published post goes live at once, so that stays Bernard's call
   (`specs/module-19-series-post-path.md`).
 - A notebook snapshot reaches production with no deploy: `php artisan notebook:manage import --file=<original>`, then
   `just notebook-to-prod <stamp>`, before the post that links it (`docs/deploy-guide.md`). The factory research session may send a new one;

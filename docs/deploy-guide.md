@@ -32,12 +32,13 @@ when the script pulled itself, a deploy that changed it ran the old one (2026-11
 ## Posting to Production
 
 ```bash
-just post-to-prod <id>
+just post-to-prod <id> --publish   # or --draft; one is required
 ```
 
-Sends local post `<id>` to production: a new slug is created as a draft, an existing one is backed up
-and updated (status unchanged). Then publish it in the production admin; the sitemap lists it at once (it is
-built on each request). Details: `.claude/skills/project-blog-writer/references/managing-posts.md`.
+Sends local post `<id>` to production: a new slug is created, an existing one is backed up and updated.
+`--publish` puts a new post or a draft live at once, keeping its date; `--draft` leaves it for the production
+admin's Publish button. A post already published stays published either way. The sitemap lists a published
+post at once (it is built on each request). Details: `.claude/skills/project-blog-writer/references/managing-posts.md`.
 
 ## Notebook Snapshots to Production
 

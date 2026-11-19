@@ -25,6 +25,7 @@ class BlogManage extends Command
         {--slug= : Series slug (series actions)}
         {--pitch= : Series pitch (series create/update)}
         {--published-at= : Date the post shows once published, ISO 8601 (post create)}
+        {--publish : Publish the post on import (a new post or a draft; keeps its date)}
         {--force : Skip confirmation prompt}';
 
     protected $description = 'Create, update, export or import blog posts and manage series safely';
@@ -341,6 +342,10 @@ class BlogManage extends Command
             // A header without a series leaves the post's series as it is
             if ($series && ($post->series_id !== $series->id || ($part !== null && $post->series_part !== $part))) {
                 $this->placeInSeries($post, $series, $part);
+            }
+
+            if ($this->option('publish')) {
+                $post->update(['status' => 'published', 'published_at' => $post->published_at ?? now()]);
             }
 
             return $post;

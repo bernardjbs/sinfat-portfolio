@@ -123,7 +123,7 @@ Not every post needs "What I Learned"; use it only for genuine surprises or gotc
 
 ## Gates
 
-- **Drafts only.** Agents create and update drafts; Bernard publishes in the admin editor. Never publish, never touch production.
+- **Drafts only**, except a factory-series post Bernard approved in its static preview, which the factory research session sends with `post-to-prod --publish` (`specs/module-19-series-post-path.md`). Otherwise agents create and update drafts, and Bernard publishes in the admin editor.
 - **All post writes go through `php artisan blog:manage`**, never tinker: heredoc escaping and variable scoping cause data loss. Commands, flags and safety checks: [references/managing-posts.md](references/managing-posts.md).
 - **Export before every update**, as the backup.
 
@@ -152,7 +152,7 @@ Before marking a post ready for review:
 1. **Generate:** use this skill to create the draft in its series
 2. **Review:** Bernard reads it in the admin UI at `/admin/blog`
 3. **Edit:** tweak the markdown if needed
-4. **Publish:** Bernard toggles publish in admin (production steps for a series post are in its spec)
+4. **Publish:** Bernard toggles publish in admin, or a series post approved in its static preview goes out with `--publish` (its spec)
 5. **Verify:** check the live post at `sinfat.com/blog/[slug]`
 
 Past summary-to-post mapping (HISTORICAL): [references/summary-mapping.md](references/summary-mapping.md).

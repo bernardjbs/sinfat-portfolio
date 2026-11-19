@@ -39,7 +39,7 @@ deploy:
 ssh:
     ssh sinfat
 
-# post-to-prod: send local post <id> to production as a draft (updates the post with the same slug)
+# post-to-prod: send local post <id> to production, --publish (live, keeps its date) or --draft; one is required
 post-to-prod id *args:
     bash scripts/post-to-prod.sh {{id}} {{args}}
 

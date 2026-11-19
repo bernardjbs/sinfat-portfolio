@@ -48,14 +48,16 @@ sending to production.
 
 ## Send to production
 
-`just post-to-prod <id>` writes to production. The factory research session may run it for a **new** post
-(it arrives as a draft); updating an already-published post goes live at once, so ask Bernard first
+`just post-to-prod <id> --publish` or `--draft` writes to production. One is required, and a bare send is refused.
+`--publish` puts a new post or a draft live at once with its date: the factory research session uses it for a new
+post Bernard approved in its static preview, then checks the live page. `--draft` leaves it for Bernard to publish
+in the admin. Updating an already-published post goes live at once either way, so ask Bernard first
 (`specs/module-19-series-post-path.md`). It exports the post and pipes it
-to `blog:manage import` on the server, which matches by slug: a new slug becomes a **draft**, an
-existing one is updated after a backup to `storage/app/blog-exports/backups/` (status unchanged).
+to `blog:manage import` on the server, which matches by slug: a new slug is created, an
+existing one is updated after a backup to `storage/app/blog-exports/backups/`.
 Import takes `published_at` for a new post or a draft; a published post keeps its own date.
 Import refuses a series missing on the server (create it first), a part held by another post, and
-content under half the current length without `--force` (`just post-to-prod <id> --force`). A header
+content under half the current length without `--force` (`just post-to-prod <id> --draft --force`). A header
 without a series leaves the server post's series as it is. It also refuses a post linking a
 `/notebook/<stamp>/` snapshot the server lacks: send that first with `just notebook-to-prod <stamp>`.
 

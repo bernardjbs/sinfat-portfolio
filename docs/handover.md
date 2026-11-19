@@ -1,4 +1,4 @@
-*Resume with /user-next. Full state: docs/sessions/2026-11-19-notebook-snapshots-without-a-deploy.md.*
+*Resume with /user-next. Full state: docs/sessions/2026-11-19-notebook-snapshots-without-a-deploy.md; the 19 to 20 Nov work was done from the factory research session: `~/code/software-factory-research/docs/sessions/2026-11-20-blog-live-and-page-index.md`.*
 
 ## Pinned
 
@@ -9,16 +9,14 @@
 
 ## Next steps
 
-0. Row 14 (a draft carries its publish date) is built on this branch (19 Nov, factory research session): `create
-   --published-at`, the date in export and import (import dates a draft only), and Publish keeps a date already set.
-   Reviewed (approve after fixes), all six findings settled: three fixed; on Bernard's rulings a future date is
-   refused, a locally published post's date travels so both sites match, and the admin screens show the date. The run that takes the posts out:
-   `~/code/software-factory-research/docs/2026-11-19-blog-drafts-to-prod-run.md`.
+0. Done 19 to 20 Nov (factory research session): row 14 (a draft keeps its publish date: `create --published-at`, the
+   date in export and import, Publish keeps it, the admin shows it) and `just post-to-prod <id> --publish|--draft`
+   (one required; `--publish` puts a new post or a draft live with its date) are built, reviewed and deployed
+   (`bcf5363`). Record: `~/code/software-factory-research/docs/sessions/2026-11-20-blog-live-and-page-index.md`.
 1. Bernard: check Oracle Cloud disk snapshots in the console (backlog row 15, due 2026-11-26).
-2. Done 19 Nov (factory research session, on Bernard's ruling): merged, pushed and deployed once (`1b008e3`); the 7
-   committed snapshots and 4 more (`2026-11-12-2250`, `2026-11-13-2004`, `2026-11-16-1323`, `2026-11-18-2331`) serve;
-   series parts 4 to 10 are drafts on production (ids 20 to 26), dated to their sessions. Bernard previews and
-   publishes them; then row 14 closes.
+2. Done 19 to 20 Nov: merged, pushed, deployed once each time; 11 snapshots serve; series parts 4 to 10 published
+   (ids 20 to 26), each dated to its session. Merged local branches `feat/module-19-notebook-snapshots` and
+   `feat/post-to-prod-publish` can be deleted.
 3. The first step for the next session (steps 1 and 2 are Bernard's, in deploy order): backlog row 9, due
    2026-11-25 (trigger fired): price the GitHub Models replacement via the `doc-researcher` agent, put
    the choice to Bernard, then `PLAYGROUND_ENABLED=true`. The admin draft writer is broken until then.
@@ -33,10 +31,10 @@ Owed work: `docs/backlog.md`. Deploy, server and PHP patching: `docs/deploy-guid
 
 ## Git state
 
-- `main` at `1b008e3`, pushed and deployed (the module 19 branch, merged fast-forward), plus this docs commit, not pushed.
-- Branch `feat/module-19-notebook-snapshots`, not pushed: rows 10 and 12 (`3c49c73`), their docs (`0ccad4a`), two
-  blog-voice lines, this wrap, the review fixes (`c8cde50`, `a1fb95a`, `7617943`), two more voice lines with row 16
-  (`0cbb07a`) and row 17 (`f09d002`). Carries the earlier `temp-branch` wrap commits.
+- `main` at `372a738`, pushed; production deployed at `bcf5363` (the same code; later commits are docs). Plus the
+  factory research session's wrap docs commit of 20 Nov, not pushed.
+- Branches `feat/module-19-notebook-snapshots` and `feat/post-to-prod-publish`: merged into `main`, local only, can
+  be deleted.
 - One-off production dump, untracked, on the Mac: `~/backups/sinfat-portfolio/2026-11-19-before-module-19.sql.gz`.
 
 ## Plans in flight

@@ -81,6 +81,7 @@ The blog reflects the terminal aesthetic: technical, opinionated, concise. But a
 - Start with "In this blog post, I will...". Just start
 - Use filler phrases ("It's worth noting that...", "As we all know...")
 - **Keep details that say nothing important.** A quote, a date or a setting detail stays only if the reader needs it for the point; when in doubt, cut it. Technical specifics that make the point (the package, version or error) still stay.
+- **Narrate who did each step** ("I asked", "the AI checked", "the AI suggested"). Say what was found or decided. Name the AI or yourself only when who did it is the point: you and the AI disagreed, one corrected the other, it changed your mind, or it got something wrong.
 - **Sound authoritative on topics you're not expert in.** Don't explain SEO like an SEO consultant or design like a designer. Explain it like a backend dev who had to figure it out
 - **Wrap up with neat lessons** unless the lesson was genuinely surprising. Skip "What I Learned" if it would just restate the post
 - **Use polished summary sentences** like "SEO for a single-page app isn't hard" or "The consistency is what creates the aesthetic". They sound like an AI wrapping up an essay

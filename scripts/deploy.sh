@@ -3,8 +3,7 @@ set -e
 
 cd /var/www/sinfat
 
-echo "→ pulling latest code..."
-git pull origin main
+# just deploy pulls before starting this script, so bash runs the new copy of it
 
 echo "→ installing composer dependencies..."
 composer install --no-dev --optimize-autoloader

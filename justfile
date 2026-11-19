@@ -31,9 +31,9 @@ test:
 tinker:
     php artisan tinker
 
-# deploy — deploy to production (requires SSH config for 'sinfat' host)
+# deploy — deploy to production (requires SSH config for 'sinfat' host); pulls before starting the script, so a changed script runs its new copy
 deploy:
-    ssh sinfat "bash /var/www/sinfat/scripts/deploy.sh"
+    ssh sinfat "cd /var/www/sinfat && git pull origin main && bash scripts/deploy.sh"
 
 # ssh — open SSH session to production server
 ssh:
@@ -42,3 +42,7 @@ ssh:
 # post-to-prod: send local post <id> to production as a draft (updates the post with the same slug)
 post-to-prod id *args:
     bash scripts/post-to-prod.sh {{id}} {{args}}
+
+# notebook-to-prod: send local notebook snapshot <stamp> to production (import it here first: php artisan notebook:manage import)
+notebook-to-prod stamp *args:
+    bash scripts/notebook-to-prod.sh {{stamp}} {{args}}

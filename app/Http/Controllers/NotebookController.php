@@ -2,23 +2,29 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\NotebookService;
 use Symfony\Component\HttpFoundation\Response;
 
 class NotebookController extends Controller
 {
+    public function __construct(private NotebookService $notebookService) {}
+
     /**
-     * Serve a published factory notebook snapshot, a static page kept in resources/notebook.
-     * Through Laravel rather than public/, so the URL works whatever the web server does with folders.
+     * Serve a published factory notebook snapshot, a static page stored in the database so a new one
+     * reaches production without a deploy (just notebook-to-prod).
      */
     public function __invoke(string $stamp): Response
     {
-        // The stamp format is the only thing that reaches the file path
-        $path = resource_path("notebook/{$stamp}.html");
+        $snapshot = $this->notebookService->find($stamp);
 
-        if (! preg_match('/^\d{4}-\d{2}-\d{2}-\d{4}$/', $stamp) || ! is_file($path)) {
+        if (! $snapshot) {
             return response()->view('app', [], 404);
         }
 
-        return response()->file($path, ['Content-Type' => 'text/html; charset=UTF-8']);
+        return response($snapshot->html, 200, [
+            'Content-Type' => 'text/html; charset=UTF-8',
+            // Imported pages skip code review, so none may run code on this site
+            'Content-Security-Policy' => "script-src 'none'; object-src 'none'; base-uri 'none'",
+        ]);
     }
 }

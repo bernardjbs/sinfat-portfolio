@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Models\BlogPost;
 use App\Models\Series;
+use App\Services\NotebookService;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 
@@ -240,6 +241,12 @@ class BlogManage extends Command
 
         if (strlen($content) < 100) {
             $this->error("Content is only " . strlen($content) . " bytes. That's suspiciously short. Aborting.");
+            return 1;
+        }
+
+        // A post linking a snapshot this site lacks would publish a 404; send the snapshot first
+        if ($missing = app(NotebookService::class)->missingLinks($content)) {
+            $this->error('The post links snapshots missing here: ' . implode(', ', $missing) . '. Send each first: just notebook-to-prod <stamp>');
             return 1;
         }
 

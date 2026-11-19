@@ -2,50 +2,73 @@
 
 namespace Tests\Feature;
 
+use App\Models\NotebookSnapshot;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class NotebookControllerTest extends TestCase
 {
+    use RefreshDatabase;
+
     protected function setUp(): void
     {
         parent::setUp();
         $this->withoutVite();
     }
 
-    private function stamps(): array
+    private function recordStamps(): array
     {
         return array_map(fn ($path) => basename($path, '.html'), glob(resource_path('notebook/*.html')));
+    }
+
+    // The seven copies committed before snapshots moved to the database
+
+    public function test_the_committed_copies_are_loaded_byte_for_byte(): void
+    {
+        $stamps = $this->recordStamps();
+        $this->assertGreaterThanOrEqual(7, count($stamps));
+
+        foreach ($stamps as $stamp) {
+            $this->assertSame(
+                file_get_contents(resource_path("notebook/{$stamp}.html")),
+                NotebookSnapshot::where('stamp', $stamp)->value('html'),
+                $stamp
+            );
+        }
     }
 
     // GET /notebook/{stamp}
 
     public function test_each_snapshot_is_served_as_its_own_page_not_the_spa(): void
     {
-        $stamps = $this->stamps();
-        $this->assertGreaterThanOrEqual(6, count($stamps));
-
-        foreach ($stamps as $stamp) {
+        foreach (NotebookSnapshot::pluck('stamp') as $stamp) {
             $response = $this->get("/notebook/{$stamp}/")->assertOk();
 
             $this->assertStringStartsWith('text/html', $response->headers->get('Content-Type'));
-            $html = $response->getFile()->getContent();
-            $this->assertStringContainsString("<title>My Software Factory, {$stamp}</title>", $html);
-            $this->assertStringNotContainsString('<div id="app">', $html);
+            $response->assertSee("<title>My Software Factory, {$stamp}</title>", false);
+            $response->assertDontSee('<div id="app">', false);
         }
+    }
+
+    public function test_a_snapshot_page_forbids_scripts(): void
+    {
+        $response = $this->get('/notebook/2026-11-09-2327/')->assertOk();
+
+        $this->assertStringContainsString("script-src 'none'", $response->headers->get('Content-Security-Policy'));
     }
 
     public function test_published_snapshots_carry_no_local_file_links(): void
     {
-        foreach ($this->stamps() as $stamp) {
-            $this->assertStringNotContainsString('file://', file_get_contents(resource_path("notebook/{$stamp}.html")), $stamp);
+        foreach (NotebookSnapshot::all() as $snapshot) {
+            $this->assertStringNotContainsString('file://', $snapshot->html, $snapshot->stamp);
         }
     }
 
     public function test_links_between_snapshots_point_at_published_snapshots(): void
     {
         $targets = [];
-        foreach ($this->stamps() as $stamp) {
-            preg_match_all('/href="([^"#]*\d{4}-\d{2}-\d{2}-\d{4}[^"]*)"/', file_get_contents(resource_path("notebook/{$stamp}.html")), $m);
+        foreach (NotebookSnapshot::pluck('html') as $html) {
+            preg_match_all('/href="([^"#]*\d{4}-\d{2}-\d{2}-\d{4}[^"]*)"/', $html, $m);
             $targets = array_merge($targets, $m[1]);
         }
 
@@ -63,18 +86,12 @@ class NotebookControllerTest extends TestCase
             ->assertSee('<div id="app">', false);
     }
 
-    public function test_malformed_stamp_returns_404_even_when_a_file_matches(): void
+    public function test_malformed_stamp_returns_404_even_when_a_row_matches(): void
     {
-        // A file whose name is not a stamp must still never be served
-        $planted = resource_path('notebook/not-a-stamp.html');
-        file_put_contents($planted, '<title>planted</title>');
+        // A row whose stamp is not a stamp must still never be served
+        NotebookSnapshot::create(['stamp' => 'not-a-stamp', 'html' => '<title>planted</title>']);
 
-        try {
-            $this->get('/notebook/not-a-stamp/')->assertNotFound();
-        } finally {
-            unlink($planted);
-        }
-
+        $this->get('/notebook/not-a-stamp/')->assertNotFound();
         $this->get('/notebook/2026-11-09-2327.html')->assertNotFound();
     }
 }

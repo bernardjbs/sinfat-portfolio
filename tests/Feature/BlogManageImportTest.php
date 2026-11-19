@@ -58,6 +58,18 @@ class BlogManageImportTest extends TestCase
         return "---\n" . implode("\n", $lines) . "\n---\n";
     }
 
+    public function test_import_refuses_a_post_linking_a_snapshot_missing_here(): void
+    {
+        $content = $this->body . "\n\nSee [the plan](/notebook/2026-11-30-0800/) and [the first](/notebook/2026-11-09-2327/).";
+        $file = $this->writeFile($this->header(['slug' => 'import-test-snapshot', 'title' => 'Snapshot link']) . $content);
+
+        $this->artisan('blog:manage', ['action' => 'import', '--file' => $file, '--force' => true])
+            ->expectsOutputToContain('2026-11-30-0800')
+            ->assertExitCode(1);
+
+        $this->assertDatabaseMissing('blog_posts', ['slug' => 'import-test-snapshot']);
+    }
+
     public function test_export_writes_the_post_details_above_the_content(): void
     {
         $series = Series::factory()->create(['slug' => 'factory']);

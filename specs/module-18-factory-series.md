@@ -39,7 +39,10 @@ Agents never publish.
 ## Snapshots
 
 - Source: `~/code/software-factory-research/notebook/snapshots/<stamp>.html`, never edited
-- Published copies: `resources/notebook/<stamp>.html`, served by a Laravel route at
+- Moved 2026-11-19 (module 19, Decision 2): published copies live in the database (`notebook_snapshots`), made by
+  `php artisan notebook:manage import` and sent with `just notebook-to-prod <stamp>`, no deploy. The seven below
+  stay in `resources/notebook/` as their record; a migration loaded them as they are
+- Published copies (until 2026-11-19): `resources/notebook/<stamp>.html`, served by a Laravel route at
   `/notebook/<stamp>/` (with or without the slash), registered ahead of the SPA catch-all. A route
   rather than `public/notebook/<stamp>/index.html`, so the result does not depend on how the
   production web server treats a folder URL, and so a feature test can prove it

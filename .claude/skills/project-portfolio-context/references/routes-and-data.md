@@ -30,17 +30,18 @@ Verified against the code 2026-11-11. The live sources win when they disagree wi
 
 ```
 GET  /blog/{slug}, /blog/series, /blog/series/{slug}  → SPA shell with server-filled <title>, description, og: tags; 404 when missing
-GET  /notebook/{stamp}   → NotebookController: static factory-notebook snapshot from resources/notebook/<stamp>.html
-                           (stamp must match YYYY-MM-DD-HHMM, else 404); trailing slash optional
+GET  /notebook/{stamp}   → NotebookController: static factory-notebook snapshot from the notebook_snapshots table
+                           (stamp must match YYYY-MM-DD-HHMM, else 404); trailing slash optional; scripts blocked (CSP)
 GET  /feed.xml           → RSS feed of published posts
 GET  /login, POST /login (public); POST /logout (auth)
 GET  /{any}              → SPA shell (catch-all, last)
 ```
 
-A new notebook snapshot is a new file in `resources/notebook/` (copy with `file://` links unwrapped
-and `<stamp>.html` links pointed at `/notebook/<stamp>/`); the published copies carry a marked
-correction the originals lack, so never regenerate them without re-applying it
-(`specs/module-18-factory-series.md`).
+A new notebook snapshot needs no deploy: `php artisan notebook:manage import --file=<original>` makes the
+published copy (links rewritten; scripts and local paths refused), then `just notebook-to-prod <stamp>`
+sends it, before the post that links it. The seven in `resources/notebook/` carry a marked correction the
+originals lack; a migration loaded them as they are, so never regenerate them
+(`specs/module-19-series-post-path.md`, Decision 2).
 
 ## API routes
 
@@ -81,6 +82,7 @@ POST /api/playground/key        → store guest API key in session
 | `series` | Blog series: `slug`, `title`, `pitch`, `status` (writing/complete) |
 | `guest_usage` | Persistence layer for guest playground usage |
 | `ai_sessions` | Log of every AI generation (cost/usage monitoring) |
+| `notebook_snapshots` | Published factory-notebook snapshots: `stamp`, `html` |
 
 Plus the framework tables (`sessions`, `password_reset_tokens`, `cache`, `cache_locks`, `jobs`, `job_batches`, `failed_jobs`, `personal_access_tokens`).
 

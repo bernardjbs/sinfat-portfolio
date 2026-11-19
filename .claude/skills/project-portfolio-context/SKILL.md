@@ -121,11 +121,14 @@ cd /Users/bernard/code/sinfat-portfolio
 # Deploy
 git push origin main
 just deploy
-# → SSHes into server, runs scripts/deploy.sh
-# → pull, composer, npm install, vite build, migrate, cache, remove any sitemap file, nginx reload
+# → SSHes into server, pulls, then runs scripts/deploy.sh
+# → composer, npm install, vite build, migrate, cache, remove any sitemap file, nginx reload
 
 # Send local post <id> to production as a draft (Bernard runs it)
 just post-to-prod <id>
+
+# Send local notebook snapshot <stamp> to production, no deploy (before the post that links it)
+just notebook-to-prod <stamp>
 
 # SSH into server directly
 just ssh

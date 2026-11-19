@@ -54,7 +54,8 @@ to `blog:manage import` on the server, which matches by slug: a new slug becomes
 existing one is updated after a backup to `storage/app/blog-exports/backups/` (status unchanged).
 Import refuses a series missing on the server (create it first), a part held by another post, and
 content under half the current length without `--force` (`just post-to-prod <id> --force`). A header
-without a series leaves the server post's series as it is.
+without a series leaves the server post's series as it is. It also refuses a post linking a
+`/notebook/<stamp>/` snapshot the server lacks: send that first with `just notebook-to-prod <stamp>`.
 
 ## Series
 

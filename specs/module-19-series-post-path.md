@@ -48,8 +48,8 @@ Bernard: "yes, this version".
 
 1. The factory research session writes the draft and saves it to the local blog, with no local preview.
    `post-to-prod` sends from the local database, so the local save stays.
-2. It copies any new snapshot into the blog's code. Until backlog row 12 is done, Bernard merges and
-   deploys before publishing, or the post links a snapshot the site answers 404 for.
+2. It imports any new snapshot into the local blog and sends it with `just notebook-to-prod <stamp>`
+   (Decision 2; before backlog row 12 it was copied into the code and needed a merge and deploy).
 3. It runs `just post-to-prod <id>`: a new post arrives as a draft. For a post already published it asks
    Bernard first, because `post-to-prod` updates an existing post in place (status unchanged), so the
    change would be live at once.
@@ -60,9 +60,29 @@ Considered, not picked: keeping the separate blog session (the hand-over, ~57 mi
 ## Decision 2: snapshots without a deploy
 
 Bernard: "record it in the blog's backlog". A deploy rebuilds the whole site to ship one snapshot file.
-Sent to production the way post text is, a series post would need no deploy at all. Needs scoping:
-where snapshots live on the server, and how the copy's link rewriting moves with them. Backlog row 12,
-due before the next series post that links a new snapshot.
+Sent to production the way post text is, a series post would need no deploy at all. Backlog row 12.
+
+Scoped and ruled 2026-11-19 (Bernard: "1 yes, 2 keep, 3 one branch, 4 you edit, 5 record"):
+
+1. **Snapshots live in the database** (`notebook_snapshots`: stamp, html), served at the same
+   `/notebook/<stamp>/`. Files on the server were rejected: the ssh user writes them and the web server
+   reads them, the ownership trap the sitemap hit.
+2. **The link rewriting is a command**, `php artisan notebook:manage import --file=<source>`: `file://`
+   links unwrapped to their text, links to snapshots in that database pointed at `/notebook/<stamp>/`,
+   links to any other snapshot dropped. It refuses a result holding `file://`, `/Users/` or `<script`.
+3. **`just notebook-to-prod <stamp>`** sends the local copy over ssh stdin, so production holds the same
+   bytes. Production refuses a snapshot that links one it lacks, and replacing a stamp without `--force`
+   (a live page would change).
+4. **`post-to-prod` refuses a post linking a snapshot production lacks**, the 404 this decision is about.
+5. **The seven published copies** are loaded by a data migration on the deploy, so no link goes dark,
+   and stay in `resources/notebook/` as the record of the hand correction (ruling 2: "keep"). New
+   snapshots are not committed; their source is the factory folder and the command redoes the copy.
+6. **Snapshot pages forbid scripts** (a Content-Security-Policy header). None of the seven has one;
+   imported pages skip code review, so a bad import cannot run code on sinfat.com.
+7. Rides one branch with backlog row 10, so its deploy runs the new script first time (ruling 3).
+8. The factory research folder's `CLAUDE.md` send step is edited here, once the command exists (ruling 4).
+
+Production database backups: none on record, backlog row 13 (ruling 5: "record").
 
 ## What changes
 
@@ -71,4 +91,7 @@ due before the next series post that links a new snapshot.
 | `CLAUDE.md` (Commands) | `post-to-prod` may be run by the factory research session for a new post; a published post's update stays Bernard's call | Done with this file |
 | `project-blog-writer` (`references/managing-posts.md`) | Same rule in "Send to production" | Done with this file, through `/skills-builder` |
 | The factory research folder's `CLAUDE.md` | The blog session no longer loads drafts; the research session saves, sends and asks as above | Done in that folder |
-| Snapshots | Sent without a deploy | Backlog row 12 |
+| Snapshots | Sent without a deploy (Decision 2) | Done on branch `feat/module-19-notebook-snapshots`; live once it deploys |
+| `docs/deploy-guide.md`, `CLAUDE.md` (Commands) | `notebook:manage import` and `just notebook-to-prod`; the deploy pulls before the script (backlog row 10) | Done |
+| `project-portfolio-context`, `project-blog-writer`, `project-git-conventions` | Snapshots in the database, sent before the post; the deploy's pull | Through `/skills-builder` |
+| The factory research folder's `CLAUDE.md` | "copy any new snapshot into the blog's code" becomes import, then `notebook-to-prod` | Ruling 4 |

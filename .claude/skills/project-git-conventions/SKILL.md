@@ -117,7 +117,7 @@ php artisan route:list        # routes look correct (if changed)
 7. (repeat 3–6 for additional logical units in the module)
 8. git checkout main && git merge feat/module-X-description
 9. git push origin main  ← only on Bernard's word
-10. just deploy  ← only on Bernard's word; SSH into server, runs scripts/deploy.sh
+10. just deploy  ← only on Bernard's word; SSH into server, pulls, then runs scripts/deploy.sh
 11. git branch -d feat/module-X-description
 ```
 
@@ -154,7 +154,7 @@ git merge feat/module-X
 
 ## Deploy
 
-Deploy is manual, and only on Bernard's word — run `just deploy` after pushing to `main`. This SSHes into the Oracle VM and runs `scripts/deploy.sh` (pull, composer, npm install, vite build, migrate, cache, remove any sitemap file, nginx reload).
+Deploy is manual, and only on Bernard's word — run `just deploy` after pushing to `main`. This SSHes into the Oracle VM, pulls, then runs `scripts/deploy.sh` (composer, npm install, vite build, migrate, cache, remove any sitemap file, nginx reload).
 
 **Implication:** Only push to `main` when the code is production-ready.
 

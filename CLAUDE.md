@@ -19,6 +19,9 @@ prod `sinfat.com`.
 - A local post reaches production with `just post-to-prod <id>` (as a draft). The factory research session may run it
   for a new post; updating an already-published post goes live at once, so that stays Bernard's call
   (`specs/module-19-series-post-path.md`).
+- A notebook snapshot reaches production with no deploy: `php artisan notebook:manage import --file=<original>`, then
+  `just notebook-to-prod <stamp>`, before the post that links it (`docs/deploy-guide.md`). The factory research session may send a new one;
+  replacing one (`--force`) changes a live page, so that is Bernard's call.
 
 ## Project skills
 

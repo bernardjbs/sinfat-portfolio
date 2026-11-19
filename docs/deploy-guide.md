@@ -10,24 +10,22 @@ How code gets from your machine to `sinfat.com`.
 just deploy
 ```
 
-That's it. This SSHes into the server and runs `scripts/deploy.sh`, which:
+That's it. This SSHes into the server, pulls the latest code (`git pull origin main`), then runs
+`scripts/deploy.sh`, which:
 
-1. `git pull origin main`: pull latest code
-2. `composer install --no-dev --optimize-autoloader`: install PHP deps
-3. `npm install --prefer-offline`: install frontend deps (reuses existing node_modules)
-4. `npm run build`: compile Vue/Tailwind assets with Vite
-5. `php artisan migrate --force`: run pending migrations
-6. `php artisan config:cache`: cache config
-7. `php artisan route:cache`: cache routes
-8. `php artisan view:cache`: cache Blade views
-9. `sudo rm -f public/sitemap.xml`: remove any sitemap file. The sitemap is a route built from the database on each
+1. `composer install --no-dev --optimize-autoloader`: install PHP deps
+2. `npm install --prefer-offline`: install frontend deps (reuses existing node_modules)
+3. `npm run build`: compile Vue/Tailwind assets with Vite
+4. `php artisan migrate --force`: run pending migrations
+5. `php artisan config:cache`: cache config
+6. `php artisan route:cache`: cache routes
+7. `php artisan view:cache`: cache Blade views
+8. `sudo rm -f public/sitemap.xml`: remove any sitemap file. The sitemap is a route built from the database on each
    request, so it is never stale; nginx would serve a leftover file in its place
-10. `sudo systemctl reload nginx`: reload Nginx gracefully
+9. `sudo systemctl reload nginx`: reload Nginx gracefully
 
-**Trap: a deploy that changes `scripts/deploy.sh` runs the old copy.** Step 1 pulls the new script, but bash
-keeps reading the one it started. Symptom: the run stops at an error from a removed or changed step, with no
-"✅ deployed" at the end (2026-11-12: the old sitemap step failed, nginx was not reloaded). Until backlog row 10
-lands, run `just deploy` a second time after any change to the script.
+The pull happens in `just deploy`, before the script starts, because bash keeps reading the copy it started:
+when the script pulled itself, a deploy that changed it ran the old one (2026-11-12, backlog row 10).
 
 ---
 
@@ -40,6 +38,21 @@ just post-to-prod <id>
 Sends local post `<id>` to production: a new slug is created as a draft, an existing one is backed up
 and updated (status unchanged). Then publish it in the production admin; the sitemap lists it at once (it is
 built on each request). Details: `.claude/skills/project-blog-writer/references/managing-posts.md`.
+
+## Notebook Snapshots to Production
+
+```bash
+php artisan notebook:manage import --file=~/code/software-factory-research/notebook/snapshots/<stamp>.html
+just notebook-to-prod <stamp>
+```
+
+Snapshots live in the database (`notebook_snapshots`), so a new one needs no deploy. The import makes the
+published copy locally (local file links unwrapped, links to snapshots stored here pointed at
+`/notebook/<stamp>/`, links to others dropped) and refuses scripts and local paths. The send pipes those
+bytes to production, which refuses a snapshot linking one it lacks, and replacing a stamp without `--force`.
+Send a snapshot before the post that links it: `post-to-prod` refuses a post linking a missing snapshot.
+The seven copies in `resources/notebook/` were loaded by a migration and stay as the record of their hand
+correction (`specs/module-19-series-post-path.md`, Decision 2).
 
 ---
 

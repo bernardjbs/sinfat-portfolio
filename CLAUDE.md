@@ -16,7 +16,9 @@ prod `sinfat.com`.
 
 - Tests: `php artisan test`.
 - Deploy is manual (`just deploy`) and runs only on Bernard's word.
-- A local post reaches production with `just post-to-prod <id>` (as a draft); also Bernard's to run.
+- A local post reaches production with `just post-to-prod <id>` (as a draft). The factory research session may run it
+  for a new post; updating an already-published post goes live at once, so that stays Bernard's call
+  (`specs/module-19-series-post-path.md`).
 
 ## Project skills
 

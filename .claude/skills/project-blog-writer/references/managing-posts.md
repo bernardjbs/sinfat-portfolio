@@ -47,7 +47,9 @@ sending to production.
 
 ## Send to production
 
-`just post-to-prod <id>` (Bernard runs it: it writes to production). It exports the post and pipes it
+`just post-to-prod <id>` writes to production. The factory research session may run it for a **new** post
+(it arrives as a draft); updating an already-published post goes live at once, so ask Bernard first
+(`specs/module-19-series-post-path.md`). It exports the post and pipes it
 to `blog:manage import` on the server, which matches by slug: a new slug becomes a **draft**, an
 existing one is updated after a backup to `storage/app/blog-exports/backups/` (status unchanged).
 Import refuses a series missing on the server (create it first), a part held by another post, and

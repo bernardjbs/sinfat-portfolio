@@ -69,6 +69,11 @@ class BlogManage extends Command
             return $this->abort('--published-at must be a date, e.g. 2026-11-12T23:15:00+08:00.');
         }
 
+        // Publishing keeps the date, so a future one (a typo) would go live at once, dated ahead
+        if ($publishedAt?->isFuture()) {
+            return $this->abort("--published-at is in the future: {$publishedAt->toIso8601ZuluString()}.");
+        }
+
         $placement = $this->seriesPlacement(null);
 
         if ($placement === false) {
@@ -267,6 +272,10 @@ class BlogManage extends Command
 
         if ($publishedAt === false) {
             return $this->abort('The header\'s published_at is not a date.');
+        }
+
+        if ($publishedAt?->isFuture()) {
+            return $this->abort("The header's published_at is in the future: {$publishedAt->toIso8601ZuluString()}.");
         }
 
         $series = null;

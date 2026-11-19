@@ -86,7 +86,9 @@
   `published_at` in the export header, import takes it only for a new post or a draft, and the admin Publish button
   keeps a date already set (it used to overwrite it with now()).
 - Tests first, each break proved red (10 mutations). `pr-reviewer`: approve after fixes; fixed two missing tests and the
-  loose date reading; three findings wait on Bernard. Tests after: 170 passed, 3 skipped, exit 0.
+  loose date reading. Bernard's rulings on the other three: refuse a future date (a typo would go live dated ahead;
+  "a"), a locally published post's date travels so both sites match ("a"), the admin list and editor show the date
+  ("a"). Tests after: 172 passed, 3 skipped, exit 0.
 
 ## Still open
 - Bernard: Oracle Cloud disk snapshots (row 15, due 2026-11-26, before the deploy); then merge, push and deploy

@@ -11,8 +11,8 @@
 
 0. Row 14 (a draft carries its publish date) is built on this branch (19 Nov, factory research session): `create
    --published-at`, the date in export and import (import dates a draft only), and Publish keeps a date already set.
-   Reviewed (approve after fixes); three fixes in, three findings wait on Bernard (future dates, local publish dates
-   travelling, the admin showing the date). The run that takes the posts out:
+   Reviewed (approve after fixes), all six findings settled: three fixed; on Bernard's rulings a future date is
+   refused, a locally published post's date travels so both sites match, and the admin screens show the date. The run that takes the posts out:
    `~/code/software-factory-research/docs/2026-11-19-blog-drafts-to-prod-run.md`.
 1. Bernard: check Oracle Cloud disk snapshots in the console (backlog row 15, due 2026-11-26). The one-off dump below
    covers this deploy, so it no longer blocks it.

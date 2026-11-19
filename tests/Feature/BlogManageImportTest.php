@@ -248,6 +248,30 @@ class BlogManageImportTest extends TestCase
         $this->assertSame(0, BlogPost::count());
     }
 
+    public function test_create_refuses_a_publish_date_in_the_future(): void
+    {
+        $file = $this->writeFile($this->body);
+
+        $this->artisan('blog:manage', [
+            'action' => 'create', '--title' => 'Future date', '--file' => $file,
+            '--published-at' => now()->addMinute()->toIso8601ZuluString(),
+        ])->assertExitCode(1);
+
+        $this->assertSame(0, BlogPost::count());
+    }
+
+    public function test_import_refuses_a_header_date_in_the_future(): void
+    {
+        $file = $this->writeFile($this->header([
+            'slug' => 'import-test-future', 'title' => 'Future',
+            'published_at' => now()->addMinute()->toIso8601ZuluString(),
+        ]) . $this->body);
+
+        $this->artisan('blog:manage', ['action' => 'import', '--file' => $file])->assertExitCode(1);
+
+        $this->assertDatabaseMissing('blog_posts', ['slug' => 'import-test-future']);
+    }
+
     public function test_export_writes_the_publish_date(): void
     {
         $post = BlogPost::factory()->draft()->create([

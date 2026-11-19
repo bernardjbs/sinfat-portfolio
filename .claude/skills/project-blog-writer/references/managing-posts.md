@@ -19,6 +19,7 @@ php artisan blog:manage create \
 - Creates a **draft** with `ai_generated` true. Slug is generated from the title.
 - `--ai-model` defaults to an old model name (`blog:manage --help` shows it): always pass the one that drafted the post.
 - `--series` appends the post as the next part; `--part=<n>` places it, moving later parts up.
+- `--published-at=<date-time with offset>` (e.g. `2026-11-12T23:15:00+08:00`) dates the draft, and Publish keeps that date. A looser value ("tomorrow", "2026") or a future one is refused.
 - Rejects content under 100 bytes.
 
 ## Update a draft
@@ -41,7 +42,7 @@ php artisan blog:manage export --id=10
 ```
 
 Saves to `storage/app/blog-exports/{slug}.md`: a header (`---` lines holding slug, title, excerpt, category,
-ai_generated, ai_model, series, part) above the content. Edit the content below the header; `create`
+ai_generated, ai_model, series, part, published_at) above the content. Edit the content below the header; `create`
 and `update` ignore the header, so edit title or excerpt with their flags or in the header before
 sending to production.
 
@@ -52,6 +53,7 @@ sending to production.
 (`specs/module-19-series-post-path.md`). It exports the post and pipes it
 to `blog:manage import` on the server, which matches by slug: a new slug becomes a **draft**, an
 existing one is updated after a backup to `storage/app/blog-exports/backups/` (status unchanged).
+Import takes `published_at` for a new post or a draft; a published post keeps its own date.
 Import refuses a series missing on the server (create it first), a part held by another post, and
 content under half the current length without `--force` (`just post-to-prod <id> --force`). A header
 without a series leaves the server post's series as it is. It also refuses a post linking a

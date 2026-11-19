@@ -91,8 +91,13 @@ If you need to run steps individually:
 ```bash
 just ssh
 cd /var/www/sinfat
+git pull origin main
 bash scripts/deploy.sh
 ```
+
+The script refuses to run unless the server is at `origin/main`, so a forgotten pull stops it instead of
+rebuilding the old code. It runs the migrations straight after `composer install`, before the frontend build,
+because the pulled code is live from the pull onwards.
 
 Or run individual commands as needed.
 

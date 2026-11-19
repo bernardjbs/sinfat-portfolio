@@ -1,7 +1,8 @@
 # Module 19: A Factory-Series Post's Path to Production
 
 > Decided 2026-11-19 in the factory research, from a measurement of posts 1 to 4. This file records
-> what changes in how a series post reaches sinfat.com, and why. Owed code: backlog row 12.
+> what changes in how a series post reaches sinfat.com, and why. Status: built on
+> `feat/module-19-notebook-snapshots` (backlog row 12 DONE); live once that branch deploys.
 
 ## Contents
 
@@ -90,8 +91,7 @@ Production database backups: none on record, backlog row 13 (ruling 5: "record")
 |---|---|---|
 | `CLAUDE.md` (Commands) | `post-to-prod` may be run by the factory research session for a new post; a published post's update stays Bernard's call | Done with this file |
 | `project-blog-writer` (`references/managing-posts.md`) | Same rule in "Send to production" | Done with this file, through `/skills-builder` |
-| The factory research folder's `CLAUDE.md` | The blog session no longer loads drafts; the research session saves, sends and asks as above | Done in that folder |
+| The factory research folder's `CLAUDE.md` | The blog session no longer loads drafts; the research session saves, sends and asks as above; a new snapshot is imported, then sent with `notebook-to-prod` (ruling 4) | Done in that folder (send step: its `b99549d`) |
 | Snapshots | Sent without a deploy (Decision 2) | Done on branch `feat/module-19-notebook-snapshots`; live once it deploys |
 | `docs/deploy-guide.md`, `CLAUDE.md` (Commands) | `notebook:manage import` and `just notebook-to-prod`; the deploy pulls before the script (backlog row 10) | Done |
-| `project-portfolio-context`, `project-blog-writer`, `project-git-conventions` | Snapshots in the database, sent before the post; the deploy's pull | Through `/skills-builder` |
-| The factory research folder's `CLAUDE.md` | "copy any new snapshot into the blog's code" becomes import, then `notebook-to-prod` | Ruling 4 |
+| `project-portfolio-context`, `project-blog-writer`, `project-git-conventions` | Snapshots in the database, sent before the post; the deploy's pull | Done through `/skills-builder` (`0ccad4a`) |

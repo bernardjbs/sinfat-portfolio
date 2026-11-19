@@ -1,4 +1,4 @@
-*Resume with /user-next. Full state: docs/sessions/2026-11-12-factory-parts-2-3-and-sitemap.md.*
+*Resume with /user-next. Full state: docs/sessions/2026-11-19-notebook-snapshots-without-a-deploy.md.*
 
 ## Pinned
 
@@ -9,29 +9,28 @@
 
 ## Next steps
 
-1. Backlog row 10, due 2026-11-26, on branch `temp-branch` (a placeholder name: the next real work is not
-   chosen yet; rename it when it is, per Bernard's small-fixes rule): edit `justfile` so `deploy` pulls
-   the code, then starts `scripts/deploy.sh`, and take `git pull` out of the script. It goes first because
-   its trigger is this branch; the deploy after it is the first that will not need running twice when the
-   script changes.
-2. Backlog row 9, due 2026-11-25 (trigger fired): check prices and free tiers for the GitHub Models
-   replacement via the research agent, put the choice to Bernard, then `PLAYGROUND_ENABLED=true`. The admin
-   draft writer is broken until then.
-3. Backlog row 1, due 2026-12-08 (trigger fired): help.md for the project skills that lack one, starting with
-   `project-git-conventions`, via `/skills-builder`.
-4. Then: module 15, Page Explainer (`specs/module-15-page-explainer.md`); Laravel mail (SMTP via Resend) with an
-   AI health check that alerts when the provider stops answering.
+1. Bernard: check Oracle Cloud disk snapshots in the console (backlog row 15, due 2026-11-26), before the deploy.
+2. Bernard: merge `feat/module-19-notebook-snapshots` to `main`, push (`ALLOW_GIT_PUSH=1`), `just deploy`. Then check
+   each of the 7 snapshots serves at `/notebook/<stamp>/` (the data migration loads them) and that one `just deploy` finished
+   through the nginx reload with no second run (backlog row 10's proof). Until then the factory session's snapshot send fails.
+3. The first step for the next session (steps 1 and 2 are Bernard's, in deploy order): backlog row 9, due
+   2026-11-25 (trigger fired): price the GitHub Models replacement via the `doc-researcher` agent, put
+   the choice to Bernard, then `PLAYGROUND_ENABLED=true`. The admin draft writer is broken until then.
+4. Backlog row 13, due 2026-12-03: scope regular database backups once row 15 is answered.
+5. Backlog row 1, due 2026-12-08: help.md for the project skills lacking one, via `/skills-builder`. Row 14 (a draft
+   carries its publish date) due 2026-12-08, before the first catch-up post is published.
+6. Then: module 15, Page Explainer (`specs/module-15-page-explainer.md`).
 
-Waiting on Bernard: the provider choice (row 9), every merge and push, and every deploy.
+Waiting on Bernard: row 15, every merge, push and deploy, and the provider choice (row 9).
 
 Owed work: `docs/backlog.md`. Deploy, server and PHP patching: `docs/deploy-guide.md`.
 
 ## Git state
 
-- `main` at `19b1474`, pushed and deployed (sitemap built per request; parts 2 and 3 and the standalone
-  post live).
-- Branch `temp-branch` (placeholder name, renamed 2026-11-12), not pushed: this wrap and backlog row 10's record.
-  Merges with row 10's fix.
+- `main` at `19b1474`, pushed and deployed.
+- Branch `feat/module-19-notebook-snapshots`, not pushed: rows 10 and 12 (`3c49c73`), their docs (`0ccad4a`), two
+  blog-voice lines, and this wrap. Carries the earlier `temp-branch` wrap commits.
+- One-off production dump, untracked, on the Mac: `~/backups/sinfat-portfolio/2026-11-19-before-module-19.sql.gz`.
 
 ## Plans in flight
 

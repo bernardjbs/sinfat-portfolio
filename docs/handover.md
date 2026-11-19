@@ -9,7 +9,11 @@
 
 ## Next steps
 
-1. Bernard: check Oracle Cloud disk snapshots in the console (backlog row 15, due 2026-11-26), before the deploy.
+0. The factory research session builds backlog row 14 (a draft carries its publish date) on this branch first, test
+   first, with a `pr-reviewer` pass, so the catch-up posts go out with their session dates. Its plan for getting the
+   posts out: `~/code/software-factory-research/docs/handover.md`.
+1. Bernard: check Oracle Cloud disk snapshots in the console (backlog row 15, due 2026-11-26). The one-off dump below
+   covers this deploy, so it no longer blocks it.
 2. Bernard: merge `feat/module-19-notebook-snapshots` to `main` (reviewed and its six findings fixed after the wrap,
    see the session note's last section), push (`ALLOW_GIT_PUSH=1`), `just deploy`. Then check
    each of the 7 snapshots serves at `/notebook/<stamp>/` (the data migration loads them) and that one `just deploy` finished
@@ -30,8 +34,8 @@ Owed work: `docs/backlog.md`. Deploy, server and PHP patching: `docs/deploy-guid
 
 - `main` at `19b1474`, pushed and deployed.
 - Branch `feat/module-19-notebook-snapshots`, not pushed: rows 10 and 12 (`3c49c73`), their docs (`0ccad4a`), two
-  blog-voice lines, this wrap, and the review fixes (`c8cde50`, `a1fb95a`). Carries the earlier `temp-branch` wrap
-  commits.
+  blog-voice lines, this wrap, the review fixes (`c8cde50`, `a1fb95a`, `7617943`), two more voice lines with row 16
+  (`0cbb07a`) and row 17 (`f09d002`). Carries the earlier `temp-branch` wrap commits.
 - One-off production dump, untracked, on the Mac: `~/backups/sinfat-portfolio/2026-11-19-before-module-19.sql.gz`.
 
 ## Plans in flight

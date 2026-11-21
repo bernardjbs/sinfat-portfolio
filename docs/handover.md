@@ -2,6 +2,8 @@
 
 ## Pinned
 
+- **Move this project to the shared documentation layout first** (ruled 21 Nov in the factory session). Trigger: this session's start, with no other session open here. Checklist: `~/.claude/skills/user-wrap-up/references/docs-layout.md`, "Moving a project in". Questions: ask in a factory session (`~/code/software-factory`). Remove this pin once moved. This repo is public: it gets a companion first, `~/code/sinfat-portfolio-companion/`, and its private records leave the repo (`~/.claude/reference/companion-folders.md`). Also bring over the four blog-site files kept in the factory's `docs/blog/` (port brief, post page design, site review, roadmap; layout record question 7).
+
 - Every wrap-up checks and updates every document this project's wrap-up entry lists
   (`~/.claude/skills/user-wrap-up/references/workspaces/sinfat-portfolio.md`): the backlog, every spec's
   status line, the deploy guide, the production settings notes, `CLAUDE.md` and the project skills.

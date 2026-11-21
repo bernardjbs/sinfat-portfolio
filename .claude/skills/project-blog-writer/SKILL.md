@@ -34,7 +34,7 @@ Read the summary, write the post framed around the AI development journey, creat
 ### Mode 2: From a post brief
 
 ```
-Write a blog post from /Users/bernard/code/software-factory-research/docs/blog-post-01-brief.md
+Write a blog post from /Users/bernard/code/software-factory-research/docs/blog/blog-post-01-brief.md
 ```
 
 A brief, written by the project's own session, names the series and part, the sources, the arc, the quotes and its hard rules. **The brief's hard rules override this skill's defaults** (length, figures, off-limits topics). Quotes it marks as Bernard's are verbatim; fix only obvious typos.

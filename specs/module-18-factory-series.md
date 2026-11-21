@@ -5,13 +5,13 @@
 Start the second series: a solo developer working out what a software factory means for one person,
 then building it stage by stage. Publish the factory notebook's snapshots on sinfat.com so posts can
 link the plan as it stood, create the series, and draft part 1. Roadmap phase 3, step 3.4
-(`~/code/software-factory-research/docs/blog-roadmap.md`). Rulings 2026-11-10: publish the snapshots
+(`~/code/software-factory-research/docs/blog/blog-roadmap.md`). Rulings 2026-11-10: publish the snapshots
 with local file links stripped; positioning deferred, so the home and About pages are untouched.
 
 ## The Arc
 
 The series follows the factory build as it happens, one post per milestone, each from that project's
-blog journal (`~/code/software-factory-research/docs/blog-journal.md`). Status stays `writing`; there
+blog journal (`~/code/software-factory-research/docs/blog/blog-journal.md`). Status stays `writing`; there
 is no fixed total. Candidate order, from the journal (not a commitment):
 
 1. Do I need a software factory product, or just a script?
@@ -38,7 +38,7 @@ Agents never publish.
 
 ## Snapshots
 
-- Source: `~/code/software-factory-research/notebook/snapshots/<stamp>.html`, never edited
+- Source: `~/code/software-factory-research/blueprint/snapshots/<stamp>.html`, never edited
 - Moved 2026-11-19 (module 19, Decision 2): published copies live in the database (`notebook_snapshots`), made by
   `php artisan notebook:manage import` and sent with `just notebook-to-prod <stamp>`, no deploy. The seven below
   stay in `resources/notebook/` as their record; a migration loaded them as they are
@@ -60,7 +60,7 @@ Agents never publish.
 **"Do I need a software factory product, or just a script?"**
 - The three opening questions, what every factory has in common, a human still approves the merge,
   solo is real, quality is the goal, a control panel is not a quality system, the answer for me
-- Brief: `~/code/software-factory-research/docs/blog-post-01-brief.md` (its hard rules bind)
+- Brief: `~/code/software-factory-research/docs/blog/blog-post-01-brief.md` (its hard rules bind)
 - Links the notebook as it stood that night: `/notebook/2026-11-09-2327/`
 - Saved locally as a draft, part 1 (post #45 locally), 1,021 words; body replaced after a fact-check
 - Published on sinfat.com 2026-11-10, with the series and notebook snapshots live
@@ -69,15 +69,15 @@ Agents never publish.
 **"Why merge is the last thing I'll automate"**
 - Merge as a question, the workshop's "earn trust", Bernard's question verbatim, the ladder and its
   climb rules (the AI's starting points), planted failures, merge climbs last, everything at level 0
-- Brief: `~/code/software-factory-research/docs/blog-post-02-brief.md` (its hard rules bind)
+- Brief: `~/code/software-factory-research/docs/blog/blog-post-02-brief.md` (its hard rules bind)
 - Links `/notebook/2026-11-09-2354/` (the ladder) and `/notebook/2026-11-09-2344/` (just before)
 - Saved locally as a draft, part 2 (post #47), 935 words, 2026-11-11. Body and excerpt then replaced
-  from `~/code/software-factory-research/docs/blog-post-02-draft.md` (1,032 words). Published on
+  from `~/code/software-factory-research/docs/blog/blog-post-02-draft.md` (1,032 words). Published on
   sinfat.com 2026-11-11
 
 #### Post 3
 **"Before deciding anything, I compared my factory with two others"**
-- Brief and text: `~/code/software-factory-research/docs/blog-post-03-brief.md` and `-draft.md`
+- Brief and text: `~/code/software-factory-research/docs/blog/blog-post-03-brief.md` and `-draft.md`
 - Links `/notebook/2026-11-11-2343/`. The Warp quote at
   https://www.youtube.com/watch?v=nKjPBAw_N_0&t=1298s confirmed by ear by Bernard, 2026-11-12
 - Saved locally as a draft, part 3 (post #48), 549 words, 2026-11-12. Published on sinfat.com 2026-11-12

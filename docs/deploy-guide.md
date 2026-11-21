@@ -43,7 +43,7 @@ post at once (it is built on each request). Details: `.claude/skills/project-blo
 ## Notebook Snapshots to Production
 
 ```bash
-php artisan notebook:manage import --file=~/code/software-factory-research/notebook/snapshots/<stamp>.html
+php artisan notebook:manage import --file=~/code/software-factory-research/blueprint/snapshots/<stamp>.html
 just notebook-to-prod <stamp>
 ```
 
